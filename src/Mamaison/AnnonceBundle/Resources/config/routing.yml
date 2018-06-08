@@ -1,0 +1,3 @@
+#mamaison_annonce_homepage:
+#    path:     /
+#    defaults: { _controller: MamaisonAnnonceBundle:Default:index }

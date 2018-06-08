@@ -1,13 +1,197 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+    {#<head>#}
+        {#<meta charset="UTF-8" />#}
+        {#<title>{% block title %}Welcome Koera!{% endblock %}</title>#}
+        {#{% block stylesheets %}{% endblock %}#}
+        {#<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />#}
+    {#</head>#}
+    {#<body>#}
+        {#{% block body %}#}
+        {#{% block content %}#}
+        {#{% endblock %}#}
+        {#{% endblock %}#}
+        {#{% block javascripts %}{% endblock %}#}
+    {#</body>#}
+{#</html>#}
+
+
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en">
+
+<head>
+    <title>MaMaison / Home</title>
+    <!--Meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Houzez HTML5 Template">
+    <meta name="description" content="Houzez HTML5 Template">
+    <meta name="author" content="Favethemes">
+    <meta name="theme-color" content="#ffffff">
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/owl.carousel.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/jquery-ui.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/mediaqueries.css') }}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!--start header section header v1-->
+<header id="header-section" class="header-section-4 nav-left hidden-sm hidden-xs" data-sticky="1">
+    <div class="container">
+        <div class="header-left">
+            <div class="logo">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo">
+                </a>
+            </div>
+            <nav class="navi main-nav">
+                <ul>
+                    <li><a href="homepage.html">à VENDRE</a>
+                        <ul class="sub-menu">
+                            <li><a href="home-splash.html">MAISON</a></li>
+                            <li><a href="home-splash.html">APPARTEMENT</a></li>
+                            <li><a href="#">PROPRIété COMMERCIALES</a></li>
+                            <li><a href="#">COMMERCIALES</a></li>
+                            <li><a href="#">TERRAINS</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="index.html">à LOUER</a>
+                        <ul class="sub-menu">
+                            <li><a href="home-splash.html">MAISON</a></li>
+                            <li><a href="home-splash.html">APPARTEMENT</a></li>
+                            <li><a href="#">PROPRIété COMMERCIALES</a></li>
+                            <li><a href="#">COMMERCIALES</a></li>
+                            <li><a href="#">TERRAINS</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user">
+                {% if app.user %}
+                    <a href="{{ path('fos_user_security_logout') }}">Deconnecter </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">Se connecter </a>
+                    <a href="{{ path('fos_user_registration_register') }}">Créer un compte</a>
+                {% endif %}
+                <a href="add-new-property.html" class="btn btn-default btn-publish">Publier votre propriété</a>
+            </div>
+        </div>
+    </div>
+</header>
+{% block content %}
+
+
+{% endblock %}
+<!--start footer section-->
+<footer class="footer-v2">
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="footer-widget widget-about">
+                        <div class="widget-top">
+                            <h3 class="widget-title">À propos du site</h3>
+                        </div>
+                        <div class="widget-body">
+                            <p>Ma Maison</p>
+                            <p class="read"><a href="about-us.html">Lire la suite <i class="fa fa-caret-right"></i></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="footer-widget widget-contact">
+                        <div class="widget-top">
+                            <h3 class="widget-title">Nous contacter</h3>
+                        </div>
+                        <div class="widget-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fa fa-location-arrow"></i>Mahamasinba</li>
+                                <li><i class="fa fa-phone"></i>+231 032 54 953 67 </li>
+                                <li><i class="fa fa-envelope-o"></i> <a href="#">info@mamaison.mg</a></li>
+                            </ul>
+                            <p class="read"><a href="contact-us.html">Nous contacter &nbsp;<i class="fa fa-caret-right"></i></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="footer-widget widget-newsletter">
+                        <div class="widget-top">
+                            <h3 class="widget-title">Newsletter</h3>
+                        </div>
+                        <div class="widget-body">
+                            <form>
+                                <div class="table-list">
+                                    <div class="form-group table-cell">
+                                        <div class="input-email input-icon">
+                                            <input class="form-control" placeholder="Entrer votre Email">
+                                        </div>
+                                    </div>
+                                    <div class="table-cell">
+                                        <button class="btn btn-primary">Soumettre</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <p>Ma Maison est un site immobilier.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                    <div class="footer-col">
+                        <p>Ma maison © Tous droits réservés</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-5">
+                    <div class="footer-col">
+                        <div class="navi">
+                            <ul id="footer-menu" class="">
+                                <li><a href="private.html">Vie Privée</a></li>
+                                <li><a href="tearm-condition.html">Termes et conditions</a></li>
+                                <li><a href="Contact-us.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="footer-col foot-social">
+                        <p>
+                            Nous suivre sur
+                            <a href="#"><i class="fa fa-facebook-square" id="faclasse"></i></a>
+                            <a href="#" ><i class="fa fa-twitter-square" id="faclasse" ></i></a>
+                            <a href="#"><i class="fa fa-google-plus-square" id="faclasse" ></i></a>
+                            <a href="#" ><i class="fa fa-linkedin-square" id="faclasse" ></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--end footer section-->
+
+<!--Start Scripts-->
+<script type="text/javascript" src="{{ asset('assets/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/modernizr.custom.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/owl.carousel.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.matchHeight-min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/bootstrap-select.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/isotope.pkgd.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.nicescroll.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.parallax-1.1.3.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/custom.js')}}"></script>
+</body>
 </html>
