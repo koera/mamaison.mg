@@ -481,8 +481,16 @@
                             <div class="col-md-4 col-sm-5">
                                 <h4>Bonjour, {{ user.username }}!</h4>
                                 <div class="my-avatar">
-                                    <img src="http://placehold.it/50x50" alt="Avatar">
-                                    <button class="btn btn-primary btn-block">Importer une image</button>
+                                    {% if profile.avatar %}
+                                        <img src="{{ asset('uploads/avatars/'~ profile.avatar) }}" alt="Avatar">
+                                    {% else %}
+                                        <img src="http://placehold.it/50x50" alt="Avatar">
+                                    {% endif %}
+                                    <p class="error text-danger">
+                                        {{ form_errors(edit_form.avatarFile) }}
+                                    </p>
+                                    {#<button class="btn btn-primary btn-block">Importer une image</button>#}
+                                    {{ form_widget(edit_form.avatarFile,{'attr':{'class':'btn btn-primary btn-block'} } ) }}
                                 </div>
                             </div>
                             <div class="col-md-8 col-sm-7">

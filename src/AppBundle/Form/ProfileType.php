@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +20,9 @@ class ProfileType extends AbstractType
             ->add('societe')
             ->add('bio')
             ->add('facebookId')
-            ->add('linkedinId');
+            ->add('linkedinId')
+            ->add('avatarFile',FileType::class);
+
     }/**
      * {@inheritdoc}
      */

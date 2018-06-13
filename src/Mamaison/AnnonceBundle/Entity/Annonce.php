@@ -4,6 +4,7 @@ namespace Mamaison\AnnonceBundle\Entity;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Category;
 
 /**
@@ -349,13 +350,6 @@ class Annonce
     public function getQuartier()
     {
         return $this->quartier;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->caracteristiques = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

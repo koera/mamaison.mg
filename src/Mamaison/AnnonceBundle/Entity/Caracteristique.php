@@ -37,13 +37,6 @@ class Caracteristique
      */
     private $nom;
 
-    /**
-     * @var Annonce
-     *
-     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Annonce", cascade={"persist"}, mappedBy="caracteristiques")
-     */
-    private $annonces;
-
 
     /**
      * Get id
@@ -78,6 +71,7 @@ class Caracteristique
     {
         return $this->nom;
     }
+
     /**
      * Constructor
      */

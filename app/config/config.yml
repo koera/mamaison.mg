@@ -83,3 +83,4 @@ fos_user:
               from_email:
                   address:        registration@example.com
                   sender_name:    Demo Registration
+    change_password:

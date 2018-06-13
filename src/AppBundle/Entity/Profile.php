@@ -3,7 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Profile
  *
@@ -69,6 +71,18 @@ class Profile
      * @ORM\Column(name="linkedin_id", type="string", length=255, unique=true, nullable=true)
      */
     private $linkedinId;
+
+    /**
+     * @var File
+     * @Assert\Image()
+     */
+    private $avatarFile;
+
+    /**
+     * @var string
+     * @ORM\Column(name="avatar", type="string", length=255, unique=true, nullable=true)
+     */
+    private $avatar;
 
 
     /**
@@ -248,4 +262,39 @@ class Profile
     {
         return $this->linkedinId;
     }
+
+    /**
+     * @return File
+     */
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param File $avatarFile
+     */
+    public function setAvatarFile($avatarFile)
+    {
+        $this->avatarFile = $avatarFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+
+
 }

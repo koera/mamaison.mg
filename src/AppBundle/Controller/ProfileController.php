@@ -12,11 +12,12 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -69,6 +70,15 @@ class ProfileController extends BaseController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $file = $profile->getAvatarFile();
+            if($file instanceof UploadedFile){
+                $this->removeOldFile($profile);
+                $filename = time(). '.'.$file->guessClientExtension();
+                $file->move('uploads/avatars/',$filename);
+                $profile->setAvatar($filename);
+            }
+
             if($action == 'save'){
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($profile);
@@ -91,4 +101,21 @@ class ProfileController extends BaseController
             'edit_form' => $editForm->createView(),
         ));
     }
+
+
+    private function removeOldFile(Profile $profile){
+        $file = $this->getFileFromFileName($profile);
+        if($file !== null)
+            @unlink($file->getRealPath());
+    }
+
+    private function getFileFromFileName(Profile $profile){
+        $filename = $profile->getAvatar();
+        if(empty($filename)){
+            return null;
+        }
+        else
+            return new File( 'uploads/avatars/'. $filename,false);
+    }
+
 }

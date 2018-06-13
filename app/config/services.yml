@@ -43,3 +43,9 @@ services:
             - [setContainer, ["@service_container"]]
         bind:
             $formFactory: "@fos_user.profile.form.factory"
+    AppBundle\Controller\ChangePasswordController:
+        tags: ['controller.service_arguments']
+        calls:
+            - [setContainer, ["@service_container"]]
+        bind:
+            $formFactory: "@fos_user.profile.form.factory"
