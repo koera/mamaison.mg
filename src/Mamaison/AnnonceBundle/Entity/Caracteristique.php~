@@ -14,12 +14,12 @@ use Mamaison\AnnonceBundle\Entity\Annonce;
  */
 class Caracteristique
 {
-    /**
-     * @var Annonce
-     *
-     * Caracteristique have annonce
-     */
-    use Annoncable;
+//    /**
+//     * @var Annonce
+//     *
+//     * Caracteristique have annonce
+//     */
+//    use Annoncable;
 
     /**
      * @var int
@@ -36,13 +36,6 @@ class Caracteristique
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
-
-    /**
-     * @var Annonce
-     *
-     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Annonce", cascade={"persist"}, mappedBy="caracteristiques")
-     */
-    private $annonces;
 
 
     /**
@@ -78,12 +71,13 @@ class Caracteristique
     {
         return $this->nom;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->annonces = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
+//    /**
+//     * Constructor
+//     */
+//    public function __construct()
+//    {
+//        $this->annonces = new \Doctrine\Common\Collections\ArrayCollection();
+//    }
 
 }

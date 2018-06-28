@@ -100,6 +100,13 @@ class Annonce
      */
     private $user;
 
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Caracteristique")
+     */
+    private $caracteristiques;
+
 
     /**
      * Get id
@@ -374,5 +381,46 @@ class Annonce
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->caracteristiques = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add caracteristique
+     *
+     * @param \Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique
+     *
+     * @return Annonce
+     */
+    public function addCaracteristique(\Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique)
+    {
+        $this->caracteristiques[] = $caracteristique;
+
+        return $this;
+    }
+
+    /**
+     * Remove caracteristique
+     *
+     * @param \Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique
+     */
+    public function removeCaracteristique(\Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique)
+    {
+        $this->caracteristiques->removeElement($caracteristique);
+    }
+
+    /**
+     * Get caracteristiques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCaracteristiques()
+    {
+        return $this->caracteristiques;
     }
 }

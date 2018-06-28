@@ -14,12 +14,12 @@ use Mamaison\AnnonceBundle\Entity\Annonce;
  */
 class Caracteristique
 {
-    /**
-     * @var Annonce
-     *
-     * Caracteristique have annonce
-     */
-    use Annoncable;
+//    /**
+//     * @var Annonce
+//     *
+//     * Caracteristique have annonce
+//     */
+//    use Annoncable;
 
     /**
      * @var int
@@ -72,12 +72,8 @@ class Caracteristique
         return $this->nom;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function __toString()
     {
-        $this->annonces = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->getNom();
     }
-
 }

@@ -4,6 +4,7 @@ namespace Mamaison\AnnonceBundle\Entity;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Category;
 
 /**
@@ -98,6 +99,13 @@ class Annonce
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      */
     private $user;
+
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Caracteristique")
+     */
+    private $caracteristiques;
 
 
     /**
@@ -350,11 +358,28 @@ class Annonce
     {
         return $this->quartier;
     }
+
     /**
-     * Constructor
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Annonce
      */
-    public function __construct()
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
-        $this->caracteristiques = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

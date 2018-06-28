@@ -62,4 +62,9 @@ class TypeAnnonce
     {
         return $this->valeur;
     }
+
+    public function __toString()
+    {
+        return $this->getValeur();
+    }
 }

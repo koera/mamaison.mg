@@ -1,0 +1,793 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {#<h1>Annonce creation</h1>#}
+
+    {#{{ form_start(form) }}#}
+    {#{{ form_widget(form) }}#}
+    {#<input type="submit" value="Create" />#}
+    {#{{ form_end(form) }}#}
+
+    {#<ul>#}
+    {#<li>#}
+    {#<a href="{{ path('annonce_index') }}">Back to the list</a>#}
+    {#</li>#}
+    {#</ul>#}
+
+    <section class="advanced-search advance-search-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form>
+                        <div class="form-group search-long">
+                            <div class="search">
+                                <div class="input-search input-icon">
+                                    <input class="form-control" type="text"
+                                           placeholder="Entrez une adresse, une ville, une rue ou un zip">
+                                </div>
+                                <select name="location" class="selectpicker bs-select-hidden" data-live-search="false"
+                                        data-live-search-style="begins">
+                                    <option value="">Toutes les villes</option>
+                                    <option value="chicago">Antananarivo</option>
+                                    <option value="los-angeles">Antsirabe</option>
+                                    <option value="miami">Diego</option>
+                                    <option value="new-york">Farafangana</option>
+                                </select>
+                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false"
+                                        data-live-search-style="begins">
+                                    <option value="">Toutes les zones</option>
+                                    <option value="beverly-hills">Mahamasina</option>
+                                    <option value="brickell">Analakely</option>
+                                    <option value="brickyard">Besarety</option>
+                                    <option value="bronx">Andravohangy</option>
+                                    <option value="brooklyn">Ampasapiito</option>
+                                    <option value="coconut-grove">Akadimbahoka</option>
+                                    <option value="downtown">Andrepamaky</option>
+                                    <option value="eagle-rock">Amboanjobe</option>
+                                    <option value="englewood">Ankarobato</option>
+                                    <option value="hermosa">Ankasina</option>
+                                    <option value="hollywood">Ampitatafika</option>
+                                    <option value="lincoln-park">Itaosy</option>
+                                    <option value="manhattan">Ankatso</option>
+                                    <option value="midtown">Ampasika</option>
+                                    <option value="queens">Keniheny</option>
+                                    <option value="westwood">Ambatolampy</option>
+                                    <option value="wynwood">Ibity</option>
+                                </select>
+                                <div class="advance-btn-holder">
+                                    <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i>Avance
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="search-btn">
+                                <button class="btn btn-primary">Go</button>
+                            </div>
+                        </div>
+                        <div class="advance-fields">
+                            <div class="row">
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Status">
+                                            <option>Status 1</option>
+                                            <option>Status 2</option>
+                                            <option>Status 3</option>
+                                            <option>Status 4</option>
+                                            <option>Status 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Property Type">
+                                            <option>Type de propriété 1</option>
+                                            <option>Type de propriété 2</option>
+                                            <option>Type de propriété 3</option>
+                                            <option>Type de propriété 4</option>
+                                            <option>Type de propriété 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Beds">
+                                            <option>01</option>
+                                            <option>02</option>
+                                            <option>03</option>
+                                            <option>04</option>
+                                            <option>05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Baths">
+                                            <option>01</option>
+                                            <option>02</option>
+                                            <option>03</option>
+                                            <option>04</option>
+                                            <option>05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Min Price">
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Max Price">
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Min Areas (Sqft)">
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Max Areas (Sqft)">
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xs-12 features-list">
+
+                                    <label class="text-uppercase title">Autres caractéristiques</label>
+                                    <div class="clearfix"></div>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option1"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option2"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option3"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option1"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option2"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option3"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option1"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option2"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option3"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option1"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option2"> Caractéristique
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option3"> Caractéristique
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--end advanced search section-->
+
+    <section class="advanced-search-mobile visible-xs visible-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form>
+                        <div class="single-search-wrap">
+                            <div class="single-search-inner advance-btn">
+                                <button class="table-cell text-left" type="button"><i class="fa fa-gear"></i></button>
+                            </div>
+                            <div class="single-search-inner single-search">
+
+                                <input type="text" class="form-control table-cell" name="search" placeholder="Search">
+                            </div>
+                            <div class="single-search-inner single-seach-btn">
+                                <button class="table-cell text-right" type="submit"><i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="advance-fields">
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Location">
+                                            <option>Location 1</option>
+                                            <option>Location 2</option>
+                                            <option>Location 3</option>
+                                            <option>Location 4</option>
+                                            <option>Location 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Status">
+                                            <option>Statu 1</option>
+                                            <option>Statu 2</option>
+                                            <option>Statu 3</option>
+                                            <option>Statu 4</option>
+                                            <option>Statu 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Property Type">
+                                            <option>Type de propriété 1</option>
+                                            <option>Type de propriété 2</option>
+                                            <option>Type de propriété 3</option>
+                                            <option>Type de propriété 4</option>
+                                            <option>Type de propriété 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Beds">
+                                            <option>01</option>
+                                            <option>02</option>
+                                            <option>03</option>
+                                            <option>04</option>
+                                            <option>05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Baths">
+                                            <option>01</option>
+                                            <option>02</option>
+                                            <option>03</option>
+                                            <option>04</option>
+                                            <option>05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Min Areas (Sqft)">
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Max Areas (Sqft)">
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                            <option>$100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <div class="range-advanced-main">
+                                        <div class="range-text">
+                                            <input type="hidden" class="min-price-range-hidden range-input" readonly>
+                                            <input type="hidden" class="max-price-range-hidden range-input" readonly>
+                                            <p><span class="range-title">Gamme de prix:</span> de <span
+                                                        class="min-price-range"></span> à <span
+                                                        class="max-price-range"></span></p>
+                                        </div>
+                                        <div class="range-wrap">
+                                            <div class="price-range-advanced"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    <button type="submit" class="btn btn-secondary btn-block"><i
+                                                class="fa fa-search pull-left"></i> Chercher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--end advanced search section-->
+
+    <!--start advanced search section-->
+    <section class="advanced-search-mobile visible-xs visible-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form>
+                        <div class="single-search-wrap">
+                            <div class="single-search-inner advance-btn">
+                                <button class="table-cell text-left" type="button"><i class="fa fa-gear"></i></button>
+                            </div>
+                            <div class="single-search-inner single-search">
+
+                                <input type="text" class="form-control table-cell" name="search" placeholder="Search">
+                            </div>
+                            <div class="single-search-inner single-seach-btn">
+                                <button class="table-cell text-right" type="submit"><i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="advance-fields">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="false"
+                                                data-live-search-style="begins" title="All Cities">
+                                            <option>Ville 1</option>
+                                            <option>Ville 2</option>
+                                            <option>Ville 3</option>
+                                            <option>Ville 4</option>
+                                            <option>Ville 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="false"
+                                                data-live-search-style="begins" title="All Areas">
+                                            <option>Région 1</option>
+                                            <option>Région 2</option>
+                                            <option>Région 3</option>
+                                            <option>Région 4</option>
+                                            <option>Région 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="false"
+                                                data-live-search-style="begins" title="All Status">
+                                            <option>Statu 1</option>
+                                            <option>Statu 2</option>
+                                            <option>Statu 3</option>
+                                            <option>Statu 4</option>
+                                            <option>Statu 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="selectpicker" data-live-search="false"
+                                                data-live-search-style="begins" title="All Types">
+                                            <option>Type 1</option>
+                                            <option>Type 2</option>
+                                            <option>Type 3</option>
+                                            <option>Type 4</option>
+                                            <option>Type 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-number" disabled="disabled"
+                                                          data-type="minus" data-field="count_beds">
+                                                      <i class="fa fa-minus"></i>
+                                                  </button>
+                                            </span>
+                                            <input type="text" name="count_beds" class="form-control input-number"
+                                                   value="1" min="1" max="10" placeholder="Lits">
+                                            <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-number" data-type="plus"
+                                                          data-field="count_beds">
+                                                      <i class="fa fa-plus"></i>
+                                                  </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-number" disabled="disabled"
+                                                          data-type="minus" data-field="count_baths">
+                                                      <i class="fa fa-minus"></i>
+                                                  </button>
+                                            </span>
+                                            <input type="text" name="count_baths" class="form-control input-number"
+                                                   value="1" min="1" max="10" placeholder="Bains">
+                                            <span class="input-group-btn">
+                                                  <button type="button" class="btn btn-number" data-type="plus"
+                                                          data-field="count_baths">
+                                                      <i class="fa fa-plus"></i>
+                                                  </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="" name="min-area"
+                                               placeholder="Min région (sqft)">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="" name="max-area"
+                                               placeholder="Max région (sqft)">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="range-advanced-main">
+                                        <div class="range-text">
+                                            <input type="hidden" class="min-price-range-hidden range-input" readonly>
+                                            <input type="hidden" class="max-price-range-hidden range-input" readonly>
+                                            <p><span class="range-title">Échelle des prix:</span> De <span
+                                                        class="min-price-range"></span> à <span
+                                                        class="max-price-range"></span></p>
+                                        </div>
+                                        <div class="range-wrap">
+                                            <div class="price-range-advanced"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    <button type="submit" class="btn btn-secondary btn-block"><i
+                                                class="fa fa-search pull-left"></i> Chercher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--end advanced search section-->
+
+    <!--start section page body-->
+    <section id="section-body">
+
+        <div class="container">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-left">
+                            <h2>Ajouter propriete</h2>
+                        </div>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb">
+                                <li><a href="/"><i class="fa fa-home"></i></a></li>
+                                <li class="active">Mon profil</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-4 user-dashboard-left">
+                    <div class="my-sidebar">
+                        <ul class="list-unstyled my-menu">
+                            <li><a href="my-account.html"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            <li><a href="my-properties.html"> <i class="fa fa-building"></i> Mes propriétés </a></li>
+                            <li class="active"><a href="add-new-property.html"> <i class="fa fa-plus-circle"></i>
+                                    Ajouter une nouvelle propriété </a></li>
+                            <li><a href="my-favorite-properties.html"> <i class="fa fa-heart"></i> Propriétés favorites
+                                </a></li>
+                            <li><a href="#"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8 user-dashboard-right">
+                    {{ form_start(form) }}
+                    <div class="account-block">
+                        <div class="add-title-tab">
+                            <h3>Description de la propriété et prix</h3>
+                            <div class="add-expand"></div>
+                        </div>
+                        <div class="add-tab-content" style="display: block;">
+                            <div class="add-tab-row push-padding-bottom">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="property-title">Titre</label>
+                                            {{ form_widget(form.titre) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="description">Déscription</label>
+                                            {{ form_widget(form.description) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-tab-row push-padding-bottom">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="categories">Catégories</label>
+                                            {{ form_widget(form.category,{'attr':{'class':'selectpicker'} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="caracteristiques generales">Type</label>
+                                            {{ form_widget(form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="categories">Caracteristiques</label>
+                                            {{ form_widget(form.caracteristiques) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-tab-row push-padding-bottom">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="property-price">Prix &#8203;&#8203;de l'immobilier</label>
+                                            {{ form_widget(form.prix) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="property-price-before">Nombre de pièces</label>
+                                            {{ form_widget(form.nombrePiece) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="property-price-before">Surface</label>
+                                            {{ form_widget(form.surface) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="property-price-before">Unite surface</label>
+                                            {{ form_widget(form.uniteSurface) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-block">
+                        <div class="add-title-tab">
+                            <h3>Emplacement de la propriété</h3>
+                            <div class="add-expand active"></div>
+                        </div>
+                        <div class="add-tab-content" style="display: none;">
+                            <div class="add-tab-row  push-padding-bottom">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="address">Adresse</label>
+                                            {#<input class="form-control" id="address" placeholder="Entrez une adresse">#}
+                                            {{ form_widget(form.adresse) }}
+                                        </div>
+                                    </div>
+                                    {#<div class="col-sm-6">#}
+                                    {#<div class="form-group">#}
+                                    {#<label for="region">Région</label>#}
+                                    {#<input class="form-control" id="region" placeholder="Entrez une région">#}
+                                    {#</div>#}
+                                    {#</div>#}
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="quartier">Quartier</label>
+                                            {#<input class="form-control" id="quartier" placeholder="Entrez un quartier">#}
+                                            {{ form_widget(form.quartier,{'attr':{'class':'selectpicker'} }) }}
+                                        </div>
+                                    </div>
+                                    {#<div class="col-sm-6">#}
+                                    {#<div class="form-group">#}
+                                    {#<label for="ville">Ville</label>#}
+                                    {#<input class="form-control" id="ville" placeholder="Entrez une ville">#}
+                                    {#</div>#}
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-block">
+                        <div class="add-title-tab">
+                            <h3>Médias de propriété</h3>
+                            <div class="add-expand active"></div>
+                        </div>
+                        <div class="add-tab-content" style="display: none;">
+                            <div class="add-tab-row">
+                                <div class="property-media">
+                                    <div class="media-gallery">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <figure class="gallery-thumb">
+                                                    <img src="http://placehold.it/127x127" alt="thumb">
+                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
+                                                </figure>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <figure class="gallery-thumb">
+                                                    <img src="http://placehold.it/127x127" alt="thumb">
+                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                </figure>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <figure class="gallery-thumb">
+                                                    <img src="http://placehold.it/127x127" alt="thumb">
+                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                </figure>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <figure class="gallery-thumb">
+                                                    <img src="http://placehold.it/127x127" alt="thumb">
+                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                </figure>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <figure class="gallery-thumb">
+                                                    <img src="http://placehold.it/127x127" alt="thumb">
+                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                </figure>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <figure class="gallery-thumb">
+                                                    <img src="http://placehold.it/127x127" alt="thumb">
+                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-drag-drop">
+                                        <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
+                                        <h4>or</h4>
+                                        <button class="btn btn-primary">Selectioner l'Images</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="account-block">
+                        <div class="add-title-tab">
+                            <h3>Vidéo de propriété</h3>
+                            <div class="add-expand active"></div>
+                        </div>
+                        <div class="add-tab-content" style="display: none;">
+                            <div class="add-tab-row push-padding-bottom">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="videoUrl">Video URL</label>
+                                            <input class="form-control" id="videoUrl"
+                                                   placeholder="Entrez votre titre de propriété">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="table-list">
+                                            <div class="form-group table-cell full-width" style="padding-right: 8px;">
+                                                <label for="videoImageUrl">Video image URL</label>
+                                                <input class="form-control" id="videoImageUrl"
+                                                       placeholder="Entrez votre titre de propriété">
+                                            </div>
+                                            <div class="table-cell v-align-bottom">
+                                                <button class="btn btn-primary">Télécharger</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-block">
+                        <div class="add-title-tab">
+                            <h3>Attachement</h3>
+                            <div class="add-expand"></div>
+                        </div>
+                        <div class="add-tab-content" style="display: block;">
+                            <div class="add-tab-row push-padding-bottom">
+                                <div class="add-attachment">
+                                    <p>Attachement</p>
+                                    <div class="attach-list">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <div class="attach-icon"><i class="fa fa-file-o"></i></div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">filename.pdf</a></h4>
+                                                <ul class="attach-actions">
+                                                    <li><a href=""><i class="fa fa-edit"></i> Editer</a></li>
+                                                    <li><a href=""><i class="fa fa-remove"></i>Suprimer</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <div class="attach-icon"><i class="fa fa-file-o"></i></div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">filename.pdf</a></h4>
+                                                <ul class="attach-actions">
+                                                    <li><a href=""><i class="fa fa-edit"></i> Editer</a></li>
+                                                    <li><a href=""><i class="fa fa-remove"></i>Suprimer</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary">Ajouter media</button>
+                                    <p>Vous pouvez joindre des fichiers PDF, des images cartographiques ou d'autres
+                                        documents pour fournir plus de détails liés à la propriété.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-block text-right">
+                        <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

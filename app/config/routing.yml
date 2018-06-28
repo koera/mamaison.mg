@@ -1,3 +1,11 @@
+mamaison_annonce_annonce:
+    resource: "@MamaisonAnnonceBundle/Controller/AnnonceController.php"
+    type:     annotation
+
+mamaison_annonce_annonce:
+    resource: "@MamaisonAnnonceBundle/Controller/AnnonceController.php"
+    type:     annotation
+
 app_profile:
     resource: "@AppBundle/Controller/ProfileController.php"
     type:     annotation
