@@ -3,6 +3,7 @@
 namespace Mamaison\AnnonceBundle\Form;
 
 use Mamaison\AnnonceBundle\Entity\Caracteristique;
+use Mamaison\AnnonceBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,14 +23,18 @@ class AnnonceType extends AbstractType
             ->add('surface')
             ->add('uniteSurface')
             ->add('adresse')
-            ->add('category')
+            ->add('category',EntityType::class, array(
+                'class' => Category::class,
+                'multiple' => false,
+                'expanded' => true,
+                'required' => true))
             ->add('typeAnnonce')
             ->add('quartier')
             ->add('caracteristiques',EntityType::class, array(
                     'class' => Caracteristique::class,
                     'multiple' => true,
                     'expanded' => true,
-                    'required' => false)
+                    'required' => true)
             );
     }
     /**

@@ -554,35 +554,27 @@
                             </div>
                             <div class="add-tab-row push-padding-bottom">
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-12">
+                                        <label for="categories">Catégories</label>
                                         <div class="form-group">
-                                            <label for="categories">Catégories</label>
-                                            {{ form_widget(form.category,{'attr':{'class':'selectpicker'} }) }}
+                                            {% for child in form.category %}
+                                                <div class="col-md-4">
+                                                    {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
+                                                    {{ form_label(child) }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="caracteristiques generales">Type</label>
                                             {{ form_widget(form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="categories">Caracteristiques</label>
-                                            {{ form_widget(form.caracteristiques) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="add-tab-row push-padding-bottom">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="property-price">Prix &#8203;&#8203;de l'immobilier</label>
-                                            {{ form_widget(form.prix) }}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 js-hide-terrain">
                                         <div class="form-group">
                                             <label for="property-price-before">Nombre de pièces</label>
                                             {{ form_widget(form.nombrePiece) }}
@@ -590,11 +582,18 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
+                                            <label for="property-price">Prix</label>
+                                            {{ form_widget(form.prix) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3 js-show-terrain">
+                                        <div class="form-group">
                                             <label for="property-price-before">Surface</label>
                                             {{ form_widget(form.surface) }}
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 js-show-terrain">
                                         <div class="form-group">
                                             <label for="property-price-before">Unite surface</label>
                                             {{ form_widget(form.uniteSurface) }}
@@ -602,12 +601,30 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="add-tab-row push-padding-bottom">
+                                <div class="row">
+                                    <div class="col-sm-12 js-caracteristiques">
+                                        <label for="categories">Caracteristiques</label>
+                                        <div class="form-group">
+                                            {#{{ form_widget(form.caracteristiques) }}#}
+                                            {% for child in form.caracteristiques %}
+                                                <div class="col-md-4">
+                                                    {{ form_widget(child) }}
+                                                    {{ form_label(child) }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="account-block">
                         <div class="add-title-tab">
                             <h3>Emplacement de la propriété</h3>
-                            <div class="add-expand active"></div>
+                            <div class="add-expand"></div>
                         </div>
                         <div class="add-tab-content" style="display: none;">
                             <div class="add-tab-row  push-padding-bottom">
@@ -615,29 +632,15 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="address">Adresse</label>
-                                            {#<input class="form-control" id="address" placeholder="Entrez une adresse">#}
                                             {{ form_widget(form.adresse) }}
                                         </div>
                                     </div>
-                                    {#<div class="col-sm-6">#}
-                                    {#<div class="form-group">#}
-                                    {#<label for="region">Région</label>#}
-                                    {#<input class="form-control" id="region" placeholder="Entrez une région">#}
-                                    {#</div>#}
-                                    {#</div>#}
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="quartier">Quartier</label>
-                                            {#<input class="form-control" id="quartier" placeholder="Entrez un quartier">#}
                                             {{ form_widget(form.quartier,{'attr':{'class':'selectpicker'} }) }}
                                         </div>
                                     </div>
-                                    {#<div class="col-sm-6">#}
-                                    {#<div class="form-group">#}
-                                    {#<label for="ville">Ville</label>#}
-                                    {#<input class="form-control" id="ville" placeholder="Entrez une ville">#}
-                                    {#</div>#}
-                                    {#</div>#}
                                 </div>
                             </div>
                         </div>
@@ -645,7 +648,7 @@
                     <div class="account-block">
                         <div class="add-title-tab">
                             <h3>Médias de propriété</h3>
-                            <div class="add-expand active"></div>
+                            <div class="add-expand"></div>
                         </div>
                         <div class="add-tab-content" style="display: none;">
                             <div class="add-tab-row">
@@ -707,80 +710,8 @@
                         </div>
                     </div>
 
-                    <div class="account-block">
-                        <div class="add-title-tab">
-                            <h3>Vidéo de propriété</h3>
-                            <div class="add-expand active"></div>
-                        </div>
-                        <div class="add-tab-content" style="display: none;">
-                            <div class="add-tab-row push-padding-bottom">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="videoUrl">Video URL</label>
-                                            <input class="form-control" id="videoUrl"
-                                                   placeholder="Entrez votre titre de propriété">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="table-list">
-                                            <div class="form-group table-cell full-width" style="padding-right: 8px;">
-                                                <label for="videoImageUrl">Video image URL</label>
-                                                <input class="form-control" id="videoImageUrl"
-                                                       placeholder="Entrez votre titre de propriété">
-                                            </div>
-                                            <div class="table-cell v-align-bottom">
-                                                <button class="btn btn-primary">Télécharger</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="account-block">
-                        <div class="add-title-tab">
-                            <h3>Attachement</h3>
-                            <div class="add-expand"></div>
-                        </div>
-                        <div class="add-tab-content" style="display: block;">
-                            <div class="add-tab-row push-padding-bottom">
-                                <div class="add-attachment">
-                                    <p>Attachement</p>
-                                    <div class="attach-list">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <div class="attach-icon"><i class="fa fa-file-o"></i></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">filename.pdf</a></h4>
-                                                <ul class="attach-actions">
-                                                    <li><a href=""><i class="fa fa-edit"></i> Editer</a></li>
-                                                    <li><a href=""><i class="fa fa-remove"></i>Suprimer</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <div class="attach-icon"><i class="fa fa-file-o"></i></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">filename.pdf</a></h4>
-                                                <ul class="attach-actions">
-                                                    <li><a href=""><i class="fa fa-edit"></i> Editer</a></li>
-                                                    <li><a href=""><i class="fa fa-remove"></i>Suprimer</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary">Ajouter media</button>
-                                    <p>Vous pouvez joindre des fichiers PDF, des images cartographiques ou d'autres
-                                        documents pour fournir plus de détails liés à la propriété.</p>
-                                </div>
 
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="account-block text-right">
                         <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
                     </div>

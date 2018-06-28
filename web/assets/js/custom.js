@@ -1792,11 +1792,13 @@ var nice = false;
 
     $( document ).ready(function() {
         $('.tagcloud a').removeAttr('style');
+
     });
 
 })(jQuery);
 
 $(document).ready(function() {
+
     if($('#contact_form').length){
         $('#contact_form').bootstrapValidator({
             // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
@@ -1853,11 +1855,34 @@ $(document).ready(function() {
          });*/
     }
 
+    $('.js-show-terrain').hide();
+    $('.js-hide-terrain').show();
+
+    // *** ANNONCE FORM ADD JS *** //
+
+    $('.js-form-annonce').change(function () {
+
+        // value 6 is reserved to "TERRAIN"
+        var val = $(this).val();
+        if(val==6){
+            $('.js-caracteristiques').hide();
+            $('.js-show-terrain').show();
+            $('.js-hide-terrain').hide();
+        }else{
+            $('.js-caracteristiques').show();
+            $('.js-show-terrain').hide();
+            $('.js-hide-terrain').show();
+        }
+
+    })
+
 });
 /* fuction forcotroller page momcompte */
 function ShowHideDiv(chkPassport) {
     var dvPassport = document.getElementById("dvPassport");
     dvPassport.style.display = chkPassport.checked ? "block" : "none";
 }
+
+
 
 
