@@ -1874,7 +1874,112 @@ $(document).ready(function() {
             $('.js-hide-terrain').show();
         }
 
-    })
+    });
+
+    // upload image
+
+
+    var nbrImage = 0;
+
+    function readURL(input) {
+        if(nbrImage == 6){
+            nbrImage = 0;
+        }
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#image-'+(nbrImage-1)).attr('src', e.target.result);
+                if((nbrImage-1) == 5 ){
+                    $('#upload-file-button').attr('disabled','disabled');
+                }
+                $('#image-'+(nbrImage-1)).val(e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+        nbrImage = nbrImage +1;
+    }
+
+    $("#upload-file-button").change(function() {
+        readURL(this);
+    });
+
+    if (window.FileReader) {
+        var drop;
+        addEventHandler(window, 'load', function() {
+            // drop = document.getElementsByClassName('js-drug-and-drop');
+            drop = document.getElementById('drop')
+            function cancel(e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                return false;
+            }
+
+            // Tells the browser that we *can* drop on this target
+            addEventHandler(drop, 'dragover', cancel);
+            addEventHandler(drop, 'dragenter', cancel);
+
+            addEventHandler(drop, 'drop', function(e) {
+                e = e || window.event; // get window.event if e argument missing (in IE)
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } // stops the browser from redirecting off to the image.
+
+                var dt = e.dataTransfer;
+                var files = dt.files;
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+
+                    //attach event handlers here...
+
+                    reader.readAsDataURL(file);
+                    if(nbrImage == 6){
+                        nbrImage = 0;
+                    }
+                    addEventHandler(reader, 'loadend', function() {
+                        var bin = this.result;
+                        $('#image-'+(nbrImage-1)).attr('src', bin);
+                        if((nbrImage-1) == 5 ){
+                            $('#upload-file-button').attr('disabled','disabled');
+                        }
+                    }.bindToEventHandler(file));
+                    nbrImage++;
+                }
+                return false;
+            });
+            Function.prototype.bindToEventHandler = function bindToEventHandler() {
+                var handler = this;
+                var boundParameters = Array.prototype.slice.call(arguments);
+                console.log(boundParameters);
+                //create closure
+                return function(e) {
+                    e = e || window.event; // get window.event if e argument missing (in IE)
+                    boundParameters.unshift(e);
+                    handler.apply(this, boundParameters);
+                }
+            };
+        });
+    } else {
+        // document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';
+        alert('Your browser does not support the HTML5 FileReader.')
+    }
+
+    function addEventHandler(obj, evt, handler) {
+        if (obj.addEventListener) {
+            // W3C method
+            obj.addEventListener(evt, handler, false);
+        } else if (obj.attachEvent) {
+            // IE method.
+            obj.attachEvent('on' + evt, handler);
+        } else {
+            // Old school method.
+            obj['on' + evt] = handler;
+        }
+    }
 
 });
 /* fuction forcotroller page momcompte */

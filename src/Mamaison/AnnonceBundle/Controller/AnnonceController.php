@@ -44,6 +44,8 @@ class AnnonceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($request);
+            exit();
             $em = $this->getDoctrine()->getManager();
             $em->persist($annonce);
             $em->flush();

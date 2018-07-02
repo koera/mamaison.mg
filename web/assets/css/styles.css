@@ -9627,8 +9627,10 @@ body.transparent-yes .banner-caption {
 .gallery-thumb {
   position: relative;
 }
-.gallery-thumb img {
+.gallery-thumb .img {
   position: relative;
+  width: 125px !important;
+  height: 125px !important;
   z-index: 5;
 }
 .gallery-thumb .icon {

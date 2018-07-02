@@ -81,6 +81,6 @@ fos_user:
           confirmation:
               enabled: true
               from_email:
-                  address:        registration@example.com
-                  sender_name:    Demo Registration
+                  address:        no-reply@mamaison.mg
+                  sender_name:    Mamaison company
     change_password:

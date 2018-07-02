@@ -1,3 +1,7 @@
+mamaison_annonce_gallery:
+    resource: "@MamaisonAnnonceBundle/Controller/GalleryController.php"
+    type:     annotation
+
 mamaison_annonce_annonce:
     resource: "@MamaisonAnnonceBundle/Controller/AnnonceController.php"
     type:     annotation
