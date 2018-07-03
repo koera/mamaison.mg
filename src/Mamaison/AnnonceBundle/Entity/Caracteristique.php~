@@ -72,12 +72,8 @@ class Caracteristique
         return $this->nom;
     }
 
-//    /**
-//     * Constructor
-//     */
-//    public function __construct()
-//    {
-//        $this->annonces = new \Doctrine\Common\Collections\ArrayCollection();
-//    }
-
+    public function __toString()
+    {
+        return $this->getNom();
+    }
 }

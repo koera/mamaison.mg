@@ -37,8 +37,24 @@
                 <th>Adresse</th>
                 <td>{{ annonce.adresse }}</td>
             </tr>
+
+
         </tbody>
     </table>
+
+    <ul>
+        {% for caracteristique in annonce.caracteristiques %}
+            <li>
+                {{ caracteristique.nom }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    
+    Gallery : <br/>
+    {% for image in annonce.galleries %}
+        <img style="width: 150px;height: 150px;" src="{{ image.image }}"/>
+    {% endfor %}
 
     <ul>
         <li>

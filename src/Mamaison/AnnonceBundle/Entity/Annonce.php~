@@ -109,6 +109,14 @@ class Annonce
 
 
     /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Gallery")
+     */
+    private $galleries;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -381,5 +389,46 @@ class Annonce
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->caracteristiques = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add caracteristique
+     *
+     * @param \Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique
+     *
+     * @return Annonce
+     */
+    public function addCaracteristique(\Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique)
+    {
+        $this->caracteristiques[] = $caracteristique;
+
+        return $this;
+    }
+
+    /**
+     * Remove caracteristique
+     *
+     * @param \Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique
+     */
+    public function removeCaracteristique(\Mamaison\AnnonceBundle\Entity\Caracteristique $caracteristique)
+    {
+        $this->caracteristiques->removeElement($caracteristique);
+    }
+
+    /**
+     * Get caracteristiques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCaracteristiques()
+    {
+        return $this->caracteristiques;
     }
 }

@@ -3,14 +3,15 @@
 namespace Mamaison\AnnonceBundle\Controller;
 
 use Mamaison\AnnonceBundle\Entity\Annonce;
+use Mamaison\AnnonceBundle\Entity\Gallery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Annonce controller.
  *
- * @Route("/annonce")
  */
 class AnnonceController extends Controller
 {
@@ -34,7 +35,7 @@ class AnnonceController extends Controller
     /**
      * Creates a new annonce entity.
      *
-     * @Route("/new", name="annonce_new")
+     * @Route("/mon-compte/ajout-propriete", name="annonce_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -44,10 +45,24 @@ class AnnonceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($request);
-            exit();
             $em = $this->getDoctrine()->getManager();
+
+            for ($i = 0; $i <= 5; $i++) {
+                if ($request->get('mamaison_annoncebundle_annonce-image-' . $i)) {
+                    // save Gallery
+                    if (!is_null($request->get('mamaison_annoncebundle_annonce-image-' . $i))) {
+                        $g = new Gallery();
+                        $g->setImage($request->get('mamaison_annoncebundle_annonce-image-' . $i));
+                        $em->persist($g);
+                        $gallery[] = $g;
+                        $annonce->addGallery($g);
+                    }
+                }
+
+            }
+
             $em->persist($annonce);
+
             $em->flush();
 
             return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId()));
@@ -55,14 +70,14 @@ class AnnonceController extends Controller
 
         return $this->render('annonce/new.html.twig', array(
             'annonce' => $annonce,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 
     /**
      * Finds and displays a annonce entity.
      *
-     * @Route("/{id}", name="annonce_show")
+     * @Route("/propriete/{id}", name="annonce_show")
      * @Method("GET")
      */
     public function showAction(Annonce $annonce)
@@ -132,7 +147,6 @@ class AnnonceController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('annonce_delete', array('id' => $annonce->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

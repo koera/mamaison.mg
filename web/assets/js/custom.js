@@ -1835,24 +1835,7 @@ $(document).ready(function() {
                     }
                 }
             }
-        })/*.on('success.form.bv', function(e) {
-         $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-         $('#contact_form').data('bootstrapValidator').resetForm();
-
-         // Prevent form submission
-         e.preventDefault();
-
-         // Get the form instance
-         var $form = $(e.target);
-
-         // Get the BootstrapValidator instance
-         var bv = $form.data('bootstrapValidator');
-
-         // Use Ajax to submit form data
-         $.post($form.attr('action'), $form.serialize(), function(result) {
-         console.log(result);
-         }, 'json');
-         });*/
+        })
     }
 
     $('.js-show-terrain').hide();
@@ -1893,7 +1876,7 @@ $(document).ready(function() {
                 if((nbrImage-1) == 5 ){
                     $('#upload-file-button').attr('disabled','disabled');
                 }
-                $('#image-'+(nbrImage-1)).val(e.target.result);
+                $('#hidden-image-'+(nbrImage-1)).val(bin);
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -1936,25 +1919,30 @@ $(document).ready(function() {
 
                     //attach event handlers here...
 
+
                     reader.readAsDataURL(file);
                     if(nbrImage == 6){
                         nbrImage = 0;
                     }
                     addEventHandler(reader, 'loadend', function() {
                         var bin = this.result;
+
                         $('#image-'+(nbrImage-1)).attr('src', bin);
                         if((nbrImage-1) == 5 ){
                             $('#upload-file-button').attr('disabled','disabled');
                         }
+
+                        $('#hidden-image-'+(nbrImage-1)).val(bin);
+
                     }.bindToEventHandler(file));
                     nbrImage++;
                 }
                 return false;
             });
+
             Function.prototype.bindToEventHandler = function bindToEventHandler() {
                 var handler = this;
                 var boundParameters = Array.prototype.slice.call(arguments);
-                console.log(boundParameters);
                 //create closure
                 return function(e) {
                     e = e || window.event; // get window.event if e argument missing (in IE)

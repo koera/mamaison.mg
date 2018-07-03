@@ -518,7 +518,7 @@
                 <div class="col-md-3 col-sm-4 user-dashboard-left">
                     <div class="my-sidebar">
                         <ul class="list-unstyled my-menu">
-                            <li><a href="my-account.html"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            <li><a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
                             <li><a href="my-properties.html"> <i class="fa fa-building"></i> Mes propriétés </a></li>
                             <li class="active"><a href="add-new-property.html"> <i class="fa fa-plus-circle"></i>
                                     Ajouter une nouvelle propriété </a></li>
@@ -657,8 +657,9 @@
                                         <div class="row">
                                             <div class="col-sm-2">
                                                 <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" name="image-0" id="image-0"/>
+                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-0"/>
                                                     <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-0" id="hidden-image-0" class="fa fa-star-o"/></span>
                                                     <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                     <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
                                                 </figure>
@@ -667,6 +668,7 @@
                                                 <figure class="gallery-thumb">
                                                     <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-1" name="image-1"/>
                                                     <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-1" id="hidden-image-1" class="fa fa-star-o"/></span>
                                                     <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                 </figure>
                                             </div>
@@ -674,6 +676,7 @@
                                                 <figure class="gallery-thumb">
                                                     <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-2" name="image-2"/>
                                                     <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-2" id="hidden-image-2" class="fa fa-star-o"/></span>
                                                     <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                 </figure>
                                             </div>
@@ -681,6 +684,7 @@
                                                 <figure class="gallery-thumb">
                                                     <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-3" name="image-3"/>
                                                     <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-3" id="hidden-image-3" class="fa fa-star-o"/></span>
                                                     <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                 </figure>
                                             </div>
@@ -688,6 +692,7 @@
                                                 <figure class="gallery-thumb">
                                                     <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-4" name="image-4"/>
                                                     <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-4" id="hidden-image-4" class="fa fa-star-o"/></span>
                                                     <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                 </figure>
                                             </div>
@@ -695,6 +700,7 @@
                                                 <figure class="gallery-thumb">
                                                     <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-5" name="image-5"/>
                                                     <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-5" id="hidden-image-5" class="fa fa-star-o"/></span>
                                                     <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                 </figure>
                                             </div>

@@ -119,4 +119,3 @@ class Category
         return $this->getType();
     }
 }
-
