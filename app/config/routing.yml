@@ -31,8 +31,8 @@ mamaison_annonce:
 #fos_user_profile:
 #    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
 
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+#fos_user:
+#    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 app:
     resource: '@AppBundle/Controller/'

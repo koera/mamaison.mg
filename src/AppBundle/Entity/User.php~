@@ -24,50 +24,57 @@ class User implements UserInterface
      */
     use Annoncable;
 
-
     /**
-     * @var int
+     * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
+
     /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=254, unique=true)
      */
     private $email;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="isActive", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
 
     /**
-     * @var Ville
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile")
+     * @ORM\Column(type="string", length=254, nullable=false)
      */
-    private $profile;
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=254, unique=true, nullable=true)
+     */
+    private $societyName;
+
+
+    /**
+     * @ORM\Column(type="string", length=254, unique=true, nullable=false)
+     */
+    private $activationToken;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $activationTokenDelay;
+
 
     /**
      * User constructor.
@@ -75,13 +82,83 @@ class User implements UserInterface
     public function __construct()
     {
         $this->annonces = new \Doctrine\Common\Collections\ArrayCollection();
+//        parent::__construct();
     }
 
 
     /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -103,16 +180,6 @@ class User implements UserInterface
     }
 
     /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
      * Set password
      *
      * @param string $password
@@ -124,16 +191,6 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -177,7 +234,7 @@ class User implements UserInterface
     /**
      * Get isActive
      *
-     * @return bool
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -185,67 +242,50 @@ class User implements UserInterface
     }
 
     /**
-     * Returns the roles granted to the user.
+     * Set type
      *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
+     * @param string $type
      *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
+     * @return User
      */
-    public function getRoles()
+    public function setType($type)
     {
-        return array('ROLE_USER');
+        $this->type = $type;
+
+        return $this;
     }
 
     /**
-     * Returns the salt that was originally used to encode the password.
+     * Get type
      *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string|null The salt
+     * @return string
      */
-    public function getSalt()
+    public function getType()
     {
-        // TODO: Implement getSalt() method.
+        return $this->type;
     }
 
     /**
-     * Removes sensitive data from the user.
+     * Set societyName
      *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
+     * @param string $societyName
+     *
+     * @return User
      */
-    public function eraseCredentials()
+    public function setSocietyName($societyName)
     {
+        $this->societyName = $societyName;
+
+        return $this;
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize(){
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
+    /**
+     * Get societyName
+     *
+     * @return string
+     */
+    public function getSocietyName()
     {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+        return $this->societyName;
     }
 }
-
