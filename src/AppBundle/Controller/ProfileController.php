@@ -57,6 +57,7 @@ class ProfileController extends Controller
             /* change password form */
             $changePasswordModel = new ChangePassword();
             $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+            $form->handleRequest($request);
             /* end changepassword */
 
             if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -84,6 +85,18 @@ class ProfileController extends Controller
                 return $this->redirectToRoute('mon-compte.edit');
             }
 
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $user = $this->getUser();
+                $encoder = $this->container->get('security.password_encoder');
+                $password = $encoder->encodePassword($user, $changePasswordModel->getPassword());
+                $user->setPassword($password);
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('mon-compte.edit');
+            }
+
+
             return $this->render('profile/society_user.html.twig', array(
                 'user' => $user,
                 'profile' => $profile,
@@ -94,7 +107,6 @@ class ProfileController extends Controller
 
         } elseif ($user->getType() == 'simple') {
             $action = 'save';
-
 
             if (is_null($user->getProfileSimpleUser())) {
                 $profile = new ProfileSimpleUser();
@@ -109,6 +121,7 @@ class ProfileController extends Controller
             /* change password form */
             $changePasswordModel = new ChangePassword();
             $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+            $form->handleRequest($request);
             /* end changepassword */
 
             if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -133,6 +146,17 @@ class ProfileController extends Controller
                 } else
                     $this->getDoctrine()->getManager()->flush();
 
+                return $this->redirectToRoute('mon-compte.edit');
+            }
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $user = $this->getUser();
+                $encoder = $this->container->get('security.password_encoder');
+                $password = $encoder->encodePassword($user, $changePasswordModel->getPassword());
+                $user->setPassword($password);
+                $em->persist($user);
+                $em->flush();
                 return $this->redirectToRoute('mon-compte.edit');
             }
 

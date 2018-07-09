@@ -92,19 +92,35 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="linkdin">Linkdin URL</label>
-                                    {{ form_widget(edit_form.linkedinId )}}
+                                    {{ form_widget(edit_form.linkedinId) }}
                                 </div>
                             </div>
                             <div class="col-sm-12 col-xs-12 text-right">
                                 <button type="submit" class="btn btn-primary">Enregistrer</button>
                             </div>
                         </div>
-                    </form>
+                    {{ form_end(edit_form) }}
                 </div>
                 <div class="profile-area account-block white-block">
                     <h4>Changer votre mots de passe</h4>
+                    {#{% if not changePassword_form.vars.valid %}#}
+                        {#<ul>#}
+                            {#{% for child in changePassword_form.children %}#}
+                                {# Display the errors of the form item #}
+                                {#{% for error in child.vars.errors %}#}
+                                    {#<li>{{error.message}}</li>#}
+                                {#{% endfor %}#}
+                            {#{% endfor %}#}
+                        {#</ul>#}
+                    {#{% endif %}#}
+                    {{ form_start(changePassword_form) }}
+                        <div class="error">
+                            <p class="error">{{ form_errors(changePassword_form.oldPassword) }}</p>
+                            <p class="error">{{ form_errors(changePassword_form.password.first) }}</p>
+                            <p class="error">{{ form_errors(changePassword_form.password.second) }}</p>
 
-                    <form action="{{ path('change-password') }}" method="post">
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
@@ -126,7 +142,7 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Mettre à jour le mot de passe</button>
-                    </form>
+                    {{ form_start(changePassword_form) }}
                 </div>
             </div>
         </div>

@@ -14838,6 +14838,12 @@ label.error {
   bottom: -5px;
 }
 
+.error{
+  text-align: center !important;
+  color: red !important;
+  font-size: 13px !important;
+}
+
 label.success {
   position: absolute;
   color: green;
