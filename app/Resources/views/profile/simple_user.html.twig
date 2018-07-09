@@ -32,8 +32,6 @@
             </div>
             <div class="col-md-9 col-sm-8 user-dashboard-right">
                 <div class="profile-area account-block white-block">
-
-
                     {{ form_start(edit_form) }}
                         <div class="row">
                             <div class="col-md-4 col-sm-5">
@@ -105,24 +103,25 @@
                 </div>
                 <div class="profile-area account-block white-block">
                     <h4>Changer votre mots de passe</h4>
-                    <form>
+
+                    <form action="{{ path('change-password') }}" method="post">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="oldpass">Ancien mots de passe</label>
-                                    <input type="text" id="oldpass" class="form-control" placeholder="Ancien Mots de passe">
+                                    {{ form_widget(changePassword_form.oldPassword) }}
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="newpass">Nouveau mots de passe</label>
-                                    <input type="text" id="newpass" class="form-control" placeholder="Nouveau mots de passe">
+                                    {{ form_widget(changePassword_form.password.first) }}
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="confirmpass">Confirm password</label>
-                                    <input type="text" id="confirmpass" class="form-control" placeholder="Confirmer votre mots de passe">
+                                    {{ form_widget(changePassword_form.password.second) }}
                                 </div>
                             </div>
                         </div>

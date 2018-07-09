@@ -626,7 +626,7 @@
                             <h3>Emplacement de la propriété</h3>
                             <div class="add-expand"></div>
                         </div>
-                        <div class="add-tab-content" style="display: none;">
+                        <div class="add-tab-content">
                             <div class="add-tab-row  push-padding-bottom">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -638,7 +638,21 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="quartier">Quartier</label>
-                                            {{ form_widget(form.quartier,{'attr':{'class':'selectpicker'} }) }}
+                                            {{ form_widget(form.neighborhood) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="address">Ville</label>
+                                            {{ form_widget(form.ville) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="quartier">Region</label>
+                                            {{ form_widget(form.region) }}
                                         </div>
                                     </div>
                                 </div>
@@ -650,7 +664,7 @@
                             <h3>Médias de propriété</h3>
                             <div class="add-expand"></div>
                         </div>
-                        <div class="add-tab-content" style="display: none;">
+                        <div class="add-tab-content">
                             <div class="add-tab-row">
                                 <div class="property-media">
                                     <div class="media-gallery">

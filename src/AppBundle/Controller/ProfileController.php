@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ChangePassword;
 use AppBundle\Entity\ProfileSimpleUser;
 use AppBundle\Entity\ProfileSocietyUser;
+use AppBundle\Form\ChangePasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -51,6 +53,12 @@ class ProfileController extends Controller
             $editForm = $this->createForm('AppBundle\Form\ProfileSocietyUserType', $profile);
             $editForm->handleRequest($request);
 
+
+            /* change password form */
+            $changePasswordModel = new ChangePassword();
+            $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+            /* end changepassword */
+
             if ($editForm->isSubmitted() && $editForm->isValid()) {
 
                 $file = $profile->getAvatarFile();
@@ -80,6 +88,7 @@ class ProfileController extends Controller
                 'user' => $user,
                 'profile' => $profile,
                 'edit_form' => $editForm->createView(),
+                'changePassword_form' =>$form->createView()
             ));
 
 
@@ -96,6 +105,11 @@ class ProfileController extends Controller
 
             $editForm = $this->createForm('AppBundle\Form\ProfileSimpleUserType', $profile);
             $editForm->handleRequest($request);
+
+            /* change password form */
+            $changePasswordModel = new ChangePassword();
+            $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+            /* end changepassword */
 
             if ($editForm->isSubmitted() && $editForm->isValid()) {
 
@@ -126,6 +140,7 @@ class ProfileController extends Controller
                 'user' => $user,
                 'profile' => $profile,
                 'edit_form' => $editForm->createView(),
+                'changePassword_form'=>$form->createView()
             ));
         }
     }

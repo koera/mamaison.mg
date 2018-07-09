@@ -4,6 +4,9 @@ namespace Mamaison\AnnonceBundle\Controller;
 
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Mamaison\AnnonceBundle\Entity\Gallery;
+use Mamaison\AnnonceBundle\Entity\Quartier;
+use Mamaison\AnnonceBundle\Entity\Region;
+use Mamaison\AnnonceBundle\Entity\Ville;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -54,12 +57,43 @@ class AnnonceController extends Controller
                         $g = new Gallery();
                         $g->setImage($request->get('mamaison_annoncebundle_annonce-image-' . $i));
                         $em->persist($g);
-                        $gallery[] = $g;
                         $annonce->addGallery($g);
                     }
                 }
 
             }
+
+            // quartier ville and region
+
+            $quartierRequest = $form->get('neighborhood')->getData();
+            $villeRequest = $form->get('ville')->getData();
+            $regionRequest = $form->get('region')->getData();
+
+            $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($regionRequest)]);
+            if(is_null($region)){
+                $region = new Region();
+                $region->setNom(strtolower($regionRequest));
+                $em->persist($region);
+            }
+
+            $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($villeRequest)]);
+            if(is_null($ville)){
+                $ville = new Ville();
+                $ville->setNom(strtolower($villeRequest));
+                $ville->setRegion($region);
+                $em->persist($ville);
+            }
+
+            $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($quartierRequest)]);
+
+            if(is_null($quartier)){
+                $quartier = new Quartier();
+                $quartier->setNom(strtolower($quartierRequest))
+                    ->setVille($ville);
+                $em->persist($quartier);
+            }
+
+            $annonce->setQuartier($quartier);
 
             $em->persist($annonce);
 

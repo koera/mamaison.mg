@@ -6,6 +6,7 @@ use Mamaison\AnnonceBundle\Entity\Caracteristique;
 use Mamaison\AnnonceBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +30,15 @@ class AnnonceType extends AbstractType
                 'expanded' => true,
                 'required' => true))
             ->add('typeAnnonce')
-            ->add('quartier')
+            ->add('neighborhood',TextType::class,[
+                'mapped' => false
+            ])
+            ->add('region',TextType::class,[
+                'mapped' => false
+            ])
+            ->add('ville',TextType::class,[
+                'mapped' => false
+            ])
             ->add('caracteristiques',EntityType::class, array(
                     'class' => Caracteristique::class,
                     'multiple' => true,
@@ -37,6 +46,7 @@ class AnnonceType extends AbstractType
                     'required' => true)
             );
     }
+
     /**
      * {@inheritdoc}
      */
