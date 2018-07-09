@@ -15087,3 +15087,18 @@ label.success {
 {
 
 }
+
+
+
+/*updated by koera*/
+
+.icon-profile-detail{
+  color: #00aced;
+}
+
+.profil-text{
+  color: #00aced;
+  font-size: 20px;
+  margin-left: 40px ;
+  margin-top: -20px;
+}

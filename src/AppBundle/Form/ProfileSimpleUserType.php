@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProfileType extends AbstractType
+class ProfileSimpleUserType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -17,11 +17,10 @@ class ProfileType extends AbstractType
         $builder->add('nom')
             ->add('prenom')
             ->add('telephone')
-            ->add('societe')
             ->add('bio')
             ->add('facebookId')
             ->add('linkedinId')
-            ->add('avatarFile',FileType::class);
+            ->add('avatarFile',FileType::class,['required'=>false]);
 
     }/**
      * {@inheritdoc}
@@ -29,7 +28,7 @@ class ProfileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Profile'
+            'data_class' => 'AppBundle\Entity\ProfileSimpleUser'
         ));
     }
 

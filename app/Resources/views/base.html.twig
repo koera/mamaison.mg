@@ -55,10 +55,10 @@
         <div class="header-right">
             <div class="user">
                 {% if app.user %}
-                    {#<a href="{{ path('fos_user_security_logout') }}">Deconnecter </a>#}
+                    <a href="{{ path('logout') }}">Deconnecter </a>
                 {% else %}
-                    {#<a href="{{ path('fos_user_security_login') }}">Se connecter </a>#}
-                    {#<a href="{{ path('fos_user_registration_register') }}">Créer un compte</a>#}
+                    <a href="{{ path('login') }}">Se connecter </a>
+                    <a href="{{ path('registration_simple_user') }}">Créer un compte</a>
                 {% endif %}
                 <a href="add-new-property.html" class="btn btn-default btn-publish">Publier votre propriété</a>
             </div>

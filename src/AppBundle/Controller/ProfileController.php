@@ -2,42 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Profile;
-use FOS\UserBundle\Controller\ProfileController as BaseController;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Form\Factory\FactoryInterface;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use AppBundle\Entity\ProfileSimpleUser;
+use AppBundle\Entity\ProfileSocietyUser;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * @Route("/mon-compte", name="mon-compte")
  */
-class ProfileController extends BaseController
+class ProfileController extends Controller
 {
 
-    private $formFactory;
-    private $userManager;
-    private $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, FactoryInterface $formFactory, UserManagerInterface $userManager)
-    {
-        parent::__construct($eventDispatcher, $formFactory, $userManager);
-        $this->formFactory = $formFactory;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->userManager = $userManager;
-    }
 
     /**
      * Edit the user.
@@ -55,67 +36,121 @@ class ProfileController extends BaseController
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
+        if ($user->getType() == 'society') {
 
-        $action = 'save';
+            $action = 'save';
 
 
-        if(is_null($user->getProfile())){
-            $profile = new Profile();
-        }else{
-            $profile = $user->getProfile();
-            $action = 'edit';
-        }
-
-        $editForm = $this->createForm('AppBundle\Form\ProfileType', $profile);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            $file = $profile->getAvatarFile();
-            if($file instanceof UploadedFile){
-                $this->removeOldFile($profile);
-                $filename = time(). '.'.$file->guessClientExtension();
-                $file->move('uploads/avatars/',$filename);
-                $profile->setAvatar($filename);
+            if (is_null($user->getProfileSocietyUser())) {
+                $profile = new ProfileSocietyUser();
+            } else {
+                $profile = $user->getProfileSocietyUser();
+                $action = 'edit';
             }
 
-            if($action == 'save'){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($profile);
+            $editForm = $this->createForm('AppBundle\Form\ProfileSocietyUserType', $profile);
+            $editForm->handleRequest($request);
 
-                $user->setProfile($profile);
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
 
-                $em->merge($user);
+                $file = $profile->getAvatarFile();
+                if ($file instanceof UploadedFile) {
+                    $this->removeOldFile($profile);
+                    $filename = time() . '.' . $file->guessClientExtension();
+                    $file->move('uploads/avatars/', $filename);
+                    $profile->setAvatar($filename);
+                }
 
-                $em->flush();
+                if ($action == 'save') {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($profile);
+
+                    $user->setProfileSocietyUser($profile);
+
+                    $em->merge($user);
+
+                    $em->flush();
+                } else
+                    $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('mon-compte.edit');
             }
-            else
-                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('mon-compte.edit');
+            return $this->render('profile/society_user.html.twig', array(
+                'user' => $user,
+                'profile' => $profile,
+                'edit_form' => $editForm->createView(),
+            ));
+
+
+        } elseif ($user->getType() == 'simple') {
+            $action = 'save';
+
+
+            if (is_null($user->getProfileSimpleUser())) {
+                $profile = new ProfileSimpleUser();
+            } else {
+                $profile = $user->getProfileSimpleUser();
+                $action = 'edit';
+            }
+
+            $editForm = $this->createForm('AppBundle\Form\ProfileSimpleUserType', $profile);
+            $editForm->handleRequest($request);
+
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+                $file = $profile->getAvatarFile();
+                if ($file instanceof UploadedFile) {
+                    $this->removeOldFile($profile);
+                    $filename = time() . '.' . $file->guessClientExtension();
+                    $file->move('uploads/avatars/', $filename);
+                    $profile->setAvatar($filename);
+                }
+
+                if ($action == 'save') {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($profile);
+
+                    $user->setProfileSimpleUser($profile);
+
+                    $em->merge($user);
+
+                    $em->flush();
+                } else
+                    $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('mon-compte.edit');
+            }
+
+            return $this->render('profile/simple_user.html.twig', array(
+                'user' => $user,
+                'profile' => $profile,
+                'edit_form' => $editForm->createView(),
+            ));
         }
-
-        return $this->render('@FOSUser/Profile/show.html.twig', array(
-            'user' => $user,
-            'profile' => $profile,
-            'edit_form' => $editForm->createView(),
-        ));
     }
 
 
-    private function removeOldFile(Profile $profile){
+    private function changePasswordAction(Request $request){
+
+    }
+
+
+
+    private function removeOldFile(ProfileSimpleUser $profile)
+    {
         $file = $this->getFileFromFileName($profile);
-        if($file !== null)
+        if ($file !== null)
             @unlink($file->getRealPath());
     }
 
-    private function getFileFromFileName(Profile $profile){
+    private function getFileFromFileName(ProfileSimpleUser $profile)
+    {
         $filename = $profile->getAvatar();
-        if(empty($filename)){
+        if (empty($filename)) {
             return null;
-        }
-        else
-            return new File( 'uploads/avatars/'. $filename,false);
+        } else
+            return new File('uploads/avatars/' . $filename, false);
     }
 
 }

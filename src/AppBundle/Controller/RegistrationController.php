@@ -50,7 +50,7 @@ class RegistrationController extends Controller{
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'emails/registration.html.twig',
+                        'emails/registration_simple.html.twig',
                         array('user' => $user)
                     ),
                     'text/html'
@@ -60,10 +60,59 @@ class RegistrationController extends Controller{
 
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+//            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->render('registration/check_email.html.twig',array('user'=>$user));
         }
 
         return $this->render('registration/simple_user.form.html.twig',array(
+            'user' => $user,
+            'form' => $form->createView(),
+        ));
+    }
+
+
+
+    /**
+     * @Route("/society", name="registration_society_user")
+     */
+    public function registerSocietyUserAction(Request $request){
+        $user = new User();
+        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $user->setIsActive(false);
+            $user->setType('society');
+            $user->setActivationToken($this->random(32));
+            $user->setActivationTokenDelay(strtotime("+3 days"));
+
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
+            /* send email registration here*/
+
+            $message = (new \Swift_Message('Registration confirmation'))
+                ->setFrom('no-reply@mamaison.mg')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'emails/registration_society.html.twig',
+                        array('user' => $user)
+                    ),
+                    'text/html'
+                );
+
+            $this->get('mailer')->send($message);
+
+            $em->persist($user);
+            $em->flush();
+//            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->render('registration/check_email.html.twig',array('user'=>$user));
+        }
+
+        return $this->render('registration/society_user.form.html.twig',array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -114,7 +163,6 @@ class RegistrationController extends Controller{
             }else{
                 return new Response('token is already used, this link is not accessible');
             }
-
         }else{
             // user not found
             return new Response("we cant find this user");

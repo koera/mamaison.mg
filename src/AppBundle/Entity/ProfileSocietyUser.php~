@@ -1,19 +1,29 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: trustylabs
+ * Date: 7/6/18
+ * Time: 9:49 AM
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\HttpFoundation\File\File;
 
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * Profile
+ * Class ProfileSocietyUser
+ * @package AppBundle\Entity
  *
- * @ORM\Table(name="profile")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileRepository")
+ * @ORM\Table(name="profile_society")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileSimpleUser")
  */
-class Profile
+class ProfileSocietyUser implements \Serializable
 {
+
     /**
      * @var int
      *
@@ -33,9 +43,9 @@ class Profile
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="nom_responsable", type="string", length=255)
      */
-    private $prenom;
+    private $nomResponsable;
 
     /**
      * @var string
@@ -47,9 +57,9 @@ class Profile
     /**
      * @var string
      *
-     * @ORM\Column(name="societe", type="string", length=255, nullable=true)
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
      */
-    private $societe;
+    private $adresse;
 
     /**
      * @var string
@@ -61,16 +71,29 @@ class Profile
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook_id", type="string", length=255, unique=true, nullable=true)
+     * @ORM\Column(name="siteweb", type="string")
      */
-    private $facebookId;
+    private $siteweb;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkedin", type="string")
+     */
+    private $linkedin;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook", type="string")
+     */
+    private $facebook;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="linkedin_id", type="string", length=255, unique=true, nullable=true)
+     * @ORM\Column(name="type", type="string")
      */
-    private $linkedinId;
+    private $type;
+
 
     /**
      * @var File
@@ -85,10 +108,12 @@ class Profile
     private $avatar;
 
 
+
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -100,7 +125,7 @@ class Profile
      *
      * @param string $nom
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
     public function setNom($nom)
     {
@@ -120,35 +145,35 @@ class Profile
     }
 
     /**
-     * Set prenom
+     * Set nomResponsable
      *
-     * @param string $prenom
+     * @param string $nomResponsable
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
-    public function setPrenom($prenom)
+    public function setNomResponsable($nomResponsable)
     {
-        $this->prenom = $prenom;
+        $this->nomResponsable = $nomResponsable;
 
         return $this;
     }
 
     /**
-     * Get prenom
+     * Get nomResponsable
      *
      * @return string
      */
-    public function getPrenom()
+    public function getNomResponsable()
     {
-        return $this->prenom;
+        return $this->nomResponsable;
     }
 
     /**
-     * Set telephne
+     * Set telephone
      *
-     * @param string $telephne
+     * @param string $telephone
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
     public function setTelephone($telephone)
     {
@@ -158,7 +183,7 @@ class Profile
     }
 
     /**
-     * Get telephne
+     * Get telephone
      *
      * @return string
      */
@@ -168,27 +193,27 @@ class Profile
     }
 
     /**
-     * Set societe
+     * Set adresse
      *
-     * @param string $societe
+     * @param string $adresse
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
-    public function setSociete($societe)
+    public function setAdresse($adresse)
     {
-        $this->societe = $societe;
+        $this->adresse = $adresse;
 
         return $this;
     }
 
     /**
-     * Get societe
+     * Get adresse
      *
      * @return string
      */
-    public function getSociete()
+    public function getAdresse()
     {
-        return $this->societe;
+        return $this->adresse;
     }
 
     /**
@@ -196,7 +221,7 @@ class Profile
      *
      * @param string $bio
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
     public function setBio($bio)
     {
@@ -216,51 +241,51 @@ class Profile
     }
 
     /**
-     * Set facebookId
+     * Set type
      *
-     * @param string $facebookId
+     * @param string $type
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
-    public function setFacebookId($facebookId)
+    public function setType($type)
     {
-        $this->facebookId = $facebookId;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get facebookId
+     * Get type
      *
      * @return string
      */
-    public function getFacebookId()
+    public function getType()
     {
-        return $this->facebookId;
+        return $this->type;
     }
 
     /**
-     * Set linkedinId
+     * Set avatar
      *
-     * @param string $linkedinId
+     * @param string $avatar
      *
-     * @return Profile
+     * @return ProfileSocietyUser
      */
-    public function setLinkedinId($linkedinId)
+    public function setAvatar($avatar)
     {
-        $this->linkedinId = $linkedinId;
+        $this->avatar = $avatar;
 
         return $this;
     }
 
     /**
-     * Get linkedinId
+     * Get avatar
      *
      * @return string
      */
-    public function getLinkedinId()
+    public function getAvatar()
     {
-        return $this->linkedinId;
+        return $this->avatar;
     }
 
     /**
@@ -280,21 +305,35 @@ class Profile
     }
 
     /**
-     * @return string
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
      */
-    public function getAvatar()
+    public function serialize()
     {
-        return $this->avatar;
+        return serialize(array(
+            $this->id,
+            $this->avatar,
+        ));
     }
 
     /**
-     * @param string $avatar
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
      */
-    public function setAvatar($avatar)
+    public function unserialize($serialized)
     {
-        $this->avatar = $avatar;
+        list (
+            $this->id,
+            $this->avatarFile
+            ) = unserialize($serialized);
     }
-
-
-
 }
+
+

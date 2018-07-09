@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Symfony\Component\Security\Core\User\UserInterface;
+use AppBundle\Entity\ProfileSimpleUser;
+use AppBundle\Entity\ProfileSocietyUser;
 
 /**
  * User
@@ -85,6 +87,20 @@ class User implements UserInterface
 //        parent::__construct();
     }
 
+    /**
+     * @var ProfileSimpleUser
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProfileSimpleUser")
+     */
+    private $profileSimpleUser;
+
+
+    /**
+     * @var ProfileSocietyUser
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProfileSocietyUser")
+     */
+    private $profileSocietyUser;
 
     /**
      * Returns the roles granted to the user.
@@ -335,5 +351,53 @@ class User implements UserInterface
     public function getActivationTokenDelay()
     {
         return $this->activationTokenDelay;
+    }
+
+    /**
+     * Set profileSimpleUser
+     *
+     * @param ProfileSimpleUser $profileSimpleUser
+     *
+     * @return User
+     */
+    public function setProfileSimpleUser(ProfileSimpleUser $profileSimpleUser = null)
+    {
+        $this->profileSimpleUser = $profileSimpleUser;
+
+        return $this;
+    }
+
+    /**
+     * Get profileSimpleUser
+     *
+     * @return ProfileSimpleUser
+     */
+    public function getProfileSimpleUser()
+    {
+        return $this->profileSimpleUser;
+    }
+
+    /**
+     * Set profileSocietyUser
+     *
+     * @param ProfileSocietyUser $profileSocietyUser
+     *
+     * @return User
+     */
+    public function setProfileSocietyUser(ProfileSocietyUser $profileSocietyUser = null)
+    {
+        $this->profileSocietyUser = $profileSocietyUser;
+
+        return $this;
+    }
+
+    /**
+     * Get profileSocietyUser
+     *
+     * @return ProfileSocietyUser
+     */
+    public function getProfileSocietyUser()
+    {
+        return $this->profileSocietyUser;
     }
 }
