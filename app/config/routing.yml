@@ -1,3 +1,31 @@
+mamaison_annonce_gallery:
+    resource: "@MamaisonAnnonceBundle/Controller/GalleryController.php"
+    type:     annotation
+
+mamaison_annonce_annonce:
+    resource: "@MamaisonAnnonceBundle/Controller/AnnonceController.php"
+    type:     annotation
+
+#mamaison_annonce_registration:
+#    resource: "@MamaisonAnnonceBundle/Controller/RegistrationController.php"
+#    type:     annotation
+#
+#mamaison_annonce_security:
+#    resource: "@MamaisonAnnonceBundle/Controller/SecurityController.php"
+#    type:     annotation
+#
+#mamaison_annonce_ville:
+#    resource: "@MamaisonAnnonceBundle/Controller/VilleController.php"
+#    type:     annotation
+#
+#mamaison_annonce_profile:
+#    resource: "@AppBundle/Controller/ProfileController.php"
+#    type:     annotation
+
+mamaison_annonce:
+    resource: "@MamaisonAnnonceBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
