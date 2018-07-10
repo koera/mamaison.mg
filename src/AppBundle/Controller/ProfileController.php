@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\ChangePassword;
+use AppBundle\Entity\Profile;
 use AppBundle\Entity\ProfileSimpleUser;
 use AppBundle\Entity\ProfileSocietyUser;
 use AppBundle\Entity\User;
@@ -175,14 +176,14 @@ class ProfileController extends Controller
     }
 
 
-    private function removeOldFile(ProfileSimpleUser $profile)
+    private function removeOldFile(Profile $profile)
     {
         $file = $this->getFileFromFileName($profile);
         if ($file !== null)
             @unlink($file->getRealPath());
     }
 
-    private function getFileFromFileName(ProfileSimpleUser $profile)
+    private function getFileFromFileName(Profile $profile)
     {
         $filename = $profile->getAvatar();
         if (empty($filename)) {

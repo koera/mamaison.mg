@@ -20,66 +20,64 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                {{ form_start(edit_form) }}
-                <div class="profile-detail-block company-detail">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                            <div class="profile-image">
-                                <img src="http://placehold.it/230x165" alt="Agent" width="230" height="165" class="">
-                                {{ form_widget(edit_form.avatarFile) }}
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div class="profile-description">
-                                <h1>{{ user.societyName }}</h1>
-                                <ul class="profile-contact">
-                                    <li><span><i class="fa fa-user fa-2x icon-profile-detail"></i> </span> <div class="profil-text">{{ user.username }}</div></li>
-
-                                    <li><span><i class="fa fa-envelope fa-2x icon-profile-detail"></i></span> <div class="profil-text"><a href="mailto:{{ user.email }}">{{ user.email }}</a></div></li>
-
-                                    <li><span><i class="fa fa-phone fa-2x icon-profile-detail"></i></span><div class="profil-text"><a href="#">{{ profile.telephone }}</a></div></li>
-
-                                    <li><span><i class="fa fa-globe fa-2x icon-profile-detail"></i></span><div class="profil-text"><a href="#">{{ profile.siteweb }}</a></div></li>
-                                </ul>
-                                {#<ul class="profile-social">#}
-                                    {#<li><a href="{{ profile.facebook }}" class="btn-facebook"><i class="fa fa-facebook-square"></i></a></li>#}
-                                    {#<li><a href="{{ profile.linkedin }}" class="btn-linkedin"><i class="fa fa-linkedin-square"></i></a></li>#}
-                                {#</ul>#}
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div class="form-small">
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.nom) }}
-                                        {{ form_widget(edit_form.nom) }}
+                {#{{ form(edit_form) }}#}
+                <div class="col-sm-12">
+                    <div class="profile-detail-block company-detail">
+                        <div class="row">
+                            {{ form_start(edit_form) }}
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="profile-image">
+                                        {% if profile.avatar %}
+                                            <img src="{{ asset('uploads/avatars/'~profile.avatar) }}" alt="Avatar">
+                                        {% else %}
+                                            <img src="http://placehold.it/50x50" alt="Avatar">
+                                        {% endif %}
+                                        {{ form_widget(edit_form.avatarFile) }}
                                     </div>
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.nomResponsable) }}
-                                        {{ form_widget(edit_form.nomResponsable) }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.telephone) }}
-                                        {{ form_widget(edit_form.telephone) }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.adresse) }}
-                                        {{ form_widget(edit_form.adresse) }}
-                                    </div>
-                            </div>
-                            <button type="submit" class="btn btn-secondary btn-block">ENREGISTRER</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            {{ form_label(edit_form.bio) }}
-                            {{ form_widget(edit_form.bio) }}
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                    <div class="profile-description">
+                                        <h3>{{ user.societyName }}</h3>
+                                        <ul class="profile-contact">
+                                            <li><span>Nom du responsable:</span> <a href="#">{{ user.username }}</a></li>
+                                            <li><span>E-mail:</span> <a href="#">{{ user.email }}</a></li>
+                                            <li><span>TELEPHONE:</span> <a href="#">{{ profile.telephone }}</a></li>
+                                            <li><span>ADRESSE:</span> <a href="#">{{ profile.adresse }}</a></li>
+                                        </ul>
 
+                                        <ul class="profile-rating">
+                                            <li><span>Propriétés répertoriées:</span> 32</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-small">
+                                            <div class="form-group">
+                                                {#<input type="text" placeholder="Nom de l'entreprise" class="form-control">#}
+                                                {{ form_widget(edit_form.nom,{'attr':{'placeholder':'Nom de l\'entreprise'} }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(edit_form.adresse,{'attr':{'placeholder':'Adresse de l\'entreprise'} }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(edit_form.telephone,{'attr':{'placeholder':'Telephone de l\'entreprise'} }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(edit_form.siteweb,{'attr':{'placeholder':'Siteweb de l\'entreprise'} }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {#<textarea placeholder="Message de l'entreprise" rows="3" class="form-control"></textarea>#}
+                                                {{ form_widget(edit_form.bio,{'attr':{'placeholder':'Presentation de l\'entreprise'} }) }}
+                                            </div>
+                                            <!--mon radio -->
+                                                {{ form_widget(edit_form.type) }}
+                                            <button class="btn btn-secondary btn-block">Enregistrer</button>
+                                    </div>
+                                </div>
+                            {{ form_end(edit_form) }}
                         </div>
                     </div>
                 </div>
-                {{ form_end(edit_form) }}
             </div>
         </div>
         <div class="row">

@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,11 +16,19 @@ class ProfileSocietyUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom')
-            ->add('nomResponsable')
             ->add('telephone')
             ->add('adresse')
             ->add('bio')
-            ->add('type')
+            ->add('type',ChoiceType::class, array(
+                'choices'  => array(
+                    'Agence immobilier' => 'Agence immobilier',
+                    'Agence BTP' => 'Agence BTP',
+                ),
+                'multiple' => false,
+                'expanded' => true,
+                'required' => true)
+            )
+            ->add('siteweb')
             ->add('avatarFile',FileType::class,['required'=>false]);
     }/**
      * {@inheritdoc}
