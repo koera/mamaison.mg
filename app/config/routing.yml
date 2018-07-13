@@ -19,7 +19,7 @@ mamaison_annonce_annonce:
 #    type:     annotation
 #
 #mamaison_annonce_profile:
-#    resource: "@AppBundle/Controller/ProfileController.php"
+#    resource: "@AppBundle/Controller/ProfileSimpleUserController.phproller.php"
 #    type:     annotation
 
 mamaison_annonce:

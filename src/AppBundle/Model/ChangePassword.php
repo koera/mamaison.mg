@@ -6,7 +6,7 @@
  * Time: 3:05 PM
  */
 
-namespace AppBundle\Entity;
+namespace AppBundle\Model;
 
 
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
@@ -21,7 +21,7 @@ class ChangePassword
      *     message = "Mot de passe incorrect"
      * )
      */
-    protected $oldPassword;
+    private $oldPassword;
 
     /**
      * @Assert\Length(
@@ -29,7 +29,7 @@ class ChangePassword
      *     minMessage = "Le password doit avoir 6 caracteres"
      * )
      */
-    protected $password;
+    private $password;
 
 
     public function getOldPassword() {

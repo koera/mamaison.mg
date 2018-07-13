@@ -22,7 +22,7 @@ class ProfileSocietyUserType extends AbstractType
             ->add('type',ChoiceType::class, array(
                 'choices'  => array(
                     'Agence immobilier' => 'Agence immobilier',
-                    'Agence BTP' => 'Agence BTP',
+//                    'Agence BTP' => 'Agence BTP',
                 ),
                 'multiple' => false,
                 'expanded' => true,

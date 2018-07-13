@@ -73,10 +73,14 @@ class User implements UserInterface
     private $activationToken;
 
     /**
+     * @ORM\Column(type="string", length=254, unique=true, nullable=true)
+     */
+    private $resetPasswordToken;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $activationTokenDelay;
-
 
     /**
      * User constructor.
@@ -399,5 +403,29 @@ class User implements UserInterface
     public function getProfileSocietyUser()
     {
         return $this->profileSocietyUser;
+    }
+
+    /**
+     * Set resetPasswordToken
+     *
+     * @param string $resetPasswordToken
+     *
+     * @return User
+     */
+    public function setResetPasswordToken($resetPasswordToken)
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+
+        return $this;
+    }
+
+    /**
+     * Get resetPasswordToken
+     *
+     * @return string
+     */
+    public function getResetPasswordToken()
+    {
+        return $this->resetPasswordToken;
     }
 }

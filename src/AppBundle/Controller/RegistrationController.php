@@ -143,6 +143,7 @@ class RegistrationController extends Controller{
      */
     public function confirmationAction(Request $request, $token){
         $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(array('activationToken'=>$token));
         if(!is_null($user)){
@@ -154,7 +155,11 @@ class RegistrationController extends Controller{
                     $user->setIsActive(true);
                     $em->persist($user);
                     $em->flush();
-                    return new Response("activation confirmed");
+                    if($user->getType() == 'simple'){
+                        return $this->redirectToRoute('mon-compte.edit');
+                    }elseif($user->getType() == 'society'){
+                        return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+                    }
                 }else{
                     // token delay is over
                     return new Response("This token delay is over, please get a new token");

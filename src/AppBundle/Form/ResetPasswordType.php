@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: trustylabs
- * Date: 7/6/18
- * Time: 3:46 PM
+ * Date: 7/13/18
+ * Time: 3:27 PM
  */
 
 namespace AppBundle\Form;
@@ -14,16 +14,13 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ChangePasswordType extends AbstractType
+class ResetPasswordType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $builder
-            ->add('oldPassword', PasswordType::class, array(
-                'label' => 'Ancien mot de passe',
-            ))
             ->add('password', RepeatedType::class, array(
                     "required" => "required",
                     'type' => PasswordType::class,
@@ -38,12 +35,13 @@ class ChangePasswordType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Model\ChangePassword',
+            'data_class' => 'AppBundle\Model\ResetPassword',
         ));
     }
 
     public function getName()
     {
-        return 'appbundle_change_password';
+        return 'appbundle_reset_password';
     }
+
 }

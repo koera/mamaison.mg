@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="profile_simple")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileSimpleUser")
  */
-class ProfileSimpleUser implements \Serializable
+class ProfileSimpleUser extends Profile implements \Serializable
 {
     /**
      * @var int

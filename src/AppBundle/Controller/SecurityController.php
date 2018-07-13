@@ -10,11 +10,14 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\ChangePassword;
+use AppBundle\Entity\User;
 use AppBundle\Form\ChangePasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -65,37 +68,22 @@ class SecurityController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * Redirect after login page
      *
-     * @Route("/change-password", name="change-password")
-     *
-     * @Method({"POST"})
+     * @Route("/redirect-login",name="redirect-login")
      */
-    public function changePasswordAction(Request $request){
-        $changePasswordModel = new ChangePassword();
-        $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $user = $this->getUser(); //metemos como id la del usuario sacado de su sesion
-                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-                $password = $encoder->encodePassword($changePasswordModel->getPassword(), $user->getSalt());
-                $user->setPassword($password);
-                $em->persist($user);
-                $em->flush();
-            } else {
-                 dump($form->getErrors());
-//                $this->session->getFlashBag()->add('warning', 'El password no se ha editado por un error en el formulario !');
-            }
+    public function redirectAction(){
+        /** @var User $user */
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
         }
-
-        return $this->redirectToRoute('gallery_index');
+        if($user->getType() == 'simple'){
+            return $this->redirectToRoute('mon-compte.edit');
+        }
+        elseif($user->getType() == 'society'){
+            return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+        }
     }
-
 
 }

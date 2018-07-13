@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="profile_society")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileSimpleUser")
  */
-class ProfileSocietyUser implements \Serializable
+class ProfileSocietyUser extends Profile implements \Serializable
 {
 
     /**
@@ -39,13 +39,6 @@ class ProfileSocietyUser implements \Serializable
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_responsable", type="string", length=255)
-     */
-    private $nomResponsable;
 
     /**
      * @var string
@@ -77,13 +70,13 @@ class ProfileSocietyUser implements \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="linkedin", type="string")
+     * @ORM\Column(name="linkedin", type="string", nullable=true)
      */
     private $linkedin;
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook", type="string")
+     * @ORM\Column(name="facebook", type="string", nullable=true)
      */
     private $facebook;
 
@@ -144,29 +137,6 @@ class ProfileSocietyUser implements \Serializable
         return $this->nom;
     }
 
-    /**
-     * Set nomResponsable
-     *
-     * @param string $nomResponsable
-     *
-     * @return ProfileSocietyUser
-     */
-    public function setNomResponsable($nomResponsable)
-    {
-        $this->nomResponsable = $nomResponsable;
-
-        return $this;
-    }
-
-    /**
-     * Get nomResponsable
-     *
-     * @return string
-     */
-    public function getNomResponsable()
-    {
-        return $this->nomResponsable;
-    }
 
     /**
      * Set telephone
@@ -334,6 +304,76 @@ class ProfileSocietyUser implements \Serializable
             $this->avatarFile
             ) = unserialize($serialized);
     }
+
+    /**
+     * Set siteweb
+     *
+     * @param string $siteweb
+     *
+     * @return ProfileSocietyUser
+     */
+    public function setSiteweb($siteweb)
+    {
+        $this->siteweb = $siteweb;
+
+        return $this;
+    }
+
+    /**
+     * Get siteweb
+     *
+     * @return string
+     */
+    public function getSiteweb()
+    {
+        return $this->siteweb;
+    }
+
+    /**
+     * Set linkedin
+     *
+     * @param string $linkedin
+     *
+     * @return ProfileSocietyUser
+     */
+    public function setLinkedin($linkedin)
+    {
+        $this->linkedin = $linkedin;
+
+        return $this;
+    }
+
+    /**
+     * Get linkedin
+     *
+     * @return string
+     */
+    public function getLinkedin()
+    {
+        return $this->linkedin;
+    }
+
+    /**
+     * Set facebook
+     *
+     * @param string $facebook
+     *
+     * @return ProfileSocietyUser
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook
+     *
+     * @return string
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
 }
-
-

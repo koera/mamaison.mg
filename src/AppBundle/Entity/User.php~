@@ -73,10 +73,14 @@ class User implements UserInterface
     private $activationToken;
 
     /**
+     * @ORM\Column(type="string", length=254, unique=true, nullable=true)
+     */
+    private $resetPasswordToken;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $activationTokenDelay;
-
 
     /**
      * User constructor.
