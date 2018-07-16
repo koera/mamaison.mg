@@ -14,13 +14,13 @@
                 <div class="form-group field-group">
                     <div class="input-user input-icon">
                         {#<input placeholder="Nom d’utilisateur">#}
-                        {{ form_widget(form.username, { 'attr': {'placeholder':'Pseudo (responsable)'} }) }}
+                        {{ form_widget(form.username, { 'attr': {'placeholder':'Nom d\'utilisateur (responsable)'} }) }}
                     </div>
                     <div class="input-email input-icon">
-                        {{ form_widget(form.societyName, { 'attr': {'placeholder':'Nom du societe'} }) }}
+                        {{ form_widget(form.societyName, { 'attr': {'placeholder':'Nom de l\'agence'} }) }}
                     </div>
                     <div class="input-email input-icon">
-                        {{ form_widget(form.email, { 'attr': {'placeholder':'email societe'} }) }}
+                        {{ form_widget(form.email, { 'attr': {'placeholder':'email professionnel'} }) }}
                     </div>
                     <div class="fa fa-key input-icon">
                         {{ form_widget(form.password.first, { 'attr': {'placeholder':'Mot de passe'} }) }}
