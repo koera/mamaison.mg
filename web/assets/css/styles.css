@@ -14843,6 +14843,11 @@ label.error {
   color: red !important;
   font-size: 13px !important;
 }
+.error-left{
+  text-align: left !important;
+  color: red !important;
+  font-size: 13px !important;
+}
 
 label.success {
   position: absolute;

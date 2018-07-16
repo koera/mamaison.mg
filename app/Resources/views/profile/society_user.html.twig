@@ -76,6 +76,36 @@
                                 </div>
                             {{ form_end(edit_form) }}
                         </div>
+                        <div class="row">
+                            {{ form_start(changePassword_form) }}
+                            <div class="error-left">
+                                {{ form_errors(changePassword_form.oldPassword) }}<br/>
+                                {{ form_errors(changePassword_form.password.first) }}<br/>
+                                {{ form_errors(changePassword_form.password.second) }}<br/>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="oldpass">Ancien mots de passe</label>
+                                        {{ form_widget(changePassword_form.oldPassword) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="newpass">Nouveau mots de passe</label>
+                                        {{ form_widget(changePassword_form.password.first) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="confirmpass">Confirm password</label>
+                                        {{ form_widget(changePassword_form.password.second) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Mettre à jour le mot de passe</button>
+                            {{ form_end(changePassword_form) }}
+                        </div>
                     </div>
                 </div>
             </div>
