@@ -201,6 +201,8 @@ class ProfileSocietyUserController extends Controller
 
             $em->flush();
 
+            $this->addFlash("success", "Annnonce ajouter avec success");
+
             return $this->redirectToRoute('compte.edit',array('societyName'=>$societyName));
         }
     }

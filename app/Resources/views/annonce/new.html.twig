@@ -504,6 +504,11 @@
                         <div class="page-title-left">
                             <h2>Ajouter propriete</h2>
                         </div>
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                         <div class="page-title-right">
                             <ol class="breadcrumb">
                                 <li><a href="/"><i class="fa fa-home"></i></a></li>
@@ -542,12 +547,14 @@
                                             <div class="form-group">
                                                 <label for="property-title">Titre</label>
                                                 {{ form_widget(form.titre) }}
+                                                {{ form_errors(form.titre) }}
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="description">Déscription</label>
                                                 {{ form_widget(form.description) }}
+                                                {{ form_errors(form.description) }}
                                             </div>
                                         </div>
                                     </div>
@@ -557,6 +564,7 @@
                                         <div class="col-sm-12">
                                             <label for="categories">Catégories</label>
                                             <div class="form-group">
+                                                {{ form_errors(form.category) }}
                                                 {% for child in form.category %}
                                                     <div class="col-md-4">
                                                         {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
@@ -572,18 +580,21 @@
                                             <div class="form-group">
                                                 <label for="caracteristiques generales">Type</label>
                                                 {{ form_widget(form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
+                                                {{ form_errors(form.typeAnnonce) }}
                                             </div>
                                         </div>
                                         <div class="col-sm-3 js-hide-terrain">
                                             <div class="form-group">
                                                 <label for="property-price-before">Nombre de pièces</label>
                                                 {{ form_widget(form.nombrePiece) }}
+                                                {{ form_errors(form.nombrePiece) }}
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="property-price">Prix</label>
                                                 {{ form_widget(form.prix) }}
+                                                {{ form_errors(form.prix) }}
                                             </div>
                                         </div>
 
@@ -591,12 +602,14 @@
                                             <div class="form-group">
                                                 <label for="property-price-before">Surface</label>
                                                 {{ form_widget(form.surface) }}
+                                                {{ form_errors(form.surface) }}
                                             </div>
                                         </div>
                                         <div class="col-sm-3 js-show-terrain">
                                             <div class="form-group">
                                                 <label for="property-price-before">Unite surface</label>
                                                 {{ form_widget(form.uniteSurface) }}
+                                                {{ form_errors(form.uniteSurface) }}
                                             </div>
                                         </div>
                                     </div>
@@ -607,7 +620,7 @@
                                         <div class="col-sm-12 js-caracteristiques">
                                             <label for="categories">Caracteristiques</label>
                                             <div class="form-group">
-                                                {#{{ form_widget(form.caracteristiques) }}#}
+                                                {{ form_errors(form.caracteristiques) }}
                                                 {% for child in form.caracteristiques %}
                                                     <div class="col-md-4">
                                                         {{ form_widget(child) }}
@@ -633,12 +646,14 @@
                                             <div class="form-group">
                                                 <label for="address">Adresse</label>
                                                 {{ form_widget(form.adresse) }}
+                                                {{ form_errors(form.adresse) }}
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="quartier">Quartier</label>
                                                 {{ form_widget(form.neighborhood) }}
+                                                {{ form_errors(form.neighborhood) }}
                                             </div>
                                         </div>
                                     </div>
@@ -647,12 +662,14 @@
                                             <div class="form-group">
                                                 <label for="address">Ville</label>
                                                 {{ form_widget(form.ville) }}
+                                                {{ form_errors(form.ville) }}
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="quartier">Region</label>
                                                 {{ form_widget(form.region) }}
+                                                {{ form_errors(form.region) }}
                                             </div>
                                         </div>
                                     </div>

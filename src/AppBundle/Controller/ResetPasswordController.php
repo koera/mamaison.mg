@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  * Class ResetPasswordController
  * @package AppBundle\Controller
  *
- * @Route("/reset")
+ * @Route("/reinitialiser")
  */
 class ResetPasswordController extends Controller
 {
@@ -42,7 +42,7 @@ class ResetPasswordController extends Controller
      * @param Request $request
      * @return Response
      *
-     * @Route("/send-email", name="reset.send-email")
+     * @Route("/envoie-email", name="reset.send-email")
      * @Method({"POST"})
      */
     public function requestAction(Request $request){
@@ -76,7 +76,7 @@ class ResetPasswordController extends Controller
     /**
      * @param Request $request
      * @return Response
-     * @Route("/reset-my-password/{token}", name="reset.change")
+     * @Route("/reinitialiser-mon-mot-de-passe/{token}", name="reset.change")
      * @Method({"GET","POST"})
      */
     public function changePasswordAction(Request $request,$token){

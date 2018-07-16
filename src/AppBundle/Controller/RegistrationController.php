@@ -73,7 +73,7 @@ class RegistrationController extends Controller{
 
 
     /**
-     * @Route("/society", name="registration_society_user")
+     * @Route("/agence-immobiliere", name="registration_society_user")
      */
     public function registerSocietyUserAction(Request $request){
         $user = new User();

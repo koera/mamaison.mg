@@ -15,15 +15,19 @@
                     <div class="input-user input-icon">
                         {#<input placeholder="Nom d’utilisateur">#}
                         {{ form_widget(form.username, { 'attr': {'placeholder':'pseudo'} }) }}
+                        {{ form_errors(form.username) }}
                     </div>
                     <div class="input-email input-icon">
                         {{ form_widget(form.societyName, { 'attr': {'placeholder':'Nom du societe', 'class' : 'hidden'} }) }}
+                        {{ form_errors(form.societyName) }}
                     </div>
                     <div class="input-email input-icon">
                         {{ form_widget(form.email, { 'attr': {'placeholder':'email'} }) }}
+                        {{ form_errors(form.email) }}
                     </div>
                     <div class="fa fa-key input-icon">
                         {{ form_widget(form.password.first, { 'attr': {'placeholder':'Mot de passe'} }) }}
+                        {{ form_errors(form.password) }}
                     </div>
                     <div class="fa fa-key input-icon">
                         {{ form_widget(form.password.second, { 'attr': {'placeholder':'Confirmer mot de passe'} }) }}
@@ -39,8 +43,8 @@
                 <button class="btn btn-primary btn-block" type="submit">S'inscrire</button>
             {{ form_end(form) }}
             <hr>
-            <a href="{{ path('registration_society_user') }}" class="btn btn-block btn-primary">
-                S'inscrire entant qu'agence
+            <a href="{{ path('registration_society_user') }}" class="btn btn-block" style="background: #303030 !important; color: white !important;">
+                S'inscrire en tant qu'agence immobillière
             </a>
             <a href="#" class="btn btn-social btn-bg-facebook btn-block"><i class="fa fa-facebook"></i>Se connecter avec
                 facebook</a>

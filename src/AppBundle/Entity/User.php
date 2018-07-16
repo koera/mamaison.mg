@@ -8,12 +8,16 @@ use Mamaison\AnnonceBundle\Entity\Annonce;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\ProfileSimpleUser;
 use AppBundle\Entity\ProfileSocietyUser;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @UniqueEntity(fields={"username","email"}, message="Cette valeur est deja utiliser")
  */
 class User implements UserInterface
 {

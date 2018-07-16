@@ -99,6 +99,9 @@ class AnnonceController extends Controller
 
             $em->flush();
 
+
+            $this->addFlash("success", "Annnonce ajouter avec success");
+
             return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId()));
         }
 
