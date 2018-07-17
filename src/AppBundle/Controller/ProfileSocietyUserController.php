@@ -24,10 +24,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\ProfileSocietyUser;
 
 /**
  * Class ProfileSocietyUserController
@@ -126,7 +128,7 @@ class ProfileSocietyUserController extends Controller
      * @param string $societyName
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function changePasswordAction(Form $changePassword_form,ChangePassword $changePasswordModel,string $societyName){
+    private function changePasswordAction(Form $changePassword_form,ChangePassword $changePasswordModel,$societyName){
         if ($changePassword_form->isSubmitted() && $changePassword_form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $user = $this->getUser();
@@ -147,7 +149,7 @@ class ProfileSocietyUserController extends Controller
      * @param string $societyName
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function addProprieteAction(Request $request, Form $formPropriete, Annonce $annonce, string $societyName){
+    private function addProprieteAction(Request $request, Form $formPropriete, Annonce $annonce,$societyName){
 
         if ($formPropriete->isSubmitted() && $formPropriete->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -207,7 +209,9 @@ class ProfileSocietyUserController extends Controller
         }
     }
 
-
+    /**
+     * @param Profile $profile
+     */
     private function removeOldFile(Profile $profile)
     {
         $file = $this->getFileFromFileName($profile);
@@ -215,6 +219,10 @@ class ProfileSocietyUserController extends Controller
             @unlink($file->getRealPath());
     }
 
+    /**
+     * @param Profile $profile
+     * @return File|null
+     */
     private function getFileFromFileName(Profile $profile)
     {
         $filename = $profile->getAvatar();
