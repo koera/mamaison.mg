@@ -50,17 +50,16 @@ class AnnonceController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            for ($i = 0; $i <= 5; $i++) {
-                if ($request->get('mamaison_annoncebundle_annonce-image-' . $i)) {
-                    // save Gallery
-                    if (!is_null($request->get('mamaison_annoncebundle_annonce-image-' . $i))) {
-                        $g = new Gallery();
-                        $g->setImage($request->get('mamaison_annoncebundle_annonce-image-' . $i));
-                        $em->persist($g);
-                        $annonce->addGallery($g);
-                    }
-                }
+            dump($form->get('gallery_0')->getData());
 
+            for ($i = 0; $i <= 5; $i++) {
+                // save Gallery
+                if (!is_null($form->get('gallery_'.$i)->getData())) {
+                    $g = new Gallery();
+                    $g->setImage($form->get('gallery_'.$i)->getData());
+                    $em->persist($g);
+                    $annonce->addGallery($g);
+                }
             }
 
             // quartier ville and region
