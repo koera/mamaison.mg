@@ -155,16 +155,13 @@ class ProfileSocietyUserController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             for ($i = 0; $i <= 5; $i++) {
-                if ($request->get('mamaison_annoncebundle_annonce-image-' . $i)) {
-                    // save Gallery
-                    if (!is_null($request->get('mamaison_annoncebundle_annonce-image-' . $i))) {
-                        $g = new Gallery();
-                        $g->setImage($request->get('mamaison_annoncebundle_annonce-image-' . $i));
-                        $em->persist($g);
-                        $annonce->addGallery($g);
-                    }
+                // save Gallery
+                if (!is_null($formPropriete->get('gallery_'.$i)->getData())) {
+                    $g = new Gallery();
+                    $g->setImage($formPropriete->get('gallery_'.$i)->getData());
+                    $em->persist($g);
+                    $annonce->addGallery($g);
                 }
-
             }
 
             // quartier ville and region

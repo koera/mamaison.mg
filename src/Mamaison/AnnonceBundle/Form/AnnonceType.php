@@ -6,6 +6,7 @@ use Mamaison\AnnonceBundle\Entity\Caracteristique;
 use Mamaison\AnnonceBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,7 +24,14 @@ class AnnonceType extends AbstractType
             ->add('prix')
             ->add('nombrePiece')
             ->add('surface')
-            ->add('uniteSurface')
+            ->add('uniteSurface',ChoiceType::class, array(
+                    'choices'  => array(
+                        'm2' => 'm2',
+                        'Ha' => 'Ha',
+                    ),
+                    'multiple' => false,
+                )
+            )
             ->add('adresse')
             ->add('category',EntityType::class, array(
                 'class' => Category::class,

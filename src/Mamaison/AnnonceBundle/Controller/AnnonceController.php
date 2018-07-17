@@ -50,8 +50,6 @@ class AnnonceController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            dump($form->get('gallery_0')->getData());
-
             for ($i = 0; $i <= 5; $i++) {
                 // save Gallery
                 if (!is_null($form->get('gallery_'.$i)->getData())) {
