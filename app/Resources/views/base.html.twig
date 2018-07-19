@@ -19,63 +19,130 @@
     <link href="{{ asset('assets/css/mediaqueries.css') }}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="modal fade" id="pop-login" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                    <ul class="contenaire-login" align="center">
+                        <a href="{{ path('login') }}" class="menumbil"><h5 style="color : #828282;">Se connecter</h5></a>
+                        <hr></hr>
+                        <a href="{{ path('registration_simple_user')}}" class="menumbil"><h5 style="color : #828282;", sans-serif;">S'enregistrer</h5></a>
+                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pop-reset-pass" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ul class="login-tabs">
+                    <li class="active">Reset Password</li>
+                </ul>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Please enter your username or email address. You will receive a link to create a new password via email.</p>
+                <form>
+                    <div class="form-group">
+                        <div class="input-user input-icon">
+                            <input placeholder="Enter your username or email" class="form-control">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block">Get new password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--start header section header v1-->
 <header id="header-section" class="header-section-4 nav-left hidden-sm hidden-xs" data-sticky="1">
     <div class="container">
         <div class="header-left">
             <div class="logo">
-                <a href="homepage.html">
-                    <img src="{{ asset('assets/images/mamaison2.png') }}" alt="logo">
+                <a href="index.html">
+                    <img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo">
                 </a>
             </div>
             <nav class="navi main-nav">
                 <ul>
-                    <li><a href="homepage.html">à Vendre</a>
+                    <li><a href="index.html">A VENDRE</a>
                         <ul class="sub-menu">
-                            <li><a href="home-splash.html">appartement</a></li>
-                            <li><a href="home-splash.html"> maison familiale</a></li>
-                            <li><a href="#">studio</a></li>
-                            <li><a href="#">villa</a>
-                            <li><a href="#">propriétés commerciales</a></li>
-                            <li><a href="#">terrains</a></li>
+                            <li><a href="#">a-vendre</a></li>
+                            <li><a href="#">a-vendre/terrain</a></li>
+                            <li><a href="#">a-vendre/propriete-commerciale</a></li>
+                            <li><a href="#">a-vendre/villa</a></li>
+                            <li><a href="#">a-vendre/Studio</a></li>
+                            <li><a href="#">a-vendre/maison-familiale</a></li>
+                            <li><a href="#">a-vendre/appartement</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">	A louer par mois</a>
+
+                    <li><a href="index.html">A LOUER PAR MOIS</a>
                         <ul class="sub-menu">
-                            <li><a href="home-splash.html">appartement</a></li>
-                            <li><a href="home-splash.html"> maison familiale</a></li>
-                            <li><a href="#">studio</a></li>
-                            <li><a href="#">villa</a>
-                            <li><a href="#">propriétés commerciales</a></li>
-                            <li><a href="#">terrains</a></li>
+                            <li><a href="#">a-louer-mois</a></li>
+                            <li><a href="#">a-louer-mois/terrain</a></li>
+                            <li><a href="#">a-louer-mois/propriete-commerciale</a></li>
+                            <li><a href="#">a-louer-mois/villa</a></li>
+                            <li><a href="#">a-louer-mois/Studio</a></li>
+                            <li><a href="#">a-louer-mois/maison-familiale</a></li>
+                            <li><a href="#">a-louer-mois/appartement</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">à louer par jour</a>
+
+                    <li><a href="index.html">A LOUER PAR JOUR</a>
                         <ul class="sub-menu">
-                            <li><a href="home-splash.html">appartement</a></li>
-                            <li><a href="home-splash.html"> maison familiale</a></li>
-                            <li><a href="#">studio</a></li>
-                            <li><a href="#">villa</a>
-                            <li><a href="#">propriétés commerciales</a></li>
-                            <li><a href="#">terrains</a></li>
+                            <li><a href="#">a-louer-jour</a></li>
+                            <li><a href="#">a-louer-jour/terrain</a></li>
+                            <li><a href="#">a-louer-jour/propriete-commerciale</a></li>
+                            <li><a href="#">a-louer-jour/villa</a></li>
+                            <li><a href="#">a-louer-jour/Studio</a></li>
+                            <li><a href="#">a-louer-jour/maison-familiale</a></li>
+                            <li><a href="#">a-louer-jour/appartement</a></li>
                         </ul>
                     </li>
+
                 </ul>
             </nav>
-
         </div>
         <div class="header-right">
+
             <div class="user">
                 {% if app.user %}
                     <a href="{{ path('logout') }}">Deconnecter </a>
                 {% else %}
                     <a href="{{ path('login') }}">Se connecter </a>
-                    <a href="{{ path('registration_simple_user') }}">Créer un compte</a>
+                    {#<a href="{{ path('registration_simple_user') }}">Créer un compte</a>#}
                 {% endif %}
                 <a href="add-new-property.html" class="btn btn-default btn-publish">Publier votre propriété</a>
             </div>
         </div>
     </div>
 </header>
+<div class="header-mobile visible-sm visible-xs">
+    <div class="container">
+        <!--start mobile nav-->
+        <div class="mobile-nav">
+            <span class="nav-trigger"><i class="fa fa-navicon"></i></span>
+            <div class="nav-dropdown main-nav-dropdown"></div>
+        </div>
+        <!--end mobile nav-->
+        <div class="header-logo">
+            <a href="#"><img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo" ></a>
+        </div>
+        <div class="header-user">
+            <div class="user">
+                {% if app.user %}
+                    <a href="{{ path('logout') }}"><i class="fa fa-sign-out"></i></a>
+                {% else %}
+                    <a href="#" data-toggle="modal" data-target="#pop-login"><i class="fa fa-user"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% block content %}
 
 
@@ -91,8 +158,8 @@
                             <h3 class="widget-title">À propos du site</h3>
                         </div>
                         <div class="widget-body">
-                            <p>Ma Maison</p>
-                            <p class="read"><a href="about-us.html">Lire la suite <i class="fa fa-caret-right"></i></a></p>
+                            <p></p>
+                            <p class="read"><a href="about-us.html" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En savoir plus <i class="fa fa-caret-right"></i></a></p>
                         </div>
                     </div>
                 </div>
@@ -102,12 +169,12 @@
                             <h3 class="widget-title">Nous contacter</h3>
                         </div>
                         <div class="widget-body">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-location-arrow"></i>Mahamasinba</li>
-                                <li><i class="fa fa-phone"></i>+231 032 54 953 67 </li>
-                                <li><i class="fa fa-envelope-o"></i> <a href="#">info@mamaison.mg</a></li>
+                            <ul class="list-unstyled" >
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-location-arrow"></i>Mahamasinba</li>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-phone"></i>+231 032 54 953 67 </li>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-envelope-o"></i> <a href="#">info@mamaison.mg</a></li>
                             </ul>
-                            <p class="read"><a href="contact-us.html">Nous contacter &nbsp;<i class="fa fa-caret-right"></i></a></p>
+                            <!--<p class="read"><a href="contact-us.html">Nous contacter &nbsp;<i class="fa fa-caret-right"></i></a></p>-->
                         </div>
                     </div>
                 </div>
@@ -129,7 +196,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <p>Ma Maison est un site immobilier.</p>
+                            <p></p>
 
                         </div>
                     </div>
@@ -142,15 +209,15 @@
             <div class="row">
                 <div class="col-md-3 col-sm-3">
                     <div class="footer-col">
-                        <p>Ma maison © Tous droits réservés</p>
+                        <p>MaMaison © Tous droits r&eacute;serv&eacute;s</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-5">
                     <div class="footer-col">
                         <div class="navi">
                             <ul id="footer-menu" class="">
-                                <li><a href="private.html">Vie Privée</a></li>
-                                <li><a href="tearm-condition.html">Termes et conditions</a></li>
+                                <li><a href="private.html">Vie Priv&eacute;e</a></li>
+                                <li><a href="tearm-condition.html">Termes & Conditions</a></li>
                                 <li><a href="Contact-us.html">Contact</a></li>
                             </ul>
                         </div>
