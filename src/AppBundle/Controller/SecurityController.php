@@ -52,13 +52,26 @@ class SecurityController extends Controller
         $helper = $fb->getRedirectLoginHelper();// to set redirection url
         $permissions = ['email'];// set required permissions to user details
 
-        $loginUrl = $helper->getLoginUrl($this->getParameter('fb_app_url_redirect'),$permissions);
+        $loginFbUrl = $helper->getLoginUrl($this->getParameter('fb_app_url_redirect'),$permissions);
+        /* end connect fb */
+
+        /* connect via google */
+        $client= new \Google_Client();
+        $client->setApplicationName($this->getParameter('google_app_name'));// to set app name
+        $client->setClientId($this->getParameter('google_app_client_id'));// to set app id or client id
+        $client->setClientSecret($this->getParameter('google_app_client_secret'));// to set app secret or client secret
+        $client->setRedirectUri($this->getParameter('google_app_url_redirect'));// to set redirect uri
+        $client->addScope('https://mail.google.com/');
+        $loginGoogleUrl= $client->createAuthUrl();// to get login url
+        /* end connect google */
+
 
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $lastUsername,
             'error'         => $error,
-            'fb_login_token'=> $loginUrl
+            'fb_login_token'=> $loginFbUrl,
+            'google_login_token' => $loginGoogleUrl
         ));
     }
 
@@ -170,7 +183,23 @@ class SecurityController extends Controller
         return $this->redirectToRoute('redirect-login');
     }
 
-
+    /**
+     * @param Request $request
+     * @Route("/login/google/check",name="google_check_login")
+     */
+    public function loginCheckGoogleAction(Request $request){
+        $client= new \Google_Client();
+        $client->setApplicationName($this->getParameter('google_app_name'));// to set app name
+        $client->setClientId($this->getParameter('google_app_client_id'));// to set app id or client id
+        $client->setClientSecret($this->getParameter('google_app_client_secret'));// to set app secret or client secret
+        $client->setRedirectUri($this->getParameter('google_app_url_redirect'));// to set redirect uri
+        $client->addScope('https://mail.google.com/');
+        $service = new \Google_Service_Oauth2($client);
+        $code=$client->authenticate($request->query->get('code'));// to get code
+        $client->setAccessToken($code);// to get access token by setting of $code
+        $userDetails=$service->userinfo->get();// to get user detail by using access token
+        var_dump($userDetails);die;
+    }
 
     /**
      * @return Response
