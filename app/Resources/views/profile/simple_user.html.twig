@@ -22,9 +22,9 @@
             <div class="col-md-3 col-sm-4 user-dashboard-left">
                 <div class="my-sidebar">
                     <ul class="list-unstyled my-menu">
-                        <li class="active"> <a href="my-account.html"> <i class="fa fa-user"></i> Mon profil </a></li>
+                        <li class="active"> <a href="#"> <i class="fa fa-user"></i> Mon profil </a></li>
                         <li> <a href="my-properties.html"> <i class="fa fa-building"></i> Mes propriétés </a></li>
-                        <li> <a href="add-new-property.html"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
+                        <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
                         <li> <a href="my-favorite-properties.html"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
                         <li> <a href="#"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
                     </ul>
@@ -35,11 +35,17 @@
                     {{ form_start(edit_form) }}
                         <div class="row">
                             <div class="col-md-4 col-sm-5">
-                                <h4>Bienvenue, {{ user.username }}!</h4>
+                                {% if profile.nom %}
+                                    <h4>Bienvenue, {{ profile.nom  }}!</h4>
+                                {% else %}
+                                    <h4>Bienvenue, {{ user.username }}!</h4>
+                                {% endif %}
                                 <div class="my-avatar">
                                     {% if profile.avatar %}
                                         <img src="{{ asset('uploads/avatars/'~profile.avatar) }}" alt="Avatar">
-                                    {% else %}
+                                    {% elseif profile.avatarUrlFb %}
+                                        <img src="{{ profile.avatarUrlFb }}" alt="Avatar">
+                                    {%  else %}
                                         <img src="http://placehold.it/50x50" alt="Avatar">
                                     {% endif %}
                                     <label class="btn btn-default btn-file">
@@ -101,18 +107,9 @@
                         </div>
                     {{ form_end(edit_form) }}
                 </div>
+                {% if not profile.isSigninWithFb %}
                 <div class="profile-area account-block white-block">
                     <h4>Changer votre mots de passe</h4>
-                    {#{% if not changePassword_form.vars.valid %}#}
-                        {#<ul>#}
-                            {#{% for child in changePassword_form.children %}#}
-                                {# Display the errors of the form item #}
-                                {#{% for error in child.vars.errors %}#}
-                                    {#<li>{{error.message}}</li>#}
-                                {#{% endfor %}#}
-                            {#{% endfor %}#}
-                        {#</ul>#}
-                    {#{% endif %}#}
                     {{ form_start(changePassword_form) }}
                         <div class="error">
                             <p class="error">{{ form_errors(changePassword_form.oldPassword) }}</p>
@@ -120,7 +117,6 @@
                             <p class="error">{{ form_errors(changePassword_form.password.second) }}</p>
 
                         </div>
-
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
@@ -144,6 +140,7 @@
                         <button type="submit" class="btn btn-primary">Mettre à jour le mot de passe</button>
                     {{ form_end(changePassword_form) }}
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

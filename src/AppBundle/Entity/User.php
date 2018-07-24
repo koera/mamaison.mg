@@ -46,7 +46,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $password;
 
@@ -72,7 +72,7 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string", length=254, unique=true, nullable=false)
+     * @ORM\Column(type="string", length=254, unique=true, nullable=true)
      */
     private $activationToken;
 
@@ -82,9 +82,15 @@ class User implements UserInterface
     private $resetPasswordToken;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $activationTokenDelay;
+
+    /**
+     * @ORM\Column(type="string", length=254, unique=true, nullable=true)
+     */
+    private $facebookId;
+    
 
     /**
      * User constructor.
@@ -431,5 +437,29 @@ class User implements UserInterface
     public function getResetPasswordToken()
     {
         return $this->resetPasswordToken;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId
+     *
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
     }
 }
