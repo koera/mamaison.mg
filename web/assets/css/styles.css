@@ -260,8 +260,8 @@ fieldset[disabled] .btn-default.active {
 
 .btn-primary {
   color: #fff;
-  background-color:#d70506 ! important;
-  border-color: #d70506 ! important;
+  background-color: #d70506;
+  border-color: #d70506;
 }
 
 .btn-primary:focus,
@@ -811,7 +811,7 @@ strong, b {
   line-height: 36px;
   margin: 0;
   font-weight: 500;
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
   text-align: inherit;
   /* mini phones and down */
   /* mini phones and down */
@@ -1028,7 +1028,7 @@ h4 {
   line-height: 14px;
   margin: 0;
   font-weight: 700;
-  /*text-transform: capitalize;*/
+  text-transform: capitalize;
   text-align: inherit;
 }
 .navi ul ul li {
@@ -2991,7 +2991,7 @@ h4 {
   line-height: 55px;
 }
 .header-mobile .header-logo img {
-  max-height: 45px;
+  max-height: 20px;
 }
 .header-mobile .header-user {
   text-align: right;
@@ -4013,6 +4013,7 @@ h4 {
   line-height: 60px;
   text-decoration: none;
   color: #fff;
+  font-size : 12px;
   /* mini phones and down */
   /* mini phones and down */
 }
@@ -5831,10 +5832,20 @@ img {
   width: 100%;
   padding: 9px 0;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  background-color: #f6f6f6 !important;
+  /* mini phones and down */
+  /* mini phones and down */
+}
+
+.advance-search-header1 {
+  width: 100%;
+  padding: 9px 0;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
   background-color: #004274 !important;
   /* mini phones and down */
   /* mini phones and down */
 }
+
 .advance-search-header div[class^="col-"] {
   padding-left: 5px;
   padding-right: 5px;
@@ -6157,7 +6168,7 @@ img {
   margin-bottom: 10px;
 }
 .advanced-search-mobile .advance-fields .btn, .advanced-search-mobile .advance-fields .fave-load-more a, .fave-load-more .advanced-search-mobile .advance-fields a, .advanced-search-mobile .advance-fields .post-password-form input[type='submit'], .post-password-form .advanced-search-mobile .advance-fields input[type='submit'] {
-  height: 50px;
+  height: 30px;
 }
 .advanced-search-mobile .advance-fields .btn-number {
   background-color: #f1f1f1;
@@ -6173,7 +6184,7 @@ img {
   background-color: #eee;
 }
 .advanced-search-mobile .advance-fields .form-control, .advanced-search-mobile .advance-fields .post-password-form input[type='password'], .post-password-form .advanced-search-mobile .advance-fields input[type='password'] {
-  height: 50px;
+  height: 30px;
 }
 .advanced-search-mobile .advance-fields .row {
   margin-left: -5px;
@@ -6199,15 +6210,15 @@ img {
   padding: 7px 15px;
 }
 .advanced-search-mobile .range-wrap {
-  border: 1px solid #cccccc;
-  background-color: #f1f1f1 !important;
+  /*border: 1px solid #cccccc;
+  background-color: #f1f1f1 !important;*/
   border-radius: 3px;
-  padding-right: 40px;
+  padding-right: 0px;
   padding-left: 8px;
 }
 .advanced-search-mobile .ui-slider .ui-slider-handle {
-  width: 50px;
-  height: 50px;
+  width: 16px;
+  height: 16px;
   top: -1px;
 }
 .advanced-search-mobile .ui-slider .ui-slider-handle:before {
@@ -6215,7 +6226,7 @@ img {
   height: 14px;
 }
 .advanced-search-mobile .ui-slider-horizontal {
-  height: 48px;
+  height: 7px;
   background-color: transparent !important;
   border: none !important;
 }
@@ -8346,7 +8357,7 @@ div[class*="col-"] > .item-wrap {
 .location-module {
   margin-bottom: -30px;
 }
-.location-module div[class*="col-"] {
+/*.location-module div[class*="col-"] {
   margin-bottom: 30px;
 }
 
@@ -8419,6 +8430,7 @@ div[class*="col-"] > .item-wrap {
 @media (min-width: 992px) and (max-width: 1199px) {
   .location-block {
     height: 306px;
+    width: 360px;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -8498,7 +8510,7 @@ div[class*="col-"] > .item-wrap {
   content: '';
   width: 100%;
   height: 100%;
-  background: #000;
+  /*background: #000;*/
   opacity: 0.3;
   filter: alpha(opacity=30);
 }
@@ -11119,7 +11131,6 @@ body.transparent-yes .banner-caption {
 
 .popover {
   font-family: "Roboto", sans-serif;
-  font-style : bold;
 }
 
 .table-popover {
@@ -14986,7 +14997,7 @@ a img.aligncenter {
 }
 
 .splash-foot-right, .footer-bottom .foot-social {
-  text-align: right;
+  text-align: center;
   color: #fff;
 }
 .splash-foot-right p, .footer-bottom .foot-social p {
@@ -15067,14 +15078,27 @@ a img.aligncenter {
   padding: 30px 0;
   /* mini phones and down */
 }
+
+.footerR {
+  width: 100%;
+  height : 39px;
+  background-color: black;
+  border-top: 1px solid #00243f;
+  padding-top: 8px;
+  font-size : 12px;
+  font-weight : 300;
+  color : white;
+  /* mini phones and down */
+}
+
 @media (max-width: 767px) {
   .footer-bottom {
     padding: 15px 0;
   }
 }
-.footer-bottom div[class*="col-"] {
-  /* mini phones and down */
-}
+/* .footer-bottom div[class*="col-"] {
+  /* mini phones and down 
+}*/
 @media (max-width: 767px) {
   .footer-bottom div[class*="col-"] {
     text-align: center;
@@ -15437,27 +15461,7 @@ label.success {
   margin-bottom: 15px;
 }
 
-.tabstyle
-{
-  margin-top:50px;
-  margin-bottom:50px;
-  margin-right:10px;
-  margin-left:10px;
-}
 
-/* login end */
-
-/* footer start */
-
-#faclasse
-{
-  color:white;
-  font-size: 1al6px;
-}
-.form-check
-{
-
-}
 /*updated by koera*/
 
 .icon-profile-detail{
@@ -15488,3 +15492,18 @@ label.success {
   background-color: #3e3e3e;
 }
 
+/*reorganisation*/
+
+.grid-content1{
+	display : block;
+  padding : 10px;
+}
+
+.grid-content2{
+	display : block;
+  padding : 10px;
+}
+
+.grid-item{
+	text-align : center;
+}
