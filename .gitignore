@@ -16,3 +16,8 @@
 /vendor/
 /web/bundles/
 .idea
+.idea/*
+/web/uploads/*
+/web/uploads/avatars/*
+/certs
+/certs/*

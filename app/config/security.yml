@@ -25,7 +25,7 @@ security:
                 login_path: login
                 check_path: loginCheck
                 always_use_default_target_path: true
-                default_target_path: /mon-compte
+                default_target_path: /redirect-login
                 use_referer: true
             logout: true
             anonymous: true
@@ -40,5 +40,5 @@ security:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/mon-compte/$, role: ROLE_USER }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }

@@ -18,22 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class AnnonceController extends Controller
 {
-    /**
-     * Lists all annonce entities.
-     *
-     * @Route("/", name="annonce_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $annonces = $em->getRepository('MamaisonAnnonceBundle:Annonce')->findAll();
-
-        return $this->render('annonce/index.html.twig', array(
-            'annonces' => $annonces,
-        ));
-    }
 
     /**
      * Creates a new annonce entity.
@@ -51,16 +35,13 @@ class AnnonceController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             for ($i = 0; $i <= 5; $i++) {
-                if ($request->get('mamaison_annoncebundle_annonce-image-' . $i)) {
-                    // save Gallery
-                    if (!is_null($request->get('mamaison_annoncebundle_annonce-image-' . $i))) {
-                        $g = new Gallery();
-                        $g->setImage($request->get('mamaison_annoncebundle_annonce-image-' . $i));
-                        $em->persist($g);
-                        $annonce->addGallery($g);
-                    }
+                // save Gallery
+                if (!is_null($form->get('gallery_'.$i)->getData())) {
+                    $g = new Gallery();
+                    $g->setImage($form->get('gallery_'.$i)->getData());
+                    $em->persist($g);
+                    $annonce->addGallery($g);
                 }
-
             }
 
             // quartier ville and region
@@ -99,6 +80,9 @@ class AnnonceController extends Controller
 
             $em->flush();
 
+
+            $this->addFlash("success", "Annnonce ajouter avec success");
+
             return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId()));
         }
 
@@ -122,51 +106,6 @@ class AnnonceController extends Controller
             'annonce' => $annonce,
             'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Displays a form to edit an existing annonce entity.
-     *
-     * @Route("/{id}/edit", name="annonce_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Annonce $annonce)
-    {
-        $deleteForm = $this->createDeleteForm($annonce);
-        $editForm = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('annonce_edit', array('id' => $annonce->getId()));
-        }
-
-        return $this->render('annonce/edit.html.twig', array(
-            'annonce' => $annonce,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a annonce entity.
-     *
-     * @Route("/{id}", name="annonce_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Annonce $annonce)
-    {
-        $form = $this->createDeleteForm($annonce);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($annonce);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('annonce_index');
     }
 
     /**

@@ -1859,10 +1859,31 @@ $(document).ready(function() {
 
     });
 
+    // hide category optioins is terrain is checked
+
+    if($('#mamaison_annoncebundle_annonce_category_6').is(':checked')){
+        $('.js-caracteristiques').hide();
+        $('.js-show-terrain').show();
+        $('.js-hide-terrain').hide();
+    }
+
+
     // upload image
 
 
+    // preview image if hidden field value is not null
+
+
     var nbrImage = 0;
+
+
+    for(var j=0;j<=5;j++){
+        if($('#mamaison_annoncebundle_annonce_gallery_'+j).val() !== ''){
+            $('#image-'+j).attr('src', $('#mamaison_annoncebundle_annonce_gallery_'+j).val());
+            nbrImage++;
+        }
+    }
+
 
     function readURL(input) {
         if(nbrImage == 6){
@@ -1876,7 +1897,7 @@ $(document).ready(function() {
                 if((nbrImage-1) == 5 ){
                     $('#upload-file-button').attr('disabled','disabled');
                 }
-                $('#hidden-image-'+(nbrImage-1)).val(bin);
+                $('#mamaison_annoncebundle_annonce_gallery_'+(nbrImage-1)).val(bin);
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -1884,6 +1905,7 @@ $(document).ready(function() {
         }
         nbrImage = nbrImage +1;
     }
+
 
     $("#upload-file-button").change(function() {
         readURL(this);
@@ -1932,7 +1954,7 @@ $(document).ready(function() {
                             $('#upload-file-button').attr('disabled','disabled');
                         }
 
-                        $('#hidden-image-'+(nbrImage-1)).val(bin);
+                        $('#mamaison_annoncebundle_annonce_gallery_'+(nbrImage-1)).val(bin);
 
                     }.bindToEventHandler(file));
                     nbrImage++;

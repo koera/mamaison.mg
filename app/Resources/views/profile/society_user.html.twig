@@ -1,6 +1,6 @@
 {#{{ form(edit_form) }}#}
 
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
 {% block content %}
 
@@ -12,6 +12,11 @@
                     <div class="page-title-left">
                         <h2>Profil entreprise</h2>
                     </div>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                     <div class="page-title-right">
                         <ol class="breadcrumb"><li><a href="/"><i class="fa fa-home"></i></a></li><li class="active">Profil</li></ol>
                     </div>
@@ -20,66 +25,99 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                {{ form_start(edit_form) }}
-                <div class="profile-detail-block company-detail">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                            <div class="profile-image">
-                                <img src="http://placehold.it/230x165" alt="Agent" width="230" height="165" class="">
-                                {{ form_widget(edit_form.avatarFile) }}
+                {#{{ form(edit_form) }}#}
+                <div class="col-sm-12">
+                    <div class="profile-detail-block company-detail">
+                        <div class="row">
+                            {{ form_start(edit_form) }}
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="profile-image">
+                                        {% if profile.avatar %}
+                                            <img src="{{ asset('uploads/avatars/'~profile.avatar) }}" alt="Avatar">
+                                        {% else %}
+                                            <img src="http://placehold.it/50x50" alt="Avatar">
+                                        {% endif %}
+                                        {{ form_widget(edit_form.avatarFile) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                    <div class="profile-description">
+                                        <h3>{{ user.societyName }}</h3>
+                                        <ul class="profile-contact">
+                                            <li><span>Nom du responsable:</span> <a href="#">{{ user.username }}</a></li>
+                                            <li><span>E-mail:</span> <a href="#">{{ user.email }}</a></li>
+                                            <li><span>TELEPHONE:</span> <a href="#">{{ profile.telephone }}</a></li>
+                                            <li><span>ADRESSE:</span> <a href="#">{{ profile.adresse }}</a></li>
+                                        </ul>
+
+                                        <ul class="profile-rating">
+                                            <li><span>Propriétés répertoriées:</span> 32</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-small">
+                                            <div class="form-group">
+                                                {#<input type="text" placeholder="Nom de l'entreprise" class="form-control">#}
+                                                {{ form_widget(edit_form.nom,{'attr':{'placeholder':'Nom de l\'entreprise'} }) }}
+                                                {{ form_errors(edit_form.nom) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(edit_form.adresse,{'attr':{'placeholder':'Adresse de l\'entreprise'} }) }}
+                                                {{ form_errors(edit_form.adresse) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(edit_form.telephone,{'attr':{'placeholder':'Telephone de l\'entreprise'} }) }}
+                                                {{ form_errors(edit_form.telephone) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(edit_form.siteweb,{'attr':{'placeholder':'Siteweb de l\'entreprise'} }) }}
+                                                {{ form_errors(edit_form.siteweb) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {#<textarea placeholder="Message de l'entreprise" rows="3" class="form-control"></textarea>#}
+                                                {{ form_widget(edit_form.bio,{'attr':{'placeholder':'Presentation de l\'entreprise'} }) }}
+                                                {{ form_errors(edit_form.bio) }}
+                                            </div>
+                                            <!--mon radio -->
+                                                {{ form_widget(edit_form.type) }}
+                                            <button class="btn btn-secondary btn-block">Enregistrer</button>
+                                    </div>
+                                </div>
+                            {{ form_end(edit_form) }}
+                        </div>
+                        <div class="row">
+                            {{ form_start(changePassword_form) }}
+                            <div class="error-left">
+                                {{ form_errors(changePassword_form.oldPassword) }}<br/>
+                                {{ form_errors(changePassword_form.password.first) }}<br/>
+                                {{ form_errors(changePassword_form.password.second) }}<br/>
                             </div>
-                        </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div class="profile-description">
-                                <h1>{{ user.societyName }}</h1>
-                                <ul class="profile-contact">
-                                    <li><span><i class="fa fa-user fa-2x icon-profile-detail"></i> </span> <div class="profil-text">{{ user.username }}</div></li>
-
-                                    <li><span><i class="fa fa-envelope fa-2x icon-profile-detail"></i></span> <div class="profil-text"><a href="mailto:{{ user.email }}">{{ user.email }}</a></div></li>
-
-                                    <li><span><i class="fa fa-phone fa-2x icon-profile-detail"></i></span><div class="profil-text"><a href="#">{{ profile.telephone }}</a></div></li>
-
-                                    <li><span><i class="fa fa-globe fa-2x icon-profile-detail"></i></span><div class="profil-text"><a href="#">{{ profile.siteweb }}</a></div></li>
-                                </ul>
-                                {#<ul class="profile-social">#}
-                                    {#<li><a href="{{ profile.facebook }}" class="btn-facebook"><i class="fa fa-facebook-square"></i></a></li>#}
-                                    {#<li><a href="{{ profile.linkedin }}" class="btn-linkedin"><i class="fa fa-linkedin-square"></i></a></li>#}
-                                {#</ul>#}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="oldpass">Ancien mots de passe</label>
+                                        {{ form_widget(changePassword_form.oldPassword) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="newpass">Nouveau mots de passe</label>
+                                        {{ form_widget(changePassword_form.password.first) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="confirmpass">Confirm password</label>
+                                        {{ form_widget(changePassword_form.password.second) }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div class="form-small">
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.nom) }}
-                                        {{ form_widget(edit_form.nom) }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.nomResponsable) }}
-                                        {{ form_widget(edit_form.nomResponsable) }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.telephone) }}
-                                        {{ form_widget(edit_form.telephone) }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form_label(edit_form.adresse) }}
-                                        {{ form_widget(edit_form.adresse) }}
-                                    </div>
-                            </div>
-                            <button type="submit" class="btn btn-secondary btn-block">ENREGISTRER</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            {{ form_label(edit_form.bio) }}
-                            {{ form_widget(edit_form.bio) }}
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-
+                            <button type="submit" class="btn btn-primary">Mettre à jour le mot de passe</button>
+                            {{ form_end(changePassword_form) }}
                         </div>
                     </div>
                 </div>
-                {{ form_end(edit_form) }}
             </div>
         </div>
         <div class="row">
@@ -89,9 +127,7 @@
                         <ul class="profile-tabs">
                             <li class="active">APERÇU</li>
                             <li>PROPRIÉTÉS</li>
-                            <li>AGENTS</li>
-                            <li id="mapTab">MAP</li>
-                            <li>AVIS</li>
+                            <li>ADD PROPRIETES</li>
                         </ul>
                         <div class="tab-content">
                             <div class="profile-tab-pane tab-pane fade active in">
@@ -105,7 +141,9 @@
                                 <div class="profile-tab-content profile-properties">
                                     <!--start property items-->
                                     <div class="property-listing grid-view">
+
                                         <div class="row">
+                                            {% for annonce in user.annonces %}
                                             <div class="item-wrap">
                                                 <div class="property-item table-list">
                                                     <div class="table-cell">
@@ -113,11 +151,13 @@
                                                             <figure class="item-thumb">
                                                                 <span class="label-featured label label-success">En vedette</span>
                                                                 <div class="price hide-on-list">
-                                                                    <h3> AR 350,000</h3>
-                                                                    <p class="rant"> AR 21,000/mo</p>
+                                                                    <h3> AR {{ annonce.prix }}</h3>
+                                                                    {#<p class="rant"> AR 21,000/mo</p>#}
                                                                 </div>
                                                                 <a href="#">
-                                                                    <img src="http://placehold.it/364x244" alt="thumb">
+                                                                    {% if annonce.galleries %}
+                                                                        <img src="{{ annonce.galleries|last }}" alt="thumb">
+                                                                    {% endif %}
                                                                 </a>
                                                                 <figcaption class="thumb-caption cap-actions clearfix">
                                                                     <ul class="list-unstyled actions pull-right">
@@ -209,212 +249,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="item-wrap">
-                                                <div class="property-item table-list">
-                                                    <div class="table-cell">
-                                                        <div class="figure-block">
-                                                            <figure class="item-thumb">
-                                                                <span class="label-featured label label-success">En vedette</span>
-                                                                <div class="price hide-on-list">
-                                                                    <h3>AR 350,000</h3>
-                                                                    <p class="rant"> AR 21,000/mo</p>
-                                                                </div>
-                                                                <a href="#">
-                                                                    <img src="http://placehold.it/364x244" alt="thumb">
-                                                                </a>
-                                                                <figcaption class="thumb-caption cap-actions clearfix">
-                                                                    <ul class="list-unstyled actions pull-right">
-                                                                        <li>
-                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Favorite">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </span>
-                                                                        </li>
-                                                                        <li class="share-btn">
-                                                                            <div class="share_tooltip fade">
-                                                                                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                                                <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                                                <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
-                                                                            </div>
-                                                                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="share"><i class="fa fa-share-alt"></i></span>
-                                                                        </li>
-                                                                        <li>
-                                                                <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Photos (12)">
-                                                                    <i class="fa fa-camera"></i> <!--<span class="count">(12)</span>-->
-                                                                </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-body table-cell">
-
-                                                        <div class="body-left table-cell">
-                                                            <div class="info-row">
-                                                                <div class="rating">
-                                                        <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 93.4%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span>
-                                                        </span>
-                                                                    <span class="star-text-right">15 Votes</span>
-                                                                </div>
-                                                                <h2 class="property-title"><a href="#">Appartement</a></h2>
-                                                                <h4 class="property-location">Mahamasina</h4>
-                                                            </div>
-                                                            <div class="info-row amenities hide-on-grid">
-                                                                <p>
-                                                                    <span>Lits: 3</span>
-                                                                    <span>Chambres: 2</span>
-                                                                    <span>m²: 1,965</span>
-                                                                </p>
-                                                                <p>Maison unifamiliale</p>
-                                                            </div>
-                                                            <div class="info-row date hide-on-grid">
-                                                                <p><i class="fa fa-user"></i> <a href="#">Elite Ocean View Realty LLC</a></p>
-                                                                <p><i class="fa fa-calendar"></i> Il y a 12 jours</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="body-right table-cell hidden-gird-cell">
-                                                            <div class="info-row price">
-                                                                <h3>$350,000</h3>
-                                                                <p class="rant">$21,000/mo</p>
-                                                            </div>
-                                                            <div class="info-row phone text-right">
-                                                                <a href="#" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
-                                                                <p><a href="#">+261 34 10 859 10</a></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="table-list full-width hide-on-list">
-                                                            <div class="cell">
-                                                                <div class="info-row amenities">
-                                                                    <p>
-                                                                        <span>Lits: 3</span>
-                                                                        <span>Chambres: 2</span>
-                                                                        <span>m²: 1,965</span>
-                                                                    </p>
-                                                                    <p>Maison unifamiliale</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cell">
-                                                                <div class="phone">
-                                                                    <a href="#" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
-                                                                    <p><a href="#">+261 34 10 859 10</a></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-foot date hide-on-list">
-                                                    <div class="item-foot-left">
-                                                        <p><i class="fa fa-user"></i> <a href="#">Elite Ocean View Realty LLC</a></p>
-                                                    </div>
-                                                    <div class="item-foot-right">
-                                                        <p><i class="fa fa-calendar"></i>Il y a 12 jours</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-wrap">
-                                                <div class="property-item table-list">
-                                                    <div class="table-cell">
-                                                        <div class="figure-block">
-                                                            <figure class="item-thumb">
-                                                                <span class="label-featured label label-success">En vedette</span>
-                                                                <div class="price hide-on-list">
-                                                                    <h3> AR 350,000</h3>
-                                                                    <p class="rant"> AR 21,000/m²</p>
-                                                                </div>
-                                                                <a href="#">
-                                                                    <img src="http://placehold.it/364x244" alt="thumb">
-                                                                </a>
-                                                                <figcaption class="thumb-caption cap-actions clearfix">
-                                                                    <ul class="list-unstyled actions pull-right">
-                                                                        <li>
-                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Favorite">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </span>
-                                                                        </li>
-                                                                        <li class="share-btn">
-                                                                            <div class="share_tooltip fade">
-                                                                                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                                                <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                                                <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
-                                                                                <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
-                                                                            </div>
-                                                                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="share"><i class="fa fa-share-alt"></i></span>
-                                                                        </li>
-                                                                        <li>
-                                                                <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Photos (12)">
-                                                                    <i class="fa fa-camera"></i> <!--<span class="count">(12)</span>-->
-                                                                </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-body table-cell">
-
-                                                        <div class="body-left table-cell">
-                                                            <div class="info-row">
-                                                                <div class="rating">
-                                                        <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 93.4%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span>
-                                                        </span>
-                                                                    <span class="star-text-right">15 votes</span>
-                                                                </div>
-                                                                <h2 class="property-title"><a href="#">Appartement</a></h2>
-                                                                <h4 class="property-location">7601 East Treasure Dr. Miami Beach, FL 33141</h4>
-                                                            </div>
-                                                            <div class="info-row amenities hide-on-grid">
-                                                                <p>
-                                                                    <span>Lits: 3</span>
-                                                                    <span>Chambres: 2</span>
-                                                                    <span>m²: 1,965</span>
-                                                                </p>
-                                                                <p>Maison unifamiliale</p>
-                                                            </div>
-                                                            <div class="info-row date hide-on-grid">
-                                                                <p><i class="fa fa-user"></i> <a href="#">Elite Ocean View Realty LLC</a></p>
-                                                                <p><i class="fa fa-calendar"></i>Il y a 12 jours </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="body-right table-cell hidden-gird-cell">
-                                                            <div class="info-row price">
-                                                                <h3> AR 350,000</h3>
-                                                                <p class="rant"> AR 21,000/m²</p>
-                                                            </div>
-                                                            <div class="info-row phone text-right">
-                                                                <a href="#" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
-                                                                <p><a href="#">+261 32 658 95</a></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="table-list full-width hide-on-list">
-                                                            <div class="cell">
-                                                                <div class="info-row amenities">
-                                                                    <p>
-                                                                        <span>Lits: 3</span>
-                                                                        <span>Chambres: 2</span>
-                                                                        <span>m²: 1,965</span>
-                                                                    </p>
-                                                                    <p>Maison unifamiliale</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cell">
-                                                                <div class="phone">
-                                                                    <a href="#" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
-                                                                    <p><a href="#">+1 (786) 225-0199</a></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-foot date hide-on-list">
-                                                    <div class="item-foot-left">
-                                                        <p><i class="fa fa-user"></i> <a href="#">Elite Ocean View Realty LLC</a></p>
-                                                    </div>
-                                                    <div class="item-foot-right">
-                                                        <p><i class="fa fa-calendar"></i>Il y a 12 jours</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <!--end property items-->
@@ -422,210 +257,227 @@
                             </div>
                             <div class="profile-tab-pane tab-pane fade">
                                 <div class="profile-tab-content profile-agents">
-                                    <div class="agent-listing">
-                                        <div class="profile-detail-block">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <figure>
-                                                        <img src="http://placehold.it/239x239" alt="agent-1" height="350" width="350">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="profile-description">
-                                                        <div class="profile-description-top">
-                                                            <h3>Michelle Ramirez</h3>
-                                                            <h4 class="position">
-                                                                Company Agent at Realtory Inc.                                </h4>
+                                    <form name="mamaison_annoncebundle_annonce" method="post" enctype="multipart/form-data">
+                                        <div class="account-block">
+                                            <div class="add-title-tab">
+                                                <h3>Description de la propriété et prix</h3>
+                                                <div class="add-expand"></div>
+                                            </div>
+                                            <div class="add-tab-content" style="display: block;">
+                                                <div class="add-tab-row push-padding-bottom">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="property-title">Titre</label>
+                                                                {{ form_widget(propriete_form.titre) }}
+                                                                {{ form_errors(propriete_form.titre) }}
+                                                            </div>
                                                         </div>
-                                                        <div class="profile-description-left">
-                                                            <p>Lorem ipsum dolor sit amet consectetur incididunt ut labore et ipsum dolor sit amet consectetur incididunt ut labore et dolore magna aliqua adipi ipsum dolor sit amet conse ctetur incidit ut labore et dolore magna aliqua incididu nt ut labore ncididunt ut labore et dolore magna aliqua adipi ipsum dncididunt ut labore et dolore magna aliqua adipi ipsum.</p>
-                                                            <a href="#" class="btn btn-primary hidden-sm hidden-xs">View My Properties</a>
-                                                        </div>
-                                                        <div class="profile-description-right">
-                                                            <ul class="profile-contact">
-                                                                <li><span>OFFICE:</span> <a href="tel:7894563210">789 456 3210</a></li>
-                                                                <li><span>MOBILE:</span> <a href="tel:3214569874">321 456 9874</a></li>
-                                                                <li><span>FAX:</span> <a>897 654 1258</a></li>
-                                                                <li class="email"><span>Email:</span> <a href="mailto:michelle@houzez.com">michelle@houzez.com</a></li>
-                                                            </ul>
-                                                            <ul class="profile-social">
-                                                                <li><a href="#"><i class="fa fa-phone-square"></i></a></li>
-                                                                <li><a class="btn-facebook" href="#" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
-                                                                <li><a class="btn-twitter" href="#" target="_blank"><i class="fa fa-twitter-square"></i></a></li>
-                                                                <li><a class="btn-linkedin" href="#" target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                                                                <li><a class="btn-google-plus" href="#" target="_blank"><i class="fa fa-google-plus-square"></i></a></li>
-                                                                <li><a class="btn-youtube" href="#" target="_blank"><i class="fa fa-youtube-square"></i></a></li>
-                                                            </ul>
-                                                            <a href="#" class="btn btn-primary btn-block visible-sm visible-xs">View My Properties</a>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="description">Déscription</label>
+                                                                {{ form_widget(propriete_form.description) }}
+                                                                {{ form_errors(propriete_form.description) }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="profile-detail-block">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <figure>
-                                                        <img src="http://placehold.it/239x239" alt="agent-1" height="350" width="350">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="profile-description">
-                                                        <div class="profile-description-top">
-                                                            <h3>Tsanta</h3>
-                                                            <h4 class="position">
-                                                                Agent de la société chez Realtory Inc.                                </h4>
+                                                <div class="add-tab-row push-padding-bottom">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label for="categories">Catégories</label>
+                                                            <div class="form-group">
+                                                                {{ form_errors(propriete_form.category) }}
+                                                                {% for child in propriete_form.category %}
+                                                                    <div class="col-md-4">
+                                                                        {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
+                                                                        {{ form_label(child) }}
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
                                                         </div>
-                                                        <div class="profile-description-left">
-                                                            <p>Lorem ipsum dolor sit amet consectetur incididunt ut labore et ipsum dolor sit amet consectetur incididunt ut labore et dolore magna aliqua adipi ipsum dolor sit amet conse ctetur incidit ut labore et dolore magna aliqua incididu nt ut labore ncididunt ut labore et dolore magna aliqua adipi ipsum dncididunt ut labore et dolore magna aliqua adipi ipsum.</p>
-                                                            <a href="#" class="btn btn-primary hidden-sm hidden-xs">View My Properties</a>
-                                                        </div>
-                                                        <div class="profile-description-right">
-                                                            <ul class="profile-contact">
-                                                                <li><span>BUREAU:</span> <a href="tel:7894563210">+261 32 65 987 52</a></li>
-                                                                <li><span>TELEPHONE:</span> <a href="tel:3214569874">+261 32 65 987 52</a></li>
-                                                                <li><span>FAX:</span> <a>+261 32 65 987 52</a></li>
-                                                                <li class="email"><span>E-mail:</span> <a href="mailto:michelle@houzez.com">test@gmail.com</a></li>
-                                                            </ul>
-                                                            <ul class="profile-social">
-                                                                <li><a href="#"><i class="fa fa-phone-square"></i></a></li>
-                                                                <li><a class="btn-facebook" href="#" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
-                                                                <li><a class="btn-twitter" href="#" target="_blank"><i class="fa fa-twitter-square"></i></a></li>
-                                                                <li><a class="btn-linkedin" href="#" target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                                                                <li><a class="btn-google-plus" href="#" target="_blank"><i class="fa fa-google-plus-square"></i></a></li>
-                                                                <li><a class="btn-youtube" href="#" target="_blank"><i class="fa fa-youtube-square"></i></a></li>
-                                                            </ul>
-                                                            <a href="#" class="btn btn-primary btn-block visible-sm visible-xs">Voir mes propriétés</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="profile-detail-block">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <figure>
-                                                        <img src="http://placehold.it/239x239" alt="agent-1" height="350" width="350">
-                                                    </figure>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="profile-description">
-                                                        <div class="profile-description-top">
-                                                            <h3>Tsanta</h3>
-                                                            <h4 class="position">
-                                                                Agent de la société chez Realtory Inc.                                </h4>
-                                                        </div>
-                                                        <div class="profile-description-left">
-                                                            <p>Lorem ipsum dolor sit amet consectetur incididunt ut labore et ipsum dolor sit amet consectetur incididunt ut labore et dolore magna aliqua adipi ipsum dolor sit amet conse ctetur incidit ut labore et dolore magna aliqua incididu nt ut labore ncididunt ut labore et dolore magna aliqua adipi ipsum dncididunt ut labore et dolore magna aliqua adipi ipsum.</p>
-                                                            <a href="#" class="btn btn-primary hidden-sm hidden-xs">View My Properties</a>
-                                                        </div>
-                                                        <div class="profile-description-right">
-                                                            <ul class="profile-contact">
-                                                                <li><span>BUREAU:</span> <a href="tel:7894563210">+261 32 65 987 52</a></li>
-                                                                <li><span>TELEPHONE:</span> <a href="tel:3214569874">+261 32 65 987 52</a></li>
-                                                                <li><span>FAX:</span> <a>+261 32 65 987 52</a></li>
-                                                                <li class="email"><span>E-mail:</span> <a href="mailto:michelle@houzez.com">test@gmail.com</a></li>
-                                                            </ul>
-                                                            <ul class="profile-social">
-                                                                <li><a href="#"><i class="fa fa-phone-square"></i></a></li>
-                                                                <li><a class="btn-facebook" href="#" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
-                                                                <li><a class="btn-twitter" href="#" target="_blank"><i class="fa fa-twitter-square"></i></a></li>
-                                                                <li><a class="btn-linkedin" href="#" target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                                                                <li><a class="btn-google-plus" href="#" target="_blank"><i class="fa fa-google-plus-square"></i></a></li>
-                                                                <li><a class="btn-youtube" href="#" target="_blank"><i class="fa fa-youtube-square"></i></a></li>
-                                                            </ul>
-                                                            <a href="#" class="btn btn-primary btn-block visible-sm visible-xs">Voir mes propriétés</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="profile-tab-pane tab-pane fade">
-                                <div class="profile-tab-content profile-map">
-                                    <div id="map" style="position: relative; overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);"><div class="gm-err-container"><div class="gm-err-content"><div class="gm-err-icon"><img src="https://maps.gstatic.com/mapfiles/api-3/images/icon_error.png" draggable="false" style="user-select: none;"></div><div class="gm-err-title">Oops! Something went wrong.</div><div class="gm-err-message">This page didn't load Google Maps correctly. See the JavaScript console for technical details.</div></div></div></div></div>
-                                </div>
-                            </div>
-                            <div class="profile-tab-pane tab-pane fade">
-                                <div class="profile-tab-content profile-review">
-                                    <h3 class="title">2 Avis pour Real Estate Inc.</h3>
-                                    <div class="reviews-list">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="#">
-                                                    <img class="media-object img-circle" src="http://placehold.it/60x60" alt="Thumb" height="60" width="60">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="review-top">
-                                                    <h3 class="media-heading"><a href="#">Hasina Rakoto</a></h3>
-                                                    <div class="rating">
-                                                        <span class="bottom-ratings"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 70%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span></span>
-                                                    </div>
-                                                </div>
-                                                <p class="review-date">Fevrier 6, 2017 </p>
 
-                                                <p>Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit. Etiam
-                                                    risus tortor, accumsan at nisi et,
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="#">
-                                                    <img class="media-object img-circle" src="http://placehold.it/60x60" alt="Thumb" height="60" width="60">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="review-top">
-                                                    <h3 class="media-heading"><a href="#">John Doe</a></h3>
-                                                    <div class="rating">
-                                                        <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 70%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span></span>
                                                     </div>
-                                                </div>
-                                                <p class="review-date">February 6, 2014 </p>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="caracteristiques generales">Type</label>
+                                                                {{ form_widget(propriete_form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
+                                                                {{ form_errors(propriete_form.typeAnnonce) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 js-hide-terrain">
+                                                            <div class="form-group">
+                                                                <label for="property-price-before">Nombre de pièces</label>
+                                                                {{ form_widget(propriete_form.nombrePiece) }}
+                                                                {{ form_errors(propriete_form.nombrePiece) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="property-price">Prix</label>
+                                                                {{ form_widget(propriete_form.prix) }}
+                                                                {{ form_errors(propriete_form.prix) }}
+                                                            </div>
+                                                        </div>
 
-                                                <p>Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit. Etiam
-                                                    risus tortor, accumsan at nisi et,
-                                                </p>
+                                                        <div class="col-sm-3 js-show-terrain">
+                                                            <div class="form-group">
+                                                                <label for="property-price-before">Surface</label>
+                                                                {{ form_widget(propriete_form.surface) }}
+                                                                {{ form_errors(propriete_form.surface) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 js-show-terrain">
+                                                            <div class="form-group">
+                                                                <label for="property-price-before">Unite surface</label>
+                                                                {{ form_widget(propriete_form.uniteSurface) }}
+                                                                {{ form_errors(propriete_form.uniteSurface) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="add-tab-row push-padding-bottom">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 js-caracteristiques">
+                                                            <label for="categories">Caracteristiques</label>
+                                                            <div class="form-group">
+                                                                {{ form_errors(propriete_form.caracteristiques) }}
+                                                                {% for child in propriete_form.caracteristiques %}
+                                                                    <div class="col-md-4">
+                                                                        {{ form_widget(child) }}
+                                                                        {{ form_label(child) }}
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="add-review-block">
-                                        <h4 class="review-title">Ajouter un avis</h4>
-                                        <form>
-                                            <div class="add-rating">
-                                                <label>Votre note</label>
-                                                <div class="rating">
-                                                    <span class="bottom-ratings"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 70%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span></span>
+                                        <div class="account-block">
+                                            <div class="add-title-tab">
+                                                <h3>Emplacement de la propriété</h3>
+                                                <div class="add-expand"></div>
+                                            </div>
+                                            <div class="add-tab-content">
+                                                <div class="add-tab-row  push-padding-bottom">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="address">Adresse</label>
+                                                                {{ form_widget(propriete_form.adresse) }}
+                                                                {{ form_errors(propriete_form.adresse) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="quartier">Quartier</label>
+                                                                {{ form_widget(propriete_form.neighborhood) }}
+                                                                {{ form_errors(propriete_form.neighborhood) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="address">Ville</label>
+                                                                {{ form_widget(propriete_form.ville) }}
+                                                                {{ form_errors(propriete_form.ville) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="quartier">Region</label>
+                                                                {{ form_widget(propriete_form.region) }}
+                                                                {{ form_errors(propriete_form.region) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-6 col-xs-12">
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Votre nom">
+                                        </div>
+                                        <div class="account-block">
+                                            <div class="add-title-tab">
+                                                <h3>Médias de propriété</h3>
+                                                <div class="add-expand"></div>
+                                            </div>
+                                            <div class="add-tab-content">
+                                                <div class="add-tab-row">
+                                                    <div class="property-media">
+                                                        <div class="media-gallery">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <figure class="gallery-thumb">
+                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-0"/>
+                                                                        <span>
+                                                            {{ form_widget(propriete_form.gallery_0) }}
+                                                        </span>
+                                                                        
+                                                                    </figure>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <figure class="gallery-thumb">
+                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-1" name="image-1"/>
+                                                                        <span>
+                                                            {{ form_widget(propriete_form.gallery_1) }}
+                                                        </span>
+                                                                    </figure>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <figure class="gallery-thumb">
+                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-2" name="image-2"/>
+                                                                        <span>
+                                                            {{ form_widget(propriete_form.gallery_2) }}
+                                                        </span>
+                                                                    </figure>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <figure class="gallery-thumb">
+                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-3" name="image-3"/>
+                                                                        <span>
+                                                            {{ form_widget(propriete_form.gallery_3) }}
+                                                        </span>
+                                                                    </figure>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <figure class="gallery-thumb">
+                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-4" name="image-4"/>
+                                                                        <span>
+                                                            {{ form_widget(propriete_form.gallery_4) }}
+                                                        </span>
+                                                                    </figure>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <figure class="gallery-thumb">
+                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-5" name="image-5"/>
+                                                                        <span>
+                                                            {{ form_widget(propriete_form.gallery_5) }}
+                                                        </span>
+                                                                    </figure>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="drop" class="media-drag-drop js-drug-and-drop">
+                                                            <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
+                                                            <h4>or</h4>
+                                                            <label class="btn btn-default btn-file" style="width:auto">
+                                                                Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="upload-file-button">
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-6 col-xs-12">
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Adresse e-mail">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <textarea class="form-control" rows="5" placeholder="Votre avis"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <button class="btn btn-secondary">Poster le commentaire</button>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+
+
+                                        <div class="account-block text-right">
+                                            <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

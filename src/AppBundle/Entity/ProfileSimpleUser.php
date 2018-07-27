@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="profile_simple")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileSimpleUser")
  */
-class ProfileSimpleUser implements \Serializable
+class ProfileSimpleUser extends Profile implements \Serializable
 {
     /**
      * @var int
@@ -33,21 +33,21 @@ class ProfileSimpleUser implements \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      */
     private $prenom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=10)
+     * @ORM\Column(name="telephone", type="string", length=10, nullable=true)
      */
     private $telephone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="bio", type="text")
+     * @ORM\Column(name="bio", type="text", nullable=true)
      */
     private $bio;
 
@@ -77,6 +77,16 @@ class ProfileSimpleUser implements \Serializable
      */
     private $avatar;
 
+    /**
+     * @var string
+     * @ORM\Column(name="avatarUrlFb", type="string", length=255, unique=true, nullable=true)
+     */
+    private $avatarUrlFb;
+
+    /**
+     * @ORM\Column(name="isSigninWithFb", type="boolean", nullable=true)
+     */
+    private $isSigninWithFb;
 
     /**
      * Get id
@@ -294,5 +304,60 @@ class ProfileSimpleUser implements \Serializable
             $this->id,
             $this->avatarFile
             ) = unserialize($serialized);
+    }
+
+    /**
+     * Set avatarUrlFb
+     *
+     * @param string $avatarUrlFb
+     *
+     * @return ProfileSimpleUser
+     */
+    public function setAvatarUrlFb($avatarUrlFb)
+    {
+        $this->avatarUrlFb = $avatarUrlFb;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarUrlFb
+     *
+     * @return string
+     */
+    public function getAvatarUrlFb()
+    {
+        return $this->avatarUrlFb;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set isSigninWithFb
+     *
+     * @param boolean $isSigninWithFb
+     *
+     * @return ProfileSimpleUser
+     */
+    public function setIsSigninWithFb($isSigninWithFb)
+    {
+        $this->isSigninWithFb = $isSigninWithFb;
+
+        return $this;
+    }
+
+    /**
+     * Get isSigninWithFb
+     *
+     * @return boolean
+     */
+    public function getIsSigninWithFb()
+    {
+        return $this->isSigninWithFb;
     }
 }

@@ -1,0 +1,23 @@
+{% extends 'base-for-login.html.twig' %}
+
+{% block content %}
+    <div class="tab-content tabstyle">
+        <div class="row">
+            <div class="col-md-4 col-sm-4"></div>
+            <div class="col-md-4 col-sm-4">
+
+                <form action="{{ path("reset.send-email") }}" method="post">
+                    <div class="form-group field-group">
+                        <div class="input-user input-icon">
+                            <input type="email" placeholder="Entrer votre email" id="_email" name="_email" required="required"/>
+                        </div>
+                    </div>
+
+                    {#<div ></div>#}
+                    <input class="btn btn-primary btn-block" type="submit" id="_submit" name="_submit" value="Se connecter" />
+                </form>
+            </div>
+            <div class="col-xs-4 col-sm-4"></div>
+        </div>
+    </div>
+{% endblock %}

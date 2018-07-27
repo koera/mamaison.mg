@@ -37,7 +37,7 @@ services:
 #    AppBundle\Controller\:
 #          resource: '../../src/AppBundle/Controller'
 #          autowire: true
-#    AppBundle\Controller\ProfileController:
+#    AppBundle\Controller\ProfileSimpleUserController:
 #        tags: ['controller.service_arguments']
 #        calls:
 #            - [setContainer, ["@service_container"]]

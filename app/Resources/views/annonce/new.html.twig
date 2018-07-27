@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
 {% block content %}
     {#<h1>Annonce creation</h1>#}
@@ -504,6 +504,11 @@
                         <div class="page-title-left">
                             <h2>Ajouter propriete</h2>
                         </div>
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                         <div class="page-title-right">
                             <ol class="breadcrumb">
                                 <li><a href="/"><i class="fa fa-home"></i></a></li>
@@ -530,213 +535,238 @@
                 </div>
                 <div class="col-md-9 col-sm-8 user-dashboard-right">
                     <form name="mamaison_annoncebundle_annonce" method="post" enctype="multipart/form-data">
-                    <div class="account-block">
-                        <div class="add-title-tab">
-                            <h3>Description de la propriété et prix</h3>
-                            <div class="add-expand"></div>
-                        </div>
-                        <div class="add-tab-content" style="display: block;">
-                            <div class="add-tab-row push-padding-bottom">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label for="property-title">Titre</label>
-                                            {{ form_widget(form.titre) }}
+                        <div class="account-block">
+                            <div class="add-title-tab">
+                                <h3>Description de la propriété et prix</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content" style="display: block;">
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="property-title">Titre</label>
+                                                {{ form_widget(form.titre) }}
+                                                {{ form_errors(form.titre) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="description">Déscription</label>
+                                                {{ form_widget(form.description) }}
+                                                {{ form_errors(form.description) }}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label for="description">Déscription</label>
-                                            {{ form_widget(form.description) }}
+                                </div>
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="categories">Catégories</label>
+                                            <div class="form-group">
+                                                {{ form_errors(form.category) }}
+                                                {% for child in form.category %}
+                                                    <div class="col-md-4">
+                                                        {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
+                                                        {{ form_label(child) }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="caracteristiques generales">Type</label>
+                                                {{ form_widget(form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
+                                                {{ form_errors(form.typeAnnonce) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 js-hide-terrain">
+                                            <div class="form-group">
+                                                <label for="property-price-before">Nombre de pièces</label>
+                                                {{ form_widget(form.nombrePiece) }}
+                                                {{ form_errors(form.nombrePiece) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="property-price">Prix</label>
+                                                {{ form_widget(form.prix) }}
+                                                {{ form_errors(form.prix) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3 js-show-terrain">
+                                            <div class="form-group">
+                                                <label for="property-price-before">Surface</label>
+                                                {{ form_widget(form.surface) }}
+                                                {{ form_errors(form.surface) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 js-show-terrain">
+                                            <div class="form-group">
+                                                <label for="property-price-before">Unite surface</label>
+                                                {{ form_widget(form.uniteSurface) }}
+                                                {{ form_errors(form.uniteSurface) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12 js-caracteristiques">
+                                            <label for="categories">Caracteristiques</label>
+                                            <div class="form-group">
+                                                {{ form_errors(form.caracteristiques) }}
+                                                {% for child in form.caracteristiques %}
+                                                    <div class="col-md-4">
+                                                        {{ form_widget(child) }}
+                                                        {{ form_label(child) }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="account-block">
+                            <div class="add-title-tab">
+                                <h3>Emplacement de la propriété</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content">
+                                <div class="add-tab-row  push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="address">Adresse</label>
+                                                {{ form_widget(form.adresse) }}
+                                                {{ form_errors(form.adresse) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="quartier">Quartier</label>
+                                                {{ form_widget(form.neighborhood) }}
+                                                {{ form_errors(form.neighborhood) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="address">Ville</label>
+                                                {{ form_widget(form.ville) }}
+                                                {{ form_errors(form.ville) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="quartier">Region</label>
+                                                {{ form_widget(form.region) }}
+                                                {{ form_errors(form.region) }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="add-tab-row push-padding-bottom">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label for="categories">Catégories</label>
-                                        <div class="form-group">
-                                            {% for child in form.category %}
-                                                <div class="col-md-4">
-                                                    {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
-                                                    {{ form_label(child) }}
+                        </div>
+                        <div class="account-block">
+                            <div class="add-title-tab">
+                                <h3>Médias de propriété</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content">
+                                <div class="add-tab-row">
+                                    <div class="property-media">
+                                        <div class="media-gallery">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-0"/>
+                                                        <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                        <span class="icon icon-fav">
+                                                            {{ form_widget(form.gallery_0) }}
+                                                        </span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                        <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
+                                                    </figure>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="caracteristiques generales">Type</label>
-                                            {{ form_widget(form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 js-hide-terrain">
-                                        <div class="form-group">
-                                            <label for="property-price-before">Nombre de pièces</label>
-                                            {{ form_widget(form.nombrePiece) }}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="property-price">Prix</label>
-                                            {{ form_widget(form.prix) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3 js-show-terrain">
-                                        <div class="form-group">
-                                            <label for="property-price-before">Surface</label>
-                                            {{ form_widget(form.surface) }}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 js-show-terrain">
-                                        <div class="form-group">
-                                            <label for="property-price-before">Unite surface</label>
-                                            {{ form_widget(form.uniteSurface) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="add-tab-row push-padding-bottom">
-                                <div class="row">
-                                    <div class="col-sm-12 js-caracteristiques">
-                                        <label for="categories">Caracteristiques</label>
-                                        <div class="form-group">
-                                            {#{{ form_widget(form.caracteristiques) }}#}
-                                            {% for child in form.caracteristiques %}
-                                                <div class="col-md-4">
-                                                    {{ form_widget(child) }}
-                                                    {{ form_label(child) }}
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-1" name="image-1"/>
+                                                        <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                        <span class="icon icon-fav">
+                                                            {{ form_widget(form.gallery_1) }}
+                                                        </span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
                                                 </div>
-                                            {% endfor %}
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-2" name="image-2"/>
+                                                        <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                        <span class="icon icon-fav">
+                                                            {{ form_widget(form.gallery_2) }}
+                                                        </span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-3" name="image-3"/>
+                                                        <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                        <span class="icon icon-fav">
+                                                            {{ form_widget(form.gallery_3) }}
+                                                        </span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-4" name="image-4"/>
+                                                        <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                        <span class="icon icon-fav">
+                                                            {{ form_widget(form.gallery_4) }}
+                                                        </span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-5" name="image-5"/>
+                                                        <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
+                                                        <span class="icon icon-fav">
+                                                            {{ form_widget(form.gallery_5) }}
+                                                        </span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="account-block">
-                        <div class="add-title-tab">
-                            <h3>Emplacement de la propriété</h3>
-                            <div class="add-expand"></div>
-                        </div>
-                        <div class="add-tab-content">
-                            <div class="add-tab-row  push-padding-bottom">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="address">Adresse</label>
-                                            {{ form_widget(form.adresse) }}
+                                        <div id="drop" class="media-drag-drop js-drug-and-drop">
+                                            <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
+                                            <h4>or</h4>
+                                            <label class="btn btn-default btn-file" style="width:auto">
+                                                Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="upload-file-button">
+                                            </label>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="quartier">Quartier</label>
-                                            {{ form_widget(form.neighborhood) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="address">Ville</label>
-                                            {{ form_widget(form.ville) }}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="quartier">Region</label>
-                                            {{ form_widget(form.region) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="account-block">
-                        <div class="add-title-tab">
-                            <h3>Médias de propriété</h3>
-                            <div class="add-expand"></div>
-                        </div>
-                        <div class="add-tab-content">
-                            <div class="add-tab-row">
-                                <div class="property-media">
-                                    <div class="media-gallery">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-0"/>
-                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
-                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-0" id="hidden-image-0" class="fa fa-star-o"/></span>
-                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
-                                                    <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
-                                                </figure>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-1" name="image-1"/>
-                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
-                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-1" id="hidden-image-1" class="fa fa-star-o"/></span>
-                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
-                                                </figure>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-2" name="image-2"/>
-                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
-                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-2" id="hidden-image-2" class="fa fa-star-o"/></span>
-                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
-                                                </figure>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-3" name="image-3"/>
-                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
-                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-3" id="hidden-image-3" class="fa fa-star-o"/></span>
-                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
-                                                </figure>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-4" name="image-4"/>
-                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
-                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-4" id="hidden-image-4" class="fa fa-star-o"/></span>
-                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
-                                                </figure>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <figure class="gallery-thumb">
-                                                    <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-5" name="image-5"/>
-                                                    <span class="icon icon-fav"><i class="fa fa-star-o"></i></span>
-                                                    <span class="icon icon-fav"><input type="hidden" name="mamaison_annoncebundle_annonce-image-5" id="hidden-image-5" class="fa fa-star-o"/></span>
-                                                    <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="drop" class="media-drag-drop js-drug-and-drop">
-                                        <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
-                                        <h4>or</h4>
-                                        <label class="btn btn-default btn-file" style="width:auto">
-                                            Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="upload-file-button">
-                                        </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="account-block text-right">
-                        <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
-                    </div>
-                    {{ form_end(form) }}
+                        <div class="account-block text-right">
+                            <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
