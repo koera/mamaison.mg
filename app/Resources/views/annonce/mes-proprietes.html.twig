@@ -1,0 +1,166 @@
+{% extends 'template.html.twig' %}
+
+{% block content %}
+
+    <section id="section-body">
+
+        <div class="container">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-left">
+                            <h2>Mes Propriétés</h2>
+                        </div>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb"><li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li><li><a href="{{ path('mon-compte.edit') }}">Mon compte</a></li><li class="active">Mes Propriétés</li></ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-4 user-dashboard-left">
+                    <div class="my-sidebar">
+                        <ul class="list-unstyled my-menu">
+                            <li> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            <li class="active"> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
+                            <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
+                            <li> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
+                            <li> <a href="{{ path('logout') }}"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8 user-dashboard-right">
+                    <div class="account-block">
+                        <div class="list-tabs">
+                            <div class="tabs">
+                                <ul>
+                                    <li>
+                                        <a href="#" class="active">TOUS</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">à vendre</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">à Louer</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="my-property-search">
+                            <form>
+                                <div class="table-list">
+                                    <div class="form-group table-cell">
+                                        <input class="form-control" placeholder="Rechercher par liste">
+                                    </div>
+                                    <div class="table-cell">
+                                        <button class="btn btn-orange">Chercher</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="my-property-listing">
+                            <div class="row grid-row">
+                                {% for annonce in annonces %}
+                                <div class="item-wrap">
+                                    <div class="media my-property">
+                                        <div class="media-left">
+                                            <div class="figure-block">
+                                                <figure class="item-thumb">
+                                                    <span class="label-featured label label-success">En vedette</span>
+                                                    <a href="#">
+                                                        {#<img src="http://placehold.it/150x110" alt="thumb">#}
+                                                        {% if annonce.galleries %}
+                                                            <img src="{{ annonce.galleries|last }}" style="width: 150px; height: 110px;" alt="thumb">
+                                                        {% endif %}
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                        <div class="media-body media-middle">
+                                            <div class="my-description">
+                                                <h4 class="my-heading"><a href="#">{{ annonce.titre }}</a></h4>
+                                                <p class="address">{{ annonce.adresse }}</p>
+                                                <p class="status"><strong>Type:</strong> {{ annonce.typeAnnonce.valeur }}</p>
+                                                <p class=""><strong>Prix:</strong> AR {{ annonce.prix }}</p>
+                                            </div>
+                                            <div class="my-actions">
+                                                <div class="btn-group">
+                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-close"></i></a>
+                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Book"><i class="fa fa-book"></i></a>
+                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Star"><i class="fa fa-star"></i></a>
+                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Upload"><i class="fa fa-upload"></i></a>
+                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Chart"><i class="fa fa-area-chart"></i></a>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button class="pay-btn action-btn">Payez  <i class="fa fa-angle-down"></i></button>
+                                                    <div class="dropdown-menu">
+                                                        <div class="pay-options">
+                                                            <table>
+                                                                <tbody><tr>
+                                                                    <td>
+                                                                        Frais de soumission
+                                                                    </td>
+                                                                    <td> AR 3.00</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                <input type="checkbox" value="option1">
+                                                                                Frais
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td> AR 5.00</td>
+                                                                </tr>
+                                                                </tbody><tfoot>
+                                                                <tr>
+                                                                    <td>Total</td>
+                                                                    <td> AR 5.00</td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                        <ul>
+                                                            <li><a href="#"><i class="fa fa-credit-card"></i> Payer avec une carte de crédit</a></li>
+                                                            <li><a href="#"><i class="fa fa-paypal"></i> Payer avec Mvola</a></li>
+                                                            <li><a href="#"><i class="fa fa-paypal"></i> Payer avec Orangemoney</a></li>
+                                                            <li><a href="#"><i class="fa fa-retweet"></i>Payer avec Airtelmoney</a></li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!--start Pagination-->
+                    <div class="pagination-main">
+                        <ul class="pagination">
+                            <li class="disabled"><a aria-label="Previous" href="#"><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
+                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a aria-label="Next" href="#"><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
+                        </ul>
+                    </div>
+                    <!--start Pagination-->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

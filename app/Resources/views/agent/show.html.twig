@@ -1,0 +1,133 @@
+{% extends 'template.html.twig' %}
+
+{% block content %}
+    <section id="section-body">
+        <div class="container">
+            <div class="page-title breadcrumb-top">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li><a href="#"><i class="fa fa-home"></i></a></li>
+                            <li>Tous les agents</li>
+                            <li class="active">
+                                {% if user.type == 'simple' %}
+                                    {{ user.profileSimpleUser.nom }}
+                                {% elseif user.type == 'society' %}
+                                    {{ user.profileSocietyUser.nom }}
+                                {% endif %}
+                            </li>
+                        </ol>
+                        <div class="page-title-left">
+                            <h2>
+                                {% if user.type == 'simple' %}
+                                    {{ user.profileSimpleUser.nom }}
+                                {% elseif user.type == 'society' %}
+                                    {{ user.profileSocietyUser.nom }}
+                                {% endif %}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="profile-detail-block agent-detail">
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-12">
+                                <div class="profile-image">
+                                    {% if user.type == 'simple' %}
+                                        {% if user.profileSimpleUser.avatar %}
+                                            <img src="{{ asset('uploads/avatars/'~user.profileSimpleUser.avatar) }}" alt="Agent" width="330" height="330">
+                                        {% elseif user.profileSimpleUser.avatarUrlFb %}
+                                            <img src="{{ user.profileSimpleUser.avatarUrlFb }}" alt="Agent" width="330" height="330">
+                                        {%  else %}
+                                            <img src="http://placehold.it/50x50" alt="Agent" width="330" height="330">
+                                        {% endif %}
+                                    {% elseif user.type == 'society' %}
+                                        {% if user.profileSocietyUser.avatar %}
+                                            <img src="{{ asset('uploads/avatars/'~user.profileSocietyUser.avatar) }}" alt="Agent" width="330" height="330">
+                                        {%  else %}
+                                            <img src="http://placehold.it/50x50" alt="Agent" width="330" height="330">
+                                        {% endif %}
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-8 col-xs-12">
+                                <div class="profile-description">
+                                    <h3>{% if user.type == 'simple' %}
+                                            {{ user.profileSimpleUser.nom }} {{ user.profileSimpleUser.prenom }}
+                                        {% elseif user.type == 'society' %}
+                                            {{ user.profileSocietyUser.nom }}
+
+                                        {% endif %}
+                                    </h3>
+                                    {% if user.type == 'society' %}
+                                    <h4 class="position">
+                                        {{ user.profileSocietyUser.type }} | {{ user.profileSocietyUser.adresse }}
+                                    </h4>
+                                    {% endif %}
+                                    <h4 class="position">
+                                        {% if user.type == 'simple' %}
+                                            {{ user.profileSimpleUser.bio }}
+                                        {% elseif user.type == 'society' %}
+                                            {{ user.profileSocietyUser.bio }}
+                                        {% endif %}
+                                    </h4>
+                                    <p></p>
+                                    <ul class="profile-contact">
+                                        {% if user.type == 'simple' %}
+                                            <li><span>Telephone:</span> <a href="#">{{ user.profileSimpleUser.telephone }}</a></li>
+                                            <li class="email"><span>Email:</span> <a href="#">{{ user.email }}</a></li>
+                                        {% elseif user.type == 'society' %}
+                                            <li><span>Telephone:</span> <a href="#">{{ user.profileSocietyUser.telephone }}</a></li>
+                                            <li><span>Siteweb:</span> <a href="{{ user.profileSocietyUser.siteweb }}">{{ user.profileSocietyUser.siteweb }}</a></li>
+                                            <li class="email"><span>Email:</span> <a href="#">{{ user.email }}</a></li>
+                                        {% endif %}
+
+                                    </ul>
+                                    <ul class="profile-social">
+                                        <li><a href="#"><i class="fa fa-phone-square"></i></a></li>
+                                        <li><a href="#" class="btn-facebook"><i class="fa fa-facebook-square"></i></a></li>
+                                        <li><a href="#" class="btn-twitter"><i class="fa fa-twitter-square"></i></a></li>
+                                        <li><a href="#" class="btn-linkedin"><i class="fa fa-linkedin-square"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-small">
+                                    <h3>Contactez  {% if user.type == 'simple' %}
+                                            {{ user.profileSimpleUser.nom }}
+                                        {% elseif user.type == 'society' %}
+                                            {{ user.profileSocietyUser.nom }}
+                                        {% endif %}</h3>
+                                    <form>
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Votre Nom" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Téléphone" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" placeholder="Adresse e-mail" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea placeholder="Salut
+                                                {% if user.type == 'simple' %}
+                                                    {{ user.profileSimpleUser.nom }}
+                                                {% elseif user.type == 'society' %}
+                                                    {{ user.profileSocietyUser.nom }}
+                                                {% endif %}
+                                        , j'ai vu ton profil sur MaMaison et je voulais voir si tu pouvais m'aider." rows="3" class="form-control"></textarea>
+                                        </div>
+                                        <button class="btn btn-secondary btn-block">ENVOYER</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

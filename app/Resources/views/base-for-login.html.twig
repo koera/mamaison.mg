@@ -87,7 +87,11 @@
 
             <div class="user">
                 {% if app.user %}
-                    <a href="{{ path('logout') }}">Deconnecter </a>
+                    {% if app.user.type == "simple" %}
+                        <a href="{{ path('mon-compte.edit') }}">Mon compte </a>
+                    {% elseif app.user.type == 'society' %}
+                        <a href="{{ path('compte.edit',{'societyName' : app.user.societyName}) }}">Mon compte </a>
+                    {% endif %}
                 {% else %}
                     <a href="{{ path('login') }}">Se connecter </a>
                     {#<a href="{{ path('registration_simple_user') }}">Créer un compte</a>#}

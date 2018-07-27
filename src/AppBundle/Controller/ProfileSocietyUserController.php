@@ -200,6 +200,8 @@ class ProfileSocietyUserController extends Controller
 
             $annonce->setQuartier($quartier);
 
+            $annonce->setUser($this->getUser());
+
             $em->persist($annonce);
 
             $em->flush();

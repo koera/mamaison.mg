@@ -6,12 +6,14 @@ use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Category;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Annonce
  *
  * @ORM\Table(name="annonce")
  * @ORM\Entity(repositoryClass="Mamaison\AnnonceBundle\Repository\AnnonceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Annonce
 {
@@ -114,6 +116,34 @@ class Annonce
      * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Gallery")
      */
     private $galleries;
+
+    /**
+     * @var DateTime $created
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime $updated
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setUpdatedAt(new \DateTime('now'));
+
+        if ($this->getCreatedAt() == null) {
+            $this->setCreatedAt(new \DateTime('now'));
+        }
+    }
 
 
     /**
@@ -464,5 +494,53 @@ class Annonce
     public function getGalleries()
     {
         return $this->galleries;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Annonce
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Annonce
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

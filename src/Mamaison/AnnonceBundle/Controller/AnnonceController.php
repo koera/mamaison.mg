@@ -76,6 +76,8 @@ class AnnonceController extends Controller
 
             $annonce->setQuartier($quartier);
 
+            $annonce->setUser($this->getUser());
+
             $em->persist($annonce);
 
             $em->flush();
@@ -93,6 +95,28 @@ class AnnonceController extends Controller
     }
 
     /**
+     * Get annonce add by User
+     *
+     * @Route("/mon-compte/mes-proprietes", name="annonce_mon_proprietes")
+     * @Method({"GET"})
+     */
+    public function mesproprietesAction(){
+        $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+            ->findBy(['user'=>$this->getUser()]);
+        return $this->render('annonce/mes-proprietes.html.twig', array('annonces'=>$annonces));
+    }
+
+    /**
+     * Get annonce favorite
+     *
+     * @Route("/mon-compte/mes-proprietes-favorites", name="annonce_mon_proprietes_favorites")
+     * @Method({"GET"})
+     */
+    public function mesproprietesfavoritesAction(){
+        return $this->render('annonce/mes-proprietes-favorites.html.twig', array('user'=>$this->getUser()));
+    }
+
+    /**
      * Finds and displays a annonce entity.
      *
      * @Route("/propriete/{id}", name="annonce_show")
@@ -106,20 +130,5 @@ class AnnonceController extends Controller
             'annonce' => $annonce,
             'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Creates a form to delete a annonce entity.
-     *
-     * @param Annonce $annonce The annonce entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Annonce $annonce)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('annonce_delete', array('id' => $annonce->getId())))
-            ->setMethod('DELETE')
-            ->getForm();
     }
 }

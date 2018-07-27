@@ -22,11 +22,11 @@
             <div class="col-md-3 col-sm-4 user-dashboard-left">
                 <div class="my-sidebar">
                     <ul class="list-unstyled my-menu">
-                        <li class="active"> <a href="#"> <i class="fa fa-user"></i> Mon profil </a></li>
-                        <li> <a href="my-properties.html"> <i class="fa fa-building"></i> Mes propriétés </a></li>
+                        <li class="active"> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                        <li> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
                         <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
-                        <li> <a href="my-favorite-properties.html"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
-                        <li> <a href="#"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
+                        <li> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
+                        <li> <a href="{{ path('logout') }}"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
                     </ul>
                 </div>
             </div>

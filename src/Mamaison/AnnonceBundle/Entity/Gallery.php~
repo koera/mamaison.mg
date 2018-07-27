@@ -64,4 +64,9 @@ class Gallery
     {
         return $this->image;
     }
+
+    public function __toString()
+    {
+        return $this->image;
+    }
 }
