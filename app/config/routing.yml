@@ -6,6 +6,14 @@ mamaison_annonce_annonce:
     resource: "@MamaisonAnnonceBundle/Controller/AnnonceController.php"
     type:     annotation
 
+mamaison_annonce_avendre:
+    resource: "@MamaisonAnnonceBundle/Controller/AVendreController.php"
+    type:     annotation
+
+mamaison_annonce_home:
+    resource: "@MamaisonAnnonceBundle/Controller/HomeController.php"
+    type:     annotation
+
 mamaison_annonce:
     resource: "@MamaisonAnnonceBundle/Resources/config/routing.yml"
     prefix:   /
