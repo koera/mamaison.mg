@@ -55,6 +55,10 @@ class ProfileSocietyUserController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
+        if($user->getType() != 'society'){
+            throw new AccessDeniedException('you have not a permission for this page');
+        }
+
         if($user->getSocietyName() != $societyName){
             throw new AccessDeniedException('we can\'t find this society name');
         }

@@ -36,10 +36,16 @@ class ProfileSimpleUserController extends Controller
     public function editAction(Request $request)
     {
 
+        /** @var User $user */
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
+
+        if($user->getType() != 'simple'){
+            throw new AccessDeniedException('you have not a permission for this page');
+        }
+
         $action = 'save';
 
         if (is_null($user->getProfileSimpleUser())) {
