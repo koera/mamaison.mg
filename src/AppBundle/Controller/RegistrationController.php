@@ -45,7 +45,7 @@ class RegistrationController extends Controller{
 
             /* send email registration here*/
 
-            $message = (new \Swift_Message('Registration confirmation'))
+            $message = (new \Swift_Message('Confirmation instructions'))
                 ->setFrom('no-reply@mamaison.mg')
                 ->setTo($user->getEmail())
                 ->setBody(
@@ -140,6 +140,7 @@ class RegistrationController extends Controller{
      * @param Request $request
      *
      * @Route("/account/confirm/{token}", name="confirm_account")
+     * @return Response
      */
     public function confirmationAction(Request $request, $token){
         $em = $this->getDoctrine()->getManager();

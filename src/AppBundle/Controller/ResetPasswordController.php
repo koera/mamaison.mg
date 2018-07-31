@@ -55,7 +55,7 @@ class ResetPasswordController extends Controller
                 $user->setResetPasswordToken($token);
                 $em->persist($user);
                 $em->flush();
-                $message = (new \Swift_Message('Reset password'))
+                $message = (new \Swift_Message('Reset password instructions'))
                     ->setFrom('no-reply@mamaison.mg')
                     ->setTo($request->get('_email'))
                     ->setBody(
