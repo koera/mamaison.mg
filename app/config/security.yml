@@ -41,4 +41,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/mon-compte/$, role: ROLE_USER }
         - { path: ^/reset, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/like, role: ROLE_USER }
+        - { path: ^/rating, role: ROLE_USER }
+        - { path: ^/unlike, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }

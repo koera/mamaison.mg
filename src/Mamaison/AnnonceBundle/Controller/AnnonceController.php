@@ -3,6 +3,7 @@
 namespace Mamaison\AnnonceBundle\Controller;
 
 use Mamaison\AnnonceBundle\Entity\Annonce;
+use Mamaison\AnnonceBundle\Entity\Category;
 use Mamaison\AnnonceBundle\Entity\Gallery;
 use Mamaison\AnnonceBundle\Entity\Quartier;
 use Mamaison\AnnonceBundle\Entity\Region;
@@ -119,16 +120,27 @@ class AnnonceController extends Controller
     /**
      * Finds and displays a annonce entity.
      *
-     * @Route("/propriete/{id}", name="annonce_show")
+     * @Route("/propriete/{title}/{id}", name="annonce_show")
      * @Method("GET")
      */
-    public function showAction(Annonce $annonce)
+    public function showAction(Request $request,$title,$id)
     {
-        $deleteForm = $this->createDeleteForm($annonce);
+        $annonce = $this->getDoctrine()->getRepository(Annonce::class)
+            ->find($id);
+
+        $category = $this->getDoctrine()->getRepository(Category::class)
+            ->findAll();
+
+        $annonceLesPlusNoter = [];
+
+        foreach ($this->getDoctrine()->getRepository(Annonce::class)
+                     ->getAnnoncePlusNote() as $a)
+            $annonceLesPlusNoter[] = $a[0];
 
         return $this->render('annonce/show.html.twig', array(
             'annonce' => $annonce,
-            'delete_form' => $deleteForm->createView(),
+            'category' => $category,
+            'annoncePlusNote' => $annonceLesPlusNoter
         ));
     }
 }

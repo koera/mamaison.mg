@@ -115,14 +115,21 @@ class ProfileSocietyUserController extends Controller
 
             return $this->redirectToRoute('compte.edit',array('societyName'=>$societyName));
         }
+
+
         /* end change profile */
+
+
+        $myAnnonce = $this->getDoctrine()->getRepository(Annonce::class)
+            ->findBy(['user'=>$this->getUser()]);
 
         return $this->render('profile/society_user.html.twig', array(
             'user' => $user,
             'profile' => $profile,
             'edit_form' => $editForm->createView(),
             'changePassword_form' =>$form->createView(),
-            'propriete_form' => $formPropriete->createView()
+            'propriete_form' => $formPropriete->createView(),
+            'myProprietes' => $myAnnonce
         ));
     }
 
@@ -207,6 +214,7 @@ class ProfileSocietyUserController extends Controller
             $em->flush();
 
             $this->addFlash("success", "Annnonce ajouter avec success");
+
 
             return $this->redirectToRoute('compte.edit',array('societyName'=>$societyName));
         }

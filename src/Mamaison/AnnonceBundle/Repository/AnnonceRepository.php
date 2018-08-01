@@ -10,4 +10,39 @@ namespace Mamaison\AnnonceBundle\Repository;
  */
 class AnnonceRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getMeilleurAnnonce(){
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.likes','user')
+            ->addSelect('count(user.id) as u')
+            ->addSelect('user')
+            ->groupBy('a.id')
+            ->having('count(user.id) > 0')
+            ->orderBy('u','desc')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function getMoyenneRating($id){
+        $q =  $this->createQueryBuilder('a')
+            ->leftJoin('a.rating','rating')
+            ->addSelect('sum(rating.ratingValue) / count(rating.id) as moyenne')
+            ->where('a.id = :id')
+            ->setParameter('id',$id)
+            ->groupBy('a.id')
+            ->getQuery()
+            ->execute();
+        return (int) $q[0]['moyenne'];
+    }
+
+
+    public function getAnnoncePlusNote(){
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.rating','rating')
+            ->addSelect('sum(rating.ratingValue) / count(rating.id) as moyenne')
+            ->groupBy('a.id')
+            ->orderBy('moyenne','desc')
+            ->getQuery()
+            ->execute();
+    }
 }

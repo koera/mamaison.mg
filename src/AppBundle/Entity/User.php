@@ -2,8 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mamaison\AnnonceBundle\Concern\Annoncable;
+use Mamaison\AnnonceBundle\Concern\Rating;
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\ProfileSimpleUser;
@@ -23,12 +25,19 @@ class User implements UserInterface
 {
 
     /**
-     * @var Annonce
+     * @var ArrayCollection
      *
      * User can like Annonce
      *
      */
     use Annoncable;
+
+    /**
+     * @var ArrayCollection
+     *
+     * User give rating to annonce
+     */
+    use Rating;
 
     /**
      * @var integer

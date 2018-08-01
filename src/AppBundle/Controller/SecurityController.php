@@ -228,6 +228,7 @@ class SecurityController extends Controller
      * @Route("/redirect-login",name="redirect-login")
      */
     public function redirectAction(){
+
         /** @var User $user */
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {

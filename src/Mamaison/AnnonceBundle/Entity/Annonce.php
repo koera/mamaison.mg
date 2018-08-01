@@ -3,6 +3,7 @@
 namespace Mamaison\AnnonceBundle\Entity;
 
 use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Category;
@@ -130,6 +131,19 @@ class Annonce
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="annonces")
+     */
+    private $likes;
+
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Rating", mappedBy="annonce")
+     */
+    private $rating;
 
 
     /**
@@ -542,5 +556,73 @@ class Annonce
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add like
+     *
+     * @param \AppBundle\Entity\User $like
+     *
+     * @return Annonce
+     */
+    public function addLike(\AppBundle\Entity\User $like)
+    {
+        $this->likes[] = $like;
+
+        return $this;
+    }
+
+    /**
+     * Remove like
+     *
+     * @param \AppBundle\Entity\User $like
+     */
+    public function removeLike(\AppBundle\Entity\User $like)
+    {
+        $this->likes->removeElement($like);
+    }
+
+    /**
+     * Get likes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Add rating
+     *
+     * @param Rating
+     *
+     * @return Annonce
+     */
+    public function addRating(Rating $rating)
+    {
+        $this->rating[] = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Remove rating
+     *
+     * @param Rating $rating
+     */
+    public function removeRating(Rating $rating)
+    {
+        $this->rating->removeElement($rating);
+    }
+
+    /**
+     * Get rating
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }
