@@ -46,7 +46,7 @@
                                 <div class="module-nav">
                                     <button class="btn btn-sm btn-crl-pprt-1-prev">Prec</button>
                                     <button class="btn btn-sm btn-crl-pprt-1-next">Suiv</button>
-                                    <a href="#" class="btn btn-carousel btn-sm">Tous</a>
+                                    <a href="" class="btn btn-carousel btn-sm">Tous</a>
                                 </div>
                             </div>
                         </div>
@@ -132,20 +132,21 @@
                                                         <div class="body-left">
                                                             <div class="info-row">
                                                                 <div class="rating">
-                                                                <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip">
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span style="width: 70%" class="top-ratings">
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                    </span>
-                                                                </span>
+                                                                    <span class="bottom-ratings tip">
+                                                                        {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for i in 1..rating.getMoyenne(annonce) %}
+                                                                                <span class="fa fa-star"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+
+                                                                        {% set j = 1 %}
+
+                                                                        {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                                                <span class="fa fa-star-o"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                        </span>
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
@@ -155,17 +156,28 @@
                                                             </div>
                                                             <div class="table-list full-width info-row">
                                                                 <div class="cell">
-                                                                    {#<div class="info-row amenities">#}
-                                                                    {#<p>#}
-                                                                    {#{% for caracteristique in annonce.caracteristiques %}#}
-                                                                    {#<span>{{ caracteristique.nom }}</span>#}
-                                                                    {#{% endfor %}#}
-                                                                    {#</p>#}
-                                                                    {#</div>#}
+                                                                    {% if app.user %}
+                                                                        {% if annonce in app.user.annonces %}
+                                                                            <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart">
+                                                                                </i> {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% else %}
+                                                                            <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart-o">
+                                                                                </i>  {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                            <i class="fa fa-heart-o">
+                                                                            </i>  {{ annonce.likes |length }} J'aime
+                                                                        </a>
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="cell">
                                                                     <div class="phone">
-                                                                        <a href="#" class="btn btn-primary">Details
+                                                                        <a href="{{ path('annonce_show',{'title':annonce.titre| slugify,'id':annonce.id}) }}" class="btn btn-primary">Details
                                                                             <i class="fa fa-angle-right fa-right"></i>
                                                                         </a>
                                                                         <p>
@@ -236,7 +248,7 @@
                                 <div class="module-nav">
                                     <button class="btn btn-sm btn-crl-pprt-2-prev">Prec</button>
                                     <button class="btn btn-sm btn-crl-pprt-2-next">Suiv</button>
-                                    <a href="#" class="btn btn-carousel btn-sm">Tous</a>
+                                    <a href="{{ path('a_vendre_tous') }}" class="btn btn-carousel btn-sm">Tous</a>
                                 </div>
                             </div>
                         </div>
@@ -322,20 +334,21 @@
                                                         <div class="body-left">
                                                             <div class="info-row">
                                                                 <div class="rating">
-                                                                <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip">
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span style="width: 70%" class="top-ratings">
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                    </span>
-                                                                </span>
+                                                                    <span class="bottom-ratings tip">
+                                                                        {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for i in 1..rating.getMoyenne(annonce) %}
+                                                                                <span class="fa fa-star"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+
+                                                                        {% set j = 1 %}
+
+                                                                        {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                                                <span class="fa fa-star-o"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                        </span>
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
@@ -345,17 +358,28 @@
                                                             </div>
                                                             <div class="table-list full-width info-row">
                                                                 <div class="cell">
-                                                                    {#<div class="info-row amenities">#}
-                                                                        {#<p>#}
-                                                                            {#{% for caracteristique in annonce.caracteristiques %}#}
-                                                                                {#<span>{{ caracteristique.nom }}</span>#}
-                                                                            {#{% endfor %}#}
-                                                                        {#</p>#}
-                                                                    {#</div>#}
+                                                                    {% if app.user %}
+                                                                        {% if annonce in app.user.annonces %}
+                                                                            <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart">
+                                                                                </i> {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% else %}
+                                                                            <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart-o">
+                                                                                </i>  {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                            <i class="fa fa-heart-o">
+                                                                            </i>  {{ annonce.likes |length }} J'aime
+                                                                        </a>
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="cell">
                                                                     <div class="phone">
-                                                                        <a href="#" class="btn btn-primary">Details
+                                                                        <a href="{{ path('annonce_show',{'title':annonce.titre| slugify,'id':annonce.id}) }}" class="btn btn-primary">Details
                                                                             <i class="fa fa-angle-right fa-right"></i>
                                                                         </a>
                                                                         <p>
@@ -380,10 +404,10 @@
                                                             {#<i class="fa fa-user"></i>#}
                                                             {#<a href="#">Nalitiana Jery</a>#}
                                                             {% if annonce.user.type == 'simple' %}
-                                                            <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
-                                                            {% elseif annonce.user.type == 'society' %}
+                                                        <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
+                                                        {% elseif annonce.user.type == 'society' %}
                                                             <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
-                                                            {% endif %}
+                                                        {% endif %}
                                                         </p>
                                                     </div>
                                                     <div class="item-foot-right">
@@ -440,7 +464,7 @@
                                                     <div class="figure-block">
                                                         <figure class="item-thumb">
                                                             <div class="label-wrap hide-on-list">
-                                                                <div class="label-status label label-default">à louer</div>
+                                                                <div class="label-status label label-default">à vendre</div>
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -494,6 +518,7 @@
                                                                                     </i>
                                                                                 </a>
                                                                             {% endif %}
+
                                                                         </span>
                                                                         </li>
                                                                         <li>
@@ -511,20 +536,21 @@
                                                         <div class="body-left">
                                                             <div class="info-row">
                                                                 <div class="rating">
-                                                                <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip">
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span style="width: 70%" class="top-ratings">
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                    </span>
-                                                                </span>
+                                                                    <span class="bottom-ratings tip">
+                                                                        {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for i in 1..rating.getMoyenne(annonce) %}
+                                                                                <span class="fa fa-star"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+
+                                                                        {% set j = 1 %}
+
+                                                                        {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                                                <span class="fa fa-star-o"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                        </span>
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
@@ -534,17 +560,28 @@
                                                             </div>
                                                             <div class="table-list full-width info-row">
                                                                 <div class="cell">
-                                                                    {#<div class="info-row amenities">#}
-                                                                    {#<p>#}
-                                                                    {#{% for caracteristique in annonce.caracteristiques %}#}
-                                                                    {#<span>{{ caracteristique.nom }}</span>#}
-                                                                    {#{% endfor %}#}
-                                                                    {#</p>#}
-                                                                    {#</div>#}
+                                                                    {% if app.user %}
+                                                                        {% if annonce in app.user.annonces %}
+                                                                            <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart">
+                                                                                </i> {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% else %}
+                                                                            <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart-o">
+                                                                                </i>  {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                            <i class="fa fa-heart-o">
+                                                                            </i>  {{ annonce.likes |length }} J'aime
+                                                                        </a>
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="cell">
                                                                     <div class="phone">
-                                                                        <a href="#" class="btn btn-primary">Details
+                                                                        <a href="{{ path('annonce_show',{'title':annonce.titre| slugify,'id':annonce.id}) }}" class="btn btn-primary">Details
                                                                             <i class="fa fa-angle-right fa-right"></i>
                                                                         </a>
                                                                         <p>
@@ -615,7 +652,7 @@
                                 <div class="module-nav">
                                     <button class="btn btn-sm btn-crl-pprt-2-prev">Prec</button>
                                     <button class="btn btn-sm btn-crl-pprt-2-next">Suiv</button>
-                                    <a href="#" class="btn btn-carousel btn-sm">Tous</a>
+                                    <a href="" class="btn btn-carousel btn-sm">Tous</a>
                                 </div>
                             </div>
                         </div>
@@ -629,14 +666,14 @@
                                                     <div class="figure-block">
                                                         <figure class="item-thumb">
                                                             <div class="label-wrap hide-on-list">
-                                                                <div class="label-status label label-default">à louer</div>
+                                                                <div class="label-status label label-default">à vendre</div>
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
                                                                 <h3>AR {{ annonce.prix }}</h3>
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
-                                                            <a href="#">
+                                                            <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
                                                                 {% if annonce.galleries %}
                                                                     <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
                                                                 {% endif %}
@@ -683,6 +720,7 @@
                                                                                     </i>
                                                                                 </a>
                                                                             {% endif %}
+
                                                                         </span>
                                                                         </li>
                                                                         <li>
@@ -700,20 +738,21 @@
                                                         <div class="body-left">
                                                             <div class="info-row">
                                                                 <div class="rating">
-                                                                <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip">
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span class="fa fa-star-o"></span>
-                                                                    <span style="width: 70%" class="top-ratings">
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                        <span class="fa fa-star"></span>
-                                                                    </span>
-                                                                </span>
+                                                                    <span class="bottom-ratings tip">
+                                                                        {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for i in 1..rating.getMoyenne(annonce) %}
+                                                                                <span class="fa fa-star"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+
+                                                                        {% set j = 1 %}
+
+                                                                        {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                                            {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                                                <span class="fa fa-star-o"></span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                        </span>
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
@@ -723,17 +762,28 @@
                                                             </div>
                                                             <div class="table-list full-width info-row">
                                                                 <div class="cell">
-                                                                    {#<div class="info-row amenities">#}
-                                                                    {#<p>#}
-                                                                    {#{% for caracteristique in annonce.caracteristiques %}#}
-                                                                    {#<span>{{ caracteristique.nom }}</span>#}
-                                                                    {#{% endfor %}#}
-                                                                    {#</p>#}
-                                                                    {#</div>#}
+                                                                    {% if app.user %}
+                                                                        {% if annonce in app.user.annonces %}
+                                                                            <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart">
+                                                                                </i> {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% else %}
+                                                                            <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                                <i class="fa fa-heart-o">
+                                                                                </i>  {{ annonce.likes |length }} J'aime
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                            <i class="fa fa-heart-o">
+                                                                            </i>  {{ annonce.likes |length }} J'aime
+                                                                        </a>
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="cell">
                                                                     <div class="phone">
-                                                                        <a href="#" class="btn btn-primary">Details
+                                                                        <a href="{{ path('annonce_show',{'title':annonce.titre|slugify,'id':annonce.id}) }}" class="btn btn-primary">Details
                                                                             <i class="fa fa-angle-right fa-right"></i>
                                                                         </a>
                                                                         <p>

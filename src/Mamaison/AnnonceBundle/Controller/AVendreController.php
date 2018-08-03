@@ -3,6 +3,7 @@
 namespace Mamaison\AnnonceBundle\Controller;
 
 use Mamaison\AnnonceBundle\Entity\Annonce;
+use Mamaison\AnnonceBundle\Entity\TypeAnnonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,8 +23,21 @@ class AVendreController extends Controller {
     public function indexAction(Request $request){
         // get all annonces
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-            ->findAll();
-        return $this->render('avendre/all.html.twig',array('annonces'=>$annonces));
+            ->findByWithPagination(
+                ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre'])],1,1
+            );
+        dump($annonces);
+
+
+
+        $annonceLesPlusNoter = [];
+
+        foreach ($this->getDoctrine()->getRepository(Annonce::class)
+                     ->getAnnoncePlusNote() as $a)
+            $annonceLesPlusNoter[] = $a[0];
+
+        return $this->render('avendre/all.html.twig',
+            array('annonces'=>$annonces,'annoncePlusNote' => $annonceLesPlusNoter));
     }
 
 

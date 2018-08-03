@@ -227,7 +227,7 @@ class SecurityController extends Controller
      *
      * @Route("/redirect-login",name="redirect-login")
      */
-    public function redirectAction(){
+    public function redirectAction(Request $request){
 
         /** @var User $user */
         $user = $this->getUser();

@@ -25,10 +25,10 @@ class ArrayExtension extends AbstractExtension
      * @param array $array
      * @return array
      */
-    public function bestFilter($array)
+    public function bestFilter($array,$lenth=3)
     {
-        if(count($array) > 3){
-            return array_slice($array,0,3);
+        if(count($array) > $lenth){
+            return array_slice($array,0,$lenth);
         }else return $array;
     }
 

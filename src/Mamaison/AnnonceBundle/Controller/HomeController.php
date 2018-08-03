@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function indexAction(){
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-            ->getMeilleurAnnonce();
+            ->getAnnonceEnVedette();
         $annonceMeilleur = [];
         foreach ($annonces as $annonce)
             $annonceMeilleur[] = $annonce[0];
