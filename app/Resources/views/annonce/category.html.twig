@@ -195,21 +195,25 @@
                             </div>
                         </div>
                         <!--end property items-->
-                        {#<hr>#}
+                        <hr>
 
-                        <!--start Pagination-->
-                        <div class="pagination-main">
-                            <ul class="pagination">
-                                <li class="disabled"><a aria-label="Previous" href="#"><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
-                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a aria-label="Next" href="#"><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                            </ul>
-                        </div>
-                        <!--start Pagination-->
+                        {% if annonces.total > 0 %}
+                            <!--start Pagination-->
+                            <div class="pagination-main">
+                                <ul class="pagination">
+                                    <li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
+                                    {% for i in 1..annonces.pages %}
+                                        {% if i == annonces.page %}
+                                            <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
+                                        {% else %}
+                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
+                                </ul>
+                            </div>
+                            <!--start Pagination-->
+                        {% endif %}
 
                     </div>
                 </div>

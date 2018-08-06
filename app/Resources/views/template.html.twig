@@ -43,44 +43,10 @@
                 </a>
             </div>
             <nav class="navi main-nav">
-                <ul>
-                    <li><a href="{{ path('a_vendre_tous') }}">A VENDRE</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-vendre.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-vendre.html">Propriétés commerciales</a></li>
-                            <li><a href="villa-a-vendre.html">Villas</a></li>
-                            <li><a href="studio-a-vendre.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-vendre.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-vendre.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="a-louer-mois.html">A LOUER PAR MOIS</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-louer-mois.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-louer-mois.html">Propriété commerciale</a></li>
-                            <li><a href="villa-a-louer-mois.html">Villas</a></li>
-                            <li><a href="studio-a-louer-mois.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-louer-mois.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-louer-mois.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="a-louer-jour.html">A LOUER PAR JOUR</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-louer-jour.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-louer-jour.html">Propriétés commerciales</a></li>
-                            <li><a href="villa-a-louer-jour.html">Villas</a></li>
-                            <li><a href="studio-a-louer-jour.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-louer-jour.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-louer-jour.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
+                {#Load menu from controller#}
+                {{ render(controller(
+                    'AppBundle:Header:index'
+                )) }}
             </nav>
         </div>
         <div class="header-right">

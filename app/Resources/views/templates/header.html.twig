@@ -1,0 +1,28 @@
+<ul>
+    <li><a href="{{ path('a_vendre_tous') }}">A VENDRE</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                <li><a href="{{ path('a_vendre_category',{'slug':category|slugify}) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+
+    <li><a href="{{ path('a_louer_mois_tous') }}">A LOUER PAR MOIS</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                <li><a href="{{ path('a_louer_mois_category',{'slug':category|slugify}) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+
+    <li><a href="{{ path('a_louer_jours_tous') }}">A LOUER PAR JOUR</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                <li><a href="{{ path('a_louer_jours_category',{'slug':category|slugify}) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+
+
+
+</ul>

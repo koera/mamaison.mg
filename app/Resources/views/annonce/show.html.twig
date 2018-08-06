@@ -616,7 +616,7 @@
                                     <h3 class="widget-title">Propriétés les plus notées</h3>
                                 </div>
                                 <div class="widget-body">
-                                    {% for annonce in annoncePlusNote|best%}
+                                    {% for annonce in annoncePlusNote|best(5)%}
                                     <div class="media">
                                         <div class="media-left">
                                             <figure class="item-thumb">

@@ -1,35 +1,42 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Koera
+ * Date: 8/6/18
+ * Time: 9:08 AM
+ */
 
 namespace Mamaison\AnnonceBundle\Controller;
+
 
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Mamaison\AnnonceBundle\Entity\Category;
 use Mamaison\AnnonceBundle\Entity\TypeAnnonce;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Class AVendreController
+ * Class ALouerParJoursController
  * @package Mamaison\AnnonceBundle\Controller
- * @Route("/a-vendre")
+ * @Route("/a-louer-par-jours")
  */
-class AVendreController extends Controller {
-
+class ALouerParJoursController extends Controller
+{
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/", name="a_vendre_tous")
+     * @Route("/", name="a_louer_jours_tous")
      */
     public function indexAction(Request $request){
 
         // get all annonces
         if(!$request->get('page') )
             $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy(1, 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre'])]);
+                ->findPageBy(1, 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par jours'])]);
         else
             $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy($request->get('page'), 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre'])]);
+                ->findPageBy($request->get('page'), 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par jours'])]);
 
         $annonceLesPlusNoter = [];
 
@@ -45,7 +52,7 @@ class AVendreController extends Controller {
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/{slug}", name="a_vendre_category")
+     * @Route("/{slug}", name="a_louer_jours_category")
      */
     public function categoryAction(Request $request,$slug){
         $slug = explode ('-', $slug);
@@ -58,12 +65,12 @@ class AVendreController extends Controller {
             $annonces = $this->getDoctrine()->getRepository(Annonce::class)
                 ->findPageBy(1, 3,
                     [
-                        'typeAnnonce' => $this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre']),
+                        'typeAnnonce' => $this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par jours']),
                         'category' => $this->getDoctrine()->getRepository(Category::class)->findOneBy(['type'=>$categoryName])
                     ]);
         else
             $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy($request->get('page'), 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre'])]);
+                ->findPageBy($request->get('page'), 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par jours'])]);
 
         $annonceLesPlusNoter = [];
 
@@ -74,6 +81,5 @@ class AVendreController extends Controller {
         return $this->render('annonce/category.html.twig',
             array('annonces'=>$annonces,'annoncePlusNote' => $annonceLesPlusNoter));
     }
-
 
 }
