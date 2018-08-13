@@ -1,0 +1,721 @@
+<!--start advanced search section-->
+<section class="advanced-search advance-search-header">
+    <div class="header-media">
+        <div class="page-banner-image banner-single-item">
+            <div class="banner-inner" style="background-image: url({{asset('assets/images/ecully4.jpg')}})">
+                <div class="banner-caption">
+                    <div class="splash-search">
+                        <h1> Toutes les annonces immobilièrs</h1>
+                        <div class="banner-search-taber">
+                            <div class="banner-search-tabs">
+                                <div class="search-tab active">
+                                    <div class="search-tab-inner">A vendre</div>
+                                </div>
+                                <div class="search-tab">
+                                    <div class="search-tab-inner">A louer / mois</div>
+                                </div>
+                                <div class="search-tab">
+                                    <div class="search-tab-inner">A louer / jour</div>
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in">
+                                    <div class="advanced-search">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-3">
+                                                    <div class="form-group">
+                                                        <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Régions</option>
+                                                                    {% for region in regions %}
+                                                                        <option value="{{ region.id }}">{{ region }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Villes</option>
+                                                                    {% for ville in villes %}
+                                                                        <option value="{{ ville.id }}">{{ ville }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Quartiers</option>
+                                                                    {% for quartier in quartiers %}
+                                                                        <option value="{{ quartier.id }}">{{ quartier }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col-xs-6 text-center">
+                                                            <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée</button>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-6">
+                                                            <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search"></i>Rechercher</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="advance-fields">
+                                                <div class="row">
+
+
+                                                    <div class="col-sm-6 col-xs-12">
+                                                        <div class="range-advanced-main">
+                                                            <div class="range-text">
+                                                                <input type="hidden" class="min-price-range-hidden range-input" readonly>
+                                                                <input type="hidden" class="max-price-range-hidden range-input" readonly>
+                                                                <p><span class="range-title">Échelle des prix:</span> de  <span class="min-price-range"></span> à  <span class="max-price-range"></span></p>
+                                                            </div>
+                                                            <div class="range-wrap">
+                                                                <div class="price-range-advanced"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 features-list">
+
+                                                        <label class="text-uppercase title">Categories</label>
+                                                        <div class="clearfix"></div>
+
+
+                                                        <div class="row">
+                                                            {% for categorie in categories %}
+                                                                <div class="col-md-4">
+                                                                    <label class="checkbox-inline">
+                                                                        <input type="checkbox" value="{{ categorie.id }}"> {{ categorie }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+
+                                                        </div>
+                                                        </br>
+
+                                                    </div>
+
+
+
+                                                    <div class="col-md-12 features-list">
+                                                        <label class="text-uppercase title">Caracteristique generale</label>
+                                                        <div class="clearfix"></div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> 1er plan
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> 2ème plan avec accès voiture
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> 2ème plan avec accès moto
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> 2ème plan accès piéton
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> Avec garage
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Avec cour
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> WC intérieur
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Douche intérieur
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Cuisine
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade">
+                                    <div class="advanced-search">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-3">
+                                                    <div class="form-group">
+                                                        <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Régions</option>
+                                                                    <option value="chicago">Antananarivo</option>
+                                                                    <option value="los-angeles">Mahajanga</option>
+                                                                    <option value="miami">Toamasina</option>
+                                                                    <option value="new-york">Diego</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Villes</option>
+                                                                    <option value="beverly-hills">Mahamasina</option>
+                                                                    <option value="brickell">Ankadifotsy</option>
+                                                                    <option value="brickyard">Analakely</option>
+                                                                    <option value="bronx">Andravoangy</option>
+                                                                    <option value="brooklyn">Barika Dimy</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Quartiers</option>
+                                                                    <option value="beverly-hills">Mahamasina</option>
+                                                                    <option value="brickell">Ankadifotsy</option>
+                                                                    <option value="brickyard">Analakely</option>
+                                                                    <option value="bronx">Andravoangy</option>
+                                                                    <option value="brooklyn">Barika Dimy</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col-xs-6 text-center">
+                                                            <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée</button>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-6">
+                                                            <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search"></i>Rechercher</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="advance-fields">
+                                                <div class="row">
+
+
+                                                    <div class="col-sm-6 col-xs-12">
+                                                        <div class="range-advanced-main">
+                                                            <div class="range-text">
+                                                                <input type="hidden" class="min-price-range-hidden range-input" readonly>
+                                                                <input type="hidden" class="max-price-range-hidden range-input" readonly>
+                                                                <p><span class="range-title">Échelle des prix:</span> de  <span class="min-price-range"></span> à  <span class="max-price-range"></span></p>
+                                                            </div>
+                                                            <div class="range-wrap">
+                                                                <div class="price-range-advanced"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 features-list">
+
+                                                        <label class="text-uppercase title">Categories</label>
+                                                        <div class="clearfix"></div>
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> terrain
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> propriété commerciale
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> villa
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> studio
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> maison familiale
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> appartement
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        </br>
+
+                                                    </div>
+
+
+
+                                                    <div class="col-md-12 features-list">
+                                                        <label class="text-uppercase title">Caracteristique generale</label>
+                                                        <div class="clearfix"></div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> 1er plan
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> 2ème plan avec accès voiture
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> 2ème plan avec accès moto
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> 2ème plan accès piéton
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> Avec garage
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Avec cour
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> WC intérieur
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Douche intérieur
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Cuisine
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade">
+                                    <div class="advanced-search">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-3">
+                                                    <div class="form-group">
+                                                        <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Régions</option>
+                                                                    <option value="chicago">Antananarivo</option>
+                                                                    <option value="los-angeles">Mahajanga</option>
+                                                                    <option value="miami">Toamasina</option>
+                                                                    <option value="new-york">Diego</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Villes</option>
+                                                                    <option value="beverly-hills">Mahamasina</option>
+                                                                    <option value="brickell">Ankadifotsy</option>
+                                                                    <option value="brickyard">Analakely</option>
+                                                                    <option value="bronx">Andravoangy</option>
+                                                                    <option value="brooklyn">Barika Dimy</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-12">
+                                                            <div class="form-group no-margin">
+                                                                <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                                                    <option value="">Quartiers</option>
+                                                                    <option value="beverly-hills">Mahamasina</option>
+                                                                    <option value="brickell">Ankadifotsy</option>
+                                                                    <option value="brickyard">Analakely</option>
+                                                                    <option value="bronx">Andravoangy</option>
+                                                                    <option value="brooklyn">Barika Dimy</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col-xs-6 text-center">
+                                                            <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée</button>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-6">
+                                                            <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search"></i>Rechercher</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="advance-fields">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12 col-md-12 features-list">
+                                                        <div classs="row">
+                                                            <div class="col-md-2">
+                                                                <label class="text-uppercase title">Prix entre : </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" id="property-title" type="number" placeholder="Valeur minimum" min="3000">
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <p>à</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input class="form-control" id="property-title" type="number" placeholder="Valeur maximum" max="1000000000">
+                                                            </div>
+                                                        </div>
+                                                        </br>
+                                                    </div>
+
+                                                    <div class="col-md-12 features-list">
+                                                        <label class="text-uppercase title">Categories</label>
+                                                        <div class="clearfix"></div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> terrain
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> propriété commerciale
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> villa
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> studio
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> maison familiale
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> appartement
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        </br>
+
+                                                    </div>
+
+
+
+                                                    <div class="col-md-12 features-list">
+                                                        <label class="text-uppercase title">Caracteristique generale</label>
+                                                        <div class="clearfix"></div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> 1er plan
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> 2ème plan avec accès voiture
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option3"> 2ème plan avec accès moto
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> 2ème plan accès piéton
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> Avec garage
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Avec cour
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option1"> WC intérieur
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Douche intérieur
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-sm-4">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" value="option2"> Cuisine
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--end advanced search section-->
+
+
+<!--start advanced search section-->
+<section class="advanced-search-mobile visible-xs visible-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <form>
+                    <div class="single-search-wrap">
+                        <div class="single-search-inner advance-btn">
+                            <button class="table-cell text-left" type="button"><i class="fa fa-gear"></i></button>
+                        </div>
+                        <div class="single-search-inner single-search">
+
+                            <input type="text" class="form-control table-cell" name="search" placeholder="Entrer une adresse, une ville, une rue ou un zip ...">
+                        </div>
+                        <div class="single-search-inner single-seach-btn">
+                            <button class="table-cell text-right" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="advance-fields">
+                        <div class="row">
+
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="A vendre">
+                                        <option>A vendre</option>
+                                        <option>A louer / mois</option>
+                                        <option>A louer / jour</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Region">
+                                        <option>Location 1</option>
+                                        <option>Location 2</option>
+                                        <option>Location 3</option>
+                                        <option>Location 4</option>
+                                        <option>Location 5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Ville">
+                                        <option>Location 1</option>
+                                        <option>Location 2</option>
+                                        <option>Location 3</option>
+                                        <option>Location 4</option>
+                                        <option>Location 5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Quartier">
+                                        <option>Location 1</option>
+                                        <option>Location 2</option>
+                                        <option>Location 3</option>
+                                        <option>Location 4</option>
+                                        <option>Location 5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="features-list">
+                                <label class="text-uppercase title">Categories</label>
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option1"> terrain
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option2"> propriété commerciale
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option3"> villa
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option1"> studio
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option2"> maison familiale
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option3"> appartement
+                                        </label>
+                                    </div>
+                                </div>
+                                </br>
+
+                            </div>
+
+
+
+                            <div class="features-list">
+                                <label class="text-uppercase title">Caracteristique generale</label>
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option1"> 1er plan
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option2"> 2ème plan avec accès voiture
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option3"> 2ème plan avec accès moto
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option1"> 2ème plan accès piéton
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option1"> Avec garage
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option2"> Avec cour
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option1"> WC intérieur
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option2"> Douche intérieur
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="option2"> Cuisine
+                                        </label>
+                                    </div>
+                                </div>
+                                </br>
+                            </div>
+
+
+
+                            <div class="col-sm-12  col-xs-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6  col-xs-6">
+                                            <input class="form-control" id="property-title" type="number" placeholder="Valeur minimum" min="3000" height="2px">
+                                        </div>
+                                        <div class="col-sm-6  col-xs-6">
+                                            <input class="form-control" id="property-title" type="number" placeholder="Valeur minimum" min="1000000000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 col-xs-2">
+
+                            </div>
+
+                            <div class="col-sm-6 col-xs-8">
+                                </br>
+                                <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search pull-left"></i> Recherche </button>
+                            </div>
+
+                            <div class="col-sm-3 col-xs-2">
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!--end advanced search section-->
