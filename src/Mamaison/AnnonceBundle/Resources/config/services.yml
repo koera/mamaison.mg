@@ -1,4 +1,7 @@
 services:
-#    mamaison_annonce.example:
-#        class: Mamaison\AnnonceBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  mamaison_annonce.twig.search_extension:
+    class: Mamaison\AnnonceBundle\Service\Extensions\SearchExtension
+    arguments:
+      - "@doctrine.orm.entity_manager"
+    tags:
+      - { name: twig.extension }

@@ -2,30 +2,25 @@
     <div class="form-group search-long">
         <div class="search">
             <div class="input-search input-icon">
-                <input class="form-control" type="text" placeholder="Entrer un lieu, une adresse...">
+                <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... " name="adresse">
             </div>
-            <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
-                <option value="">Régions</option>
-                <option value="chicago">Antananarivo</option>
-                <option value="los-angeles">Mahajanga</option>
-                <option value="miami">Toamasina</option>
-                <option value="new-york">Diego</option>
+            <select name="region" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                <option value="" selected>Régions</option>
+                {% for region in getAllRegions() %}
+                    <option value="{{ region.id }}">{{ region.nom }}</option> 
+                {% endfor %}
             </select>
-            <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
-                <option value="">Villes</option>
-                <option value="beverly-hills">Mahamasina</option>
-                <option value="brickell">Ankadifotsy</option>
-                <option value="brickyard">Analakely</option>
-                <option value="bronx">Andravoangy</option>
-                <option value="brooklyn">Barika Dimy</option>
+            <select name="ville" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                <option value="" selected>Villes</option>
+                {% for ville in getAllVilles() %}
+                    <option value="{{ ville.id }}">{{ ville.nom }}</option> 
+                {% endfor %}
             </select>
-            <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+            <select name="quartier" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
                 <option value="">Quartiers</option>
-                <option value="beverly-hills">Mahamasina</option>
-                <option value="brickell">Ankadifotsy</option>
-                <option value="brickyard">Analakely</option>
-                <option value="bronx">Andravoangy</option>
-                <option value="brooklyn">Barika Dimy</option>
+                {% for quartier in getAllQuartiers() %}
+                    <option value="{{ quartier.id }}">{{ quartier.nom }}</option> 
+                {% endfor %}
             </select>
             <div class="advance-btn-holder">
                 <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée </button>
@@ -42,36 +37,13 @@
                 <div class="clearfix"></div>
 
                 <div class="row">
-                    <div class="col-md-3">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option1"> terrains
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option2"> propriétés commerciales
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option3"> villas
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option1"> studios
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option2"> maisons familiales
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option3"> appartements
-                        </label>
-                    </div>
+                    {% for categorie in getAllCategories() %}
+                        <div class="col-md-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="category[]" value="{{ categorie.id }}"> {{categorie.type}}
+                            </label>
+                        </div>
+                    {% endfor %}
                 </div>
                 </br>
             </div>
@@ -80,51 +52,13 @@
                 <label class="text-uppercase title">Caracteristique generale</label>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option1"> 1er plan
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option2"> 2ème plan avec accès voiture
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option3"> 2ème plan avec accès moto
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option1"> 2ème plan accès piéton
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option1"> Avec garage
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option2"> Avec cour
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option1"> WC intérieur
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option2"> Douche intérieur
-                        </label>
-                    </div>
-                    <div class="col-xs-6 col-sm-4">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="option2"> Cuisine
-                        </label>
-                    </div>
+                    {% for caracteristique in getAllCaracteristiques() %}
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="caracteristique[]" value="{{caracteristique.id}}"> {{caracteristique.nom}}
+                            </label>
+                        </div>
+                    {% endfor %}
                 </div>
                 </br>
             </div>

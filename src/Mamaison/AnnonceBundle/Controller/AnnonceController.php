@@ -86,7 +86,7 @@ class AnnonceController extends Controller
 
             $this->addFlash("success", "Annnonce ajouter avec success");
 
-            return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId()));
+            return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId(),'title' => $annonce->getTitre()));
         }
 
         return $this->render('annonce/new.html.twig', array(

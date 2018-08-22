@@ -1,0 +1,289 @@
+{% extends 'template.html.twig' %}
+{% block content %}
+    <section id="section-body">
+        <div class="container">
+            <div class="page-title breadcrumb-top">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li>
+                            <li>Propriete</li>
+                            <li class="active">A vendre</li>
+                        </ol>
+                        <div class="page-title-left">
+                            <h2>Propriete mise en vente</h2>
+                        </div>
+                        <div class="page-title-right">
+                            <div class="view hidden-xs">
+                                <div class="table-cell">
+                                    <span class="view-btn btn-list active"><i class="fa fa-th-list"></i></span>
+                                    <span class="view-btn btn-grid"><i class="fa fa-th-large"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 list-grid-area container-contentbar">
+                    <div id="content-area">
+                        <!--start property items-->
+                        <div class="property-listing list-view">
+                            <div class="row">
+                                {% for annonce in annonces %}
+                                    <div class="item-wrap">
+                                        <div class="property-item table-list">
+                                            <div class="table-cell">
+                                                <div class="figure-block">
+                                                    <figure class="item-thumb">
+                                                        <span class="label-featured label label-success">En vedette</span>
+                                                        <div class="price hide-on-list">
+                                                            <h3> AR {{ annonce.prix }}</h3>
+                                                            {#<p class="rant">AR 21,000/m²</p>#}
+                                                        </div>
+                                                        <a href="#">
+                                                            <img src="{{ annonce.galleries |first }}" alt="thumb" width="364" height="244">
+                                                        </a>
+                                                        <figcaption class="thumb-caption cap-actions clearfix">
+                                                            <div class="pull-left hidden-xs">
+                                                            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Photos">
+                                                                <i class="fa fa-camera"></i> <span class="count">{{ annonce.galleries |length }}</span>
+                                                            </span>
+                                                            </div>
+                                                            <ul class="list-unstyled actions pull-right">
+                                                                <li>
+                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Favorite">
+                                                                    {% if app.user %}
+                                                                        {% if annonce in app.user.annonces %}
+                                                                            <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                                                        <i class="fa fa-heart">
+                                                                                        </i>
+                                                                                    </a>
+                                                                                {% else %}
+                                                                            <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                                        <i class="fa fa-heart-o">
+                                                                                        </i>
+                                                                                    </a>
+                                                                        {% endif %}
+                                                                            {% else %}
+                                                                        <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                                                    <i class="fa fa-heart-o">
+                                                                                    </i>
+                                                                                </a>
+                                                                    {% endif %}
+                                                                </span>
+                                                                </li>
+                                                                <li class="share-btn">
+                                                                    <div class="share_tooltip fade">
+                                                                        <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                                        <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                                    </div>
+                                                                    <span title="" data-placement="top" data-toggle="tooltip" data-original-title="share"><i class="fa fa-share-alt"></i></span>
+                                                                </li>
+                                                            </ul>
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                            <div class="item-body table-cell">
+
+                                                <div class="body-left table-cell">
+                                                    <div class="info-row">
+                                                        <div class="rating">
+                                                        <span class="stars">
+                                                            {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                                {% for i in 1..rating.getMoyenne(annonce) %}
+                                                                    <i class="fa fa-star"></i>
+                                                                {% endfor %}
+                                                            {% endif %}
+
+                                                            {% set j = 1 %}
+
+                                                            {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                                {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                                    <i class="fa fa-star-o"></i>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </span>
+                                                            <span>{{ annonce.rating |length }} Votes</span>
+                                                        </div>
+                                                        <h2 class="property-title"><a href="#">{{ annonce.typeAnnonce.valeur }}</a></h2>
+                                                        <h4 class="property-location">{{ annonce.adresse }}</h4>
+                                                    </div>
+                                                    <div class="info-row amenities hide-on-grid">
+                                                        {#<p>#}
+                                                            {#<span>Lits: 3</span>#}
+                                                            {#<span>Chambres: 2</span>#}
+                                                            {#<span>m²: 1,965</span>#}
+                                                        {#</p>#}
+                                                        <p>{{ annonce.category.type }}</p>
+                                                    </div>
+                                                    <div class="info-row date hide-on-grid">
+                                                        {% if annonce.user.type == 'simple' %}
+                                                            <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
+                                                        {% elseif annonce.user.type == 'society' %}
+                                                            <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
+                                                        {% endif %}
+                                                        <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
+                                                            {% set leftDays = difference.days %}
+                                                            {% if leftDays == 1 %}
+                                                                Il y a 1 jour
+                                                            {% elseif leftDays < 1 %}
+                                                                à l'instant
+                                                            {% else %}
+                                                                il y a {{ leftDays }} jours
+                                                            {% endif %}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="body-right table-cell hidden-gird-cell">
+                                                    <div class="info-row price">
+                                                        <h3> AR {{ annonce.prix }}</h3>
+                                                        {#<p class="rant"> AR 21,000/m²</p>#}
+                                                    </div>
+                                                    <div class="info-row phone text-right">
+                                                        <a href="#" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
+                                                        <p><a href="#">{% if annonce.user.type == 'simple' %}
+                                                                    {{ annonce.user.profileSimpleUser.telephone }}
+                                                                {% elseif annonce.user.type == 'society' %}
+                                                                    {{ annonce.user.profileSocietyUser.telephone }}
+                                                                {% endif %}</a></p>
+                                                    </div>
+                                                </div>
+                                                <div class="table-list full-width hide-on-list">
+                                                    <div class="cell">
+                                                        <div class="info-row amenities">
+                                                            {#<p>#}
+                                                                {#<span>Lits: 3</span>#}
+                                                                {#<span>Chambres: 2</span>#}
+                                                                {#<span>M²: 1,965</span>#}
+                                                            {#</p>#}
+                                                            <p>{{ annonce.category.type }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell">
+                                                        <div class="phone">
+                                                            <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
+                                                            <p><a href="#">+261 33 256 31</a></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-foot date hide-on-list">
+                                            <div class="item-foot-left">
+                                                {% if annonce.user.type == 'simple' %}
+                                                    <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
+                                                {% elseif annonce.user.type == 'society' %}
+                                                    <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="item-foot-right">
+                                                <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
+                                                    {% set leftDays = difference.days %}
+                                                    {% if leftDays == 1 %}
+                                                        Il y a 1 jour
+                                                    {% elseif leftDays < 1 %}
+                                                        à l'instant
+                                                    {% else %}
+                                                        il y a {{ leftDays }} jours
+                                                    {% endif %}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!--end property items-->
+                        <hr>
+
+                        
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-md-offset-0 col-sm-offset-3 container-sidebar">
+                    <aside id="sidebar" class="sidebar-white">
+                        <div class="widget widget-featured">
+                            <div class="widget-top">
+                                <h3 class="widget-title">Propriétés en vedette</h3>
+                            </div>
+                            <div class="widget-body">
+                                <div class="figure-block">
+                                    <figure class="item-thumb">
+                                        <span class="label-featured label label-success">vedette</span>
+                                        <a class="hover-effect" href="#">
+                                            <img src="http://placehold.it/290x194" width="290" height="194" alt="thumb">
+                                        </a>
+                                        <figcaption class="thumb-caption clearfix">
+                                            <div class="cap-price pull-left">AR 350,000</div>
+                                            <ul class="list-unstyled actions pull-right">
+                                                <li>
+                                                    <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Photos">
+                                                        <i class="fa fa-camera"></i> <span class="blue">12</span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget widget-rated">
+                            <div class="widget-top">
+                                <h3 class="widget-title">Propriétés les plus Notés</h3>
+                            </div>
+                            <div class="widget-body">
+                                {% for annonce in annoncePlusNote|best%}
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <figure class="item-thumb">
+                                                <a class="hover-effect" href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                                    <img alt="thumb" src="{{ annonce.galleries|last }}" width="100" height="75" style="width: 100px; height: 75px;">
+                                                </a>
+                                                <figcaption class="thumb-caption">
+
+                                                    <ul class="list-unstyled actions">
+                                                        <li>
+                                                        <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Photos">
+                                                            <i class="fa fa-camera"></i> <span class="blue">{{ annonce.galleries |length }}</span>
+                                                        </span>
+                                                        </li>
+                                                    </ul>
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3 class="media-heading"><a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a></h3>
+                                            <div class="rating">
+                                                <span class="star-text-left"> AR {{ annonce.prix }}</span>
+
+                                                <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip">
+                                                {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                    {% for i in 1..rating.getMoyenne(annonce) %}
+                                                        <span class="fa fa-star"></span>
+                                                    {% endfor %}
+                                                {% endif %}
+
+                                                    {% set j = 1 %}
+
+                                                    {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                        {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                            <span class="fa fa-star-o"></span>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="amenities">
+                                                <p>{{ annonce.likes|length }} J'aime</p>
+                                                <p>{{ annonce.adresse }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

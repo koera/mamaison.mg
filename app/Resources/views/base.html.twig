@@ -108,17 +108,17 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade active in">
                                     <div class="advanced-search">
-                                       {% include 'search/form_home.html.twig' %}     
+                                       {{ include('search/form_home.html.twig',{ action: path('mamaison_annonce.search.search',{type_annonce_id:1})}) }}     
                                     </div>
                                 </div>
                                 <div class="tab-pane fade">
                                     <div class="advanced-search">
-                                        {% include 'search/form_home.html.twig' %}
+                                        {{ include('search/form_home.html.twig',{ action: path('mamaison_annonce.search.search',{type_annonce_id:3})}) }}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade">
                                     <div class="advanced-search">
-                                        {% include 'search/form_home.html.twig' %}
+                                        {{ include('search/form_home.html.twig',{ action: path('mamaison_annonce.search.search',{type_annonce_id:2})}) }}
                                     </div>
                                 </div>
                             </div>
