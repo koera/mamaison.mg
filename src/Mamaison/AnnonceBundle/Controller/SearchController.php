@@ -62,4 +62,12 @@ class SearchController extends Controller
         return $this->render('search/search.result.html.twig',['annonces'=>$annonces,'annoncePlusNote'=>$annonceLesPlusNoter]);
     }
 
+    /**
+     * @Route("/search/encore",
+     * name="mamaison_annonce.search.encore")
+     */
+    public function searchEnconreAction(Request $request)
+    {
+        return $this->render('search/encore.html.twig');
+    }
 }
