@@ -9,6 +9,7 @@ use Mamaison\AnnonceBundle\Entity\Quartier;
 use Mamaison\AnnonceBundle\Entity\Region;
 use Mamaison\AnnonceBundle\Entity\Ville;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -33,13 +34,19 @@ class AnnonceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $em = $this->getDoctrine()->getManager();
 
-            for ($i = 0; $i <= 5; $i++) {
-                // save Gallery
-                if (!is_null($form->get('gallery_'.$i)->getData())) {
+            //gallery
+
+            foreach ($request->files->get('gallery') as $file){
+                if ($file instanceof UploadedFile) {
                     $g = new Gallery();
-                    $g->setImage($form->get('gallery_'.$i)->getData());
+                    $this->removeOldFile($g);
+                    $filename = md5(uniqid()). '.' . $file->guessClientExtension();
+                    $file->move('uploads/galleries/', $filename);
+                    $g->setImage($filename);
                     $em->persist($g);
                     $annonce->addGallery($g);
                 }
@@ -143,4 +150,29 @@ class AnnonceController extends Controller
             'annoncePlusNote' => $annonceLesPlusNoter
         ));
     }
+
+
+    /**
+     * @param Gallery $gallery
+     */
+    private function removeOldFile(Gallery $gallery)
+    {
+        $file = $this->getFileFromFileName($gallery);
+        if ($file !== null)
+            @unlink($file->getRealPath());
+    }
+
+    /**
+     * @param Gallery $gallery
+     * @return File|null
+     */
+    private function getFileFromFileName(Gallery $gallery)
+    {
+        $filename = $gallery->getImage();
+        if (empty($filename)) {
+            return null;
+        } else
+            return new File('uploads/galleries/' . $filename, false);
+    }
 }
+

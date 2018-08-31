@@ -125,15 +125,7 @@
                                                         {% elseif annonce.user.type == 'society' %}
                                                             <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
                                                         {% endif %}
-                                                        <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                            {% set leftDays = difference.days %}
-                                                            {% if leftDays == 1 %}
-                                                                Il y a 1 jour
-                                                            {% elseif leftDays < 1 %}
-                                                                à l'instant
-                                                            {% else %}
-                                                                il y a {{ leftDays }} jours
-                                                            {% endif %}</p>
+                                                        <p><i class="fa fa-calendar"></i> {{ annonce.createdAt|ago }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="body-right table-cell hidden-gird-cell">
@@ -164,7 +156,16 @@
                                                     <div class="cell">
                                                         <div class="phone">
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
-                                                            <p><a href="#">+261 33 256 31</a></p>
+                                                            <p><a href="#">{% if annonce.user.type == 'simple' %}
+                                                                        {% if annonce.user.profileSimpleUser.telephone %}
+                                                                            {{ annonce.user.profileSimpleUser.telephone }}
+                                                                        {% endif %}
+                                                                    {% elseif annonce.user.type == 'society' %}
+
+                                                                        {% if annonce.user.profileSocietyUser.telephone %}
+                                                                            {{ annonce.user.profileSocietyUser.telephone }}
+                                                                        {% endif %}
+                                                                    {% endif %}</a></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -179,15 +180,9 @@
                                                 {% endif %}
                                             </div>
                                             <div class="item-foot-right">
-                                                <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                    {% set leftDays = difference.days %}
-                                                    {% if leftDays == 1 %}
-                                                        Il y a 1 jour
-                                                    {% elseif leftDays < 1 %}
-                                                        à l'instant
-                                                    {% else %}
-                                                        il y a {{ leftDays }} jours
-                                                    {% endif %}</p>
+                                                <p><i class="fa fa-calendar"></i>
+                                                    {{ annonce.createdAt|ago }}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

@@ -471,4 +471,39 @@ class User implements UserInterface
     {
         return $this->facebookId;
     }
+
+//    /**
+//     * String representation of object
+//     * @link https://php.net/manual/en/serializable.serialize.php
+//     * @return string the string representation of the object or null
+//     * @since 5.1.0
+//     */
+//    public function serialize()
+//    {
+//        return $this->serialize(array(
+//            $this->id,
+//            $this->username,
+//            $this->password,
+//            $this->email
+//        ));
+//    }
+//
+//    /**
+//     * Constructs the object
+//     * @link https://php.net/manual/en/serializable.unserialize.php
+//     * @param string $serialized <p>
+//     * The string representation of the object.
+//     * </p>
+//     * @return void
+//     * @since 5.1.0
+//     */
+//    public function unserialize($serialized)
+//    {
+//        list(
+//            $this->id,
+//            $this->username,
+//            $this->password,
+//            $this->email
+//        ) = $this->unserialize($serialized);
+//    }
 }
