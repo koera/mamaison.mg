@@ -1,0 +1,80 @@
+<form>
+    <div class="form-group search-long">
+        <div class="search">
+            <div class="input-search input-icon">
+                <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... " name="adresse">
+            </div>
+            <select name="region" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                <option value="" selected>Régions</option>
+                {% for region in getAllRegions() %}
+                    <option value="{{ region.id }}">{{ region.nom }}</option> 
+                {% endfor %}
+            </select>
+            <select name="ville" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                <option value="" selected>Villes</option>
+                {% for ville in getAllVilles() %}
+                    <option value="{{ ville.id }}">{{ ville.nom }}</option> 
+                {% endfor %}
+            </select>
+            <select name="quartier" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                <option value="">Quartiers</option>
+                {% for quartier in getAllQuartiers() %}
+                    <option value="{{ quartier.id }}">{{ quartier.nom }}</option> 
+                {% endfor %}
+            </select>
+            <div class="advance-btn-holder">
+                <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée </button>
+            </div>
+        </div>
+        <div class="search-btn">
+            <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+    <div class="advance-fields">
+        <div class="row">
+            <div class="col-md-12 features-list">
+                <label class="text-uppercase title">Categories</label>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    {% for categorie in getAllCategories() %}
+                        <div class="col-md-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="category[]" value="{{ categorie.id }}"> {{categorie.type}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                </br>
+            </div>
+
+            <div class="col-md-12 features-list">
+                <label class="text-uppercase title">Caracteristique generale</label>
+                <div class="clearfix"></div>
+                <div class="row">
+                    {% for caracteristique in getAllCaracteristiques() %}
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="caracteristique[]" value="{{caracteristique.id}}"> {{caracteristique.nom}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                </br>
+            </div>
+
+            <div class="col-sm-6 col-xs-12">
+                <div class="range-advanced-main">
+                    <div class="range-text">
+                        <input type="hidden" class="min-price-range-hidden range-input" readonly>
+                        <input type="hidden" class="max-price-range-hidden range-input" readonly>
+                        <p><span class="range-title">Échelle des prix:</span> de  <span class="min-price-range"></span> à  <span class="max-price-range"></span></p>
+                    </div>
+                    <div class="range-wrap">
+                        <div class="price-range-advanced"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02a3e0441dfb6dd7ae6a78e72fd50c21",
-    "content-hash": "54a0c4818ad79dc053ac186843cb2049",
+    "hash": "05e45db50c8cf77beba6d07e6b9ec940",
+    "content-hash": "82020bb53bc5b7d6efc0c5077901d9c9",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1370,45 +1370,6 @@
             "time": "2018-02-13 18:05:56"
         },
         {
-            "name": "javihgil/doctrine-pagination",
-            "version": "v1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/javihgil/doctrine-pagination.git",
-                "reference": "7c6412992ba6df6e5ce5ff8e80479f60014358bf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/javihgil/doctrine-pagination/zipball/7c6412992ba6df6e5ce5ff8e80479f60014358bf",
-                "reference": "7c6412992ba6df6e5ce5ff8e80479f60014358bf",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "~2.4"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "4.2.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Jhg\\DoctrinePagination\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Doctrine pagination",
-            "time": "2017-12-13 10:58:05"
-        },
-        {
             "name": "jdorn/sql-formatter",
             "version": "v1.2.17",
             "source": {
@@ -1457,6 +1418,71 @@
                 "sql"
             ],
             "time": "2014-01-12 16:20:24"
+        },
+        {
+            "name": "knplabs/knp-time-bundle",
+            "version": "1.8.0",
+            "target-dir": "Knp/Bundle/TimeBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpTimeBundle.git",
+                "reference": "dd7ed9e72e8c28edb596c13e3d3c18c29d1248b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpTimeBundle/zipball/dd7ed9e72e8c28edb596c13e3d3c18c29d1248b4",
+                "reference": "dd7ed9e72e8c28edb596c13e3d3c18c29d1248b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "symfony/config": "~2.3|~3.0|~4.0",
+                "symfony/dependency-injection": "~2.3|~3.0|~4.0",
+                "symfony/templating": "~2.3|~3.0|~4.0",
+                "symfony/translation": "~2.3|~3.0|~4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "suggest": {
+                "symfony/twig-bundle": "to use the Twig time_diff function"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Bundle\\TimeBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/KnpTimeBundle/contributors"
+                }
+            ],
+            "description": "Knplabs time bundle makes your dates look sensible and descriptive",
+            "homepage": "http://github.com/KnpLabs/KnpTimeBundle",
+            "keywords": [
+                "bundle",
+                "date",
+                "descriptive time",
+                "knp",
+                "knplabs",
+                "time"
+            ],
+            "time": "2017-12-26 03:59:33"
         },
         {
             "name": "monolog/monolog",
@@ -2925,6 +2951,45 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "javihgil/doctrine-pagination",
+            "version": "v1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/javihgil/doctrine-pagination.git",
+                "reference": "7c6412992ba6df6e5ce5ff8e80479f60014358bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/javihgil/doctrine-pagination/zipball/7c6412992ba6df6e5ce5ff8e80479f60014358bf",
+                "reference": "7c6412992ba6df6e5ce5ff8e80479f60014358bf",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "~2.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jhg\\DoctrinePagination\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Doctrine pagination",
+            "time": "2017-12-13 10:58:05"
+        },
         {
             "name": "sensio/generator-bundle",
             "version": "v3.1.7",

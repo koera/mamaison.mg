@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Mamaison\AnnonceBundle\MamaisonAnnonceBundle(),
+            new Knp\Bundle\TimeBundle\KnpTimeBundle(),
 //            new \FOS\UserBundle\FOSUserBundle(),
         ];
 

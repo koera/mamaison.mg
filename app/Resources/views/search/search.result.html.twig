@@ -1,6 +1,5 @@
 {% extends 'template.html.twig' %}
 {% block content %}
-
     <section id="section-body">
         <div class="container">
             <div class="page-title breadcrumb-top">
@@ -125,7 +124,15 @@
                                                         {% elseif annonce.user.type == 'society' %}
                                                             <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
                                                         {% endif %}
-                                                        <p><i class="fa fa-calendar"></i> {{ annonce.createdAt|ago }}</p>
+                                                        <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
+                                                            {% set leftDays = difference.days %}
+                                                            {% if leftDays == 1 %}
+                                                                Il y a 1 jour
+                                                            {% elseif leftDays < 1 %}
+                                                                à l'instant
+                                                            {% else %}
+                                                                il y a {{ leftDays }} jours
+                                                            {% endif %}</p>
                                                     </div>
                                                 </div>
                                                 <div class="body-right table-cell hidden-gird-cell">
@@ -156,16 +163,7 @@
                                                     <div class="cell">
                                                         <div class="phone">
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
-                                                            <p><a href="#">{% if annonce.user.type == 'simple' %}
-                                                                        {% if annonce.user.profileSimpleUser.telephone %}
-                                                                            {{ annonce.user.profileSimpleUser.telephone }}
-                                                                        {% endif %}
-                                                                    {% elseif annonce.user.type == 'society' %}
-
-                                                                        {% if annonce.user.profileSocietyUser.telephone %}
-                                                                            {{ annonce.user.profileSocietyUser.telephone }}
-                                                                        {% endif %}
-                                                                    {% endif %}</a></p>
+                                                            <p><a href="#">+261 33 256 31</a></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,9 +178,15 @@
                                                 {% endif %}
                                             </div>
                                             <div class="item-foot-right">
-                                                <p><i class="fa fa-calendar"></i>
-                                                    {{ annonce.createdAt|ago }}
-                                                </p>
+                                                <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
+                                                    {% set leftDays = difference.days %}
+                                                    {% if leftDays == 1 %}
+                                                        Il y a 1 jour
+                                                    {% elseif leftDays < 1 %}
+                                                        à l'instant
+                                                    {% else %}
+                                                        il y a {{ leftDays }} jours
+                                                    {% endif %}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -192,23 +196,7 @@
                         <!--end property items-->
                         <hr>
 
-                        {% if annonces.total > 0 %}
-                            <!--start Pagination-->
-                            <div class="pagination-main">
-                                <ul class="pagination">
-                                    <li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
-                                    {% for i in 1..annonces.pages %}
-                                        {% if i == annonces.page %}
-                                            <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
-                                        {% else %}
-                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    <li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                                </ul>
-                            </div>
-                            <!--start Pagination-->
-                        {% endif %}
+                        
 
                     </div>
                 </div>

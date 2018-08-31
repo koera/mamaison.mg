@@ -125,15 +125,9 @@
                                                         {% elseif annonce.user.type == 'society' %}
                                                             <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
                                                         {% endif %}
-                                                        <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                            {% set leftDays = difference.days %}
-                                                            {% if leftDays == 1 %}
-                                                                Il y a 1 jour
-                                                            {% elseif leftDays < 1 %}
-                                                                à l'instant
-                                                            {% else %}
-                                                                il y a {{ leftDays }} jours
-                                                            {% endif %}</p>
+                                                        <p><i class="fa fa-calendar"></i>
+                                                            {{ annonce.createdAt|ago }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="body-right table-cell hidden-gird-cell">
@@ -179,15 +173,9 @@
                                                 {% endif %}
                                             </div>
                                             <div class="item-foot-right">
-                                                <p><i class="fa fa-calendar"></i> {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                    {% set leftDays = difference.days %}
-                                                    {% if leftDays == 1 %}
-                                                        Il y a 1 jour
-                                                    {% elseif leftDays < 1 %}
-                                                        à l'instant
-                                                    {% else %}
-                                                        il y a {{ leftDays }} jours
-                                                    {% endif %}</p>
+                                                <p><i class="fa fa-calendar"></i>
+                                                    {{ annonce.createdAt|ago }}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
