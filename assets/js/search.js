@@ -1,6 +1,5 @@
 import FormSearch from './search.params'
 import SearchResult from './search/search.result'
-import AnnonceBuilder from './search/annonceBuilder';
 
 const $ = require('jquery');
 const elasticsearch = require('elasticsearch');
@@ -9,6 +8,7 @@ const client = new elasticsearch.Client({
 });
 const INDEX_NAME = 'mamaison'
 const TYPE_NAME = 'annonces'
+const URL_IMAGE = ""
 
 $(document).ready(function() {
   $('.form-search').on('submit',function(e){
