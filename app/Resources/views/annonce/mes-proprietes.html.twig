@@ -1,7 +1,6 @@
 {% extends 'template.html.twig' %}
 
 {% block content %}
-
     <section id="section-body">
 
         <div class="container">
@@ -62,6 +61,11 @@
                         </div>
                         <div class="my-property-listing">
                             <div class="row grid-row">
+                                {% for message in app.flashes('success') %}
+                                    <div class="alert alert-success">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
                                 {% for annonce in annonces %}
                                 <div class="item-wrap">
                                     <div class="media my-property">
@@ -88,7 +92,7 @@
                                             <div class="my-actions">
                                                 <div class="btn-group">
                                                     <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-close"></i></a>
+                                                    <a href="#myModal" data-toggle="modal" class="action-btn" data-placement="top" title=""  data-original-title="Remove"><i class="fa fa-close"></i></a>
                                                     <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Book"><i class="fa fa-book"></i></a>
                                                     <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Star"><i class="fa fa-star"></i></a>
                                                     <a href="#" class="action-btn" data-toggle="tooltip" data-placement="top" title="" data-original-title="Upload"><i class="fa fa-upload"></i></a>
@@ -129,10 +133,26 @@
                                                             <li><a href="#"><i class="fa fa-paypal"></i> Payer avec Mvola</a></li>
                                                             <li><a href="#"><i class="fa fa-paypal"></i> Payer avec Orangemoney</a></li>
                                                             <li><a href="#"><i class="fa fa-retweet"></i>Payer avec Airtelmoney</a></li>
-
                                                         </ul>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="myModal" class="modal fade">
+                                    <div class="modal-dialog modal-confirm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Are you sure?</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body center-block">
+                                                <p>Voulez vous vraiment supprimer cette proprietes ? </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                                <a href="{{ path('annonce.delete',{'id':annonce.id}) }}" class="btn btn-danger">Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -145,18 +165,22 @@
                     <hr>
 
                     <!--start Pagination-->
-                    <div class="pagination-main">
-                        <ul class="pagination">
-                            <li class="disabled"><a aria-label="Previous" href="#"><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
-                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a aria-label="Next" href="#"><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                        </ul>
-                    </div>
-                    <!--start Pagination-->
+                    {% if annonces.total > 0 %}
+                        <div class="pagination-main">
+                            <ul class="pagination">
+                                <li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
+                                {% for i in 1..annonces.pages %}
+                                    {% if i == annonces.page %}
+                                        <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
+                                    {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                <li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <!--end Pagination-->
                 </div>
             </div>
         </div>

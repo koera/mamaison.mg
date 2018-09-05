@@ -28,3 +28,15 @@ services:
     rating_service:
         class: Mamaison\AnnonceBundle\Service\Rating\MoyenneService
         arguments: ['@doctrine.orm.default_entity_manager']
+
+    app.annonce_repository:
+        class: Mamaison\AnnonceBundle\Repository\AnnonceRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+        - Mamaison\AnnonceBundle\Entity\Annonce
+
+    kernel.listener.doctrine:
+        class: Mamaison\AnnonceBundle\EventListener\DoctrineListener
+        public: false
+        tags:
+          - { name: doctrine.event_listener, event: preFlush, method: preFlush }

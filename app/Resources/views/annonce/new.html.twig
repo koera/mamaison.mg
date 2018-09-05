@@ -11,11 +11,6 @@
                         <div class="page-title-left">
                             <h2>Ajouter propriete</h2>
                         </div>
-                        {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
                         <div class="page-title-right">
                             <ol class="breadcrumb">
                                 <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li>
@@ -42,6 +37,11 @@
                 <div class="col-md-9 col-sm-8 user-dashboard-right">
                     <form name="mamaison_annoncebundle_annonce" method="post" enctype="multipart/form-data">
                         <div class="account-block">
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
                             <div class="add-title-tab">
                                 <h3>Description de la propriété et prix</h3>
                                 <div class="add-expand"></div>
@@ -192,7 +192,8 @@
                                     <div class="property-media">
                                         <div class="media-gallery">
                                             <div class="row">
-                                                <div id="coba"></div>
+                                                <div id="coba">
+                                                </div>
                                             </div>
                                         </div>
 
@@ -220,7 +221,9 @@
     </section>
 {% endblock %}
 {% block specificScript %}
+
     <script src="{{ asset('assets/js/gallery/spartan-multi-image-picker-min.js') }}"></script>
+
     <script type="text/javascript">
         $(function(){
 

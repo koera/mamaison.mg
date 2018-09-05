@@ -1,0 +1,15 @@
+<ul>
+    <li><a href="{{ path('a_vendre_tous') }}">Votre Ville</a>
+        <ul class="sub-menu">
+            {% for ville in villes %}
+                <li><a href="{{ path('set_ville_in_cookies',{'ville_id':ville.id}) }}">{{ ville }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+
+{#<select class="selectpicker bs-select-hidden">#}
+    {#{% for ville in villes %}#}
+        {#<option>{{ ville }}</option>#}
+    {#{% endfor %}#}
+{#</select>#}

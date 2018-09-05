@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Mamaison\AnnonceBundle\MamaisonAnnonceBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 //            new \FOS\UserBundle\FOSUserBundle(),
         ];
 

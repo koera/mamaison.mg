@@ -1897,7 +1897,7 @@ $(document).ready(function() {
                 if((nbrImage-1) == 5 ){
                     $('#upload-file-button').attr('disabled','disabled');
                 }
-                $('#mamaison_annoncebundle_annonce_gallery_'+(nbrImage-1)).val(bin);
+                $('#mamaison_annoncebundle_annonce_gallery_'+(nbrImage-1)).val(e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);

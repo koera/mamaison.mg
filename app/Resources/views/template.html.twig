@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>MaMaison / Home</title>
+    <title>MaMaison / template</title>
     <!--Meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
             <div class="modal-body">
                 <ul class="contenaire-login" align="center">
                     <a href="{{ path('login') }}" class="menumbil"><h5 style="color : #828282;">Se connecter</h5></a>
-                    <hr></hr>
+                    <hr/>
                     <a href="{{ path('registration_simple_user')}}" class="menumbil"><h5 style="color : #828282; sans-serif;">S'enregistrer</h5></a>
                 </ul>
             </div>
@@ -76,7 +76,7 @@
         </div>
         <!--end mobile nav-->
         <div class="header-logo">
-            <a href="#"><img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo" ></a>
+            <a href="{{ path('homepage') }}"><img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo" ></a>
         </div>
         <div class="header-user">
             <div class="user">

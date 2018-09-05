@@ -47,6 +47,11 @@
                     'AppBundle:Header:index'
                 )) }}
             </nav>
+            <nav class="navi main-nav">
+                {{ render(controller(
+                    'AppBundle:Header:ville'
+                )) }}
+            </nav>
         </div>
         <div class="header-right">
 
@@ -59,6 +64,7 @@
                 {% endif %}
                 <a href="add-new-property.html" class="btn btn-default btn-publish">Publier votre propriété</a>
             </div>
+
         </div>
     </div>
 </header>

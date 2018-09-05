@@ -9,6 +9,7 @@ use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Category;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * Annonce
  *
@@ -144,6 +145,13 @@ class Annonce
      * @ORM\OneToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Rating", mappedBy="annonce")
      */
     private $rating;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
 
     /**
@@ -624,5 +632,29 @@ class Annonce
     public function getRating()
     {
         return $this->rating;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return Annonce
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 }

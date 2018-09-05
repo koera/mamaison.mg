@@ -108,9 +108,14 @@ class AnnonceController extends Controller
      * @Route("/mon-compte/mes-proprietes", name="annonce_mon_proprietes")
      * @Method({"GET"})
      */
-    public function mesproprietesAction(){
-        $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-            ->findBy(['user'=>$this->getUser()]);
+    public function mesproprietesAction(Request $request){
+        if(!$request->get('page') )
+            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+                ->findPageBy(1, 3, ['user'=>$this->getUser()]);
+        else
+            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+                ->findPageBy($request->get('page'), 3, ['user'=>$this->getUser()]);
+
         return $this->render('annonce/mes-proprietes.html.twig', array('annonces'=>$annonces));
     }
 
@@ -121,6 +126,7 @@ class AnnonceController extends Controller
      * @Method({"GET"})
      */
     public function mesproprietesfavoritesAction(){
+
         return $this->render('annonce/mes-proprietes-favorites.html.twig', array('user'=>$this->getUser()));
     }
 
@@ -152,6 +158,9 @@ class AnnonceController extends Controller
     }
 
 
+
+
+
     /**
      * @param Gallery $gallery
      */
@@ -173,6 +182,25 @@ class AnnonceController extends Controller
             return null;
         } else
             return new File('uploads/galleries/' . $filename, false);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/remove/{id}", name="annonce.delete")
+     */
+    public function deleteAnnonceAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository(Annonce::class)
+            ->find($id);
+        if($annonce){
+            $em->remove($annonce);
+            $em->flush();
+        }
+        $this->addFlash("success", "Propriete supprime :)");
+        return $this->redirectToRoute('annonce_mon_proprietes');
     }
 }
 

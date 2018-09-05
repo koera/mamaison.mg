@@ -2,9 +2,11 @@
 
 namespace Mamaison\AnnonceBundle\Repository;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping;
 use Jhg\DoctrinePagination\ORM\PaginatedQueryBuilder;
 use Jhg\DoctrinePagination\ORM\PaginatedRepository;
-
+use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * AnnonceRepository
  *
@@ -13,6 +15,14 @@ use Jhg\DoctrinePagination\ORM\PaginatedRepository;
  */
 class AnnonceRepository extends PaginatedRepository
 {
+
+
+//    public function findAll()
+//    {
+////        $this->createQueryBuilder('a')
+////            ->leftJoin('')
+//    }
+
     public function getAnnonceEnVedette(){
         return $this->createQueryBuilder('a')
             ->leftJoin('a.likes','user')
