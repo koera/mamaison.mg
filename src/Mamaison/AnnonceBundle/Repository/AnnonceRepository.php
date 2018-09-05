@@ -15,24 +15,116 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class AnnonceRepository extends PaginatedRepository
 {
+    public function findAllAnnonce($ville = null){
+        $query = $this->queryFindAll();
+        if($ville){
+            $query
+                ->leftJoin('quartier.ville','ville')
+                ->addSelect('ville')
+                ->where('ville.nom = :ville')
+                ->setParameter('ville',$ville);
+        }
+        $result = $query->getQuery()->execute();
+        if(count($result) < 50 ){
+            $result = array_merge($result,$this->queryFindAll()->getQuery()->execute());
+        }
+        return $result;
+    }
 
+    public function findAnnonceByType($typeAnnonce,$ville = null){
+        $query = $this->queryFindAll(true,$typeAnnonce);
+        if($ville){
+            $query
+                ->leftJoin('quartier.ville','ville')
+                ->addSelect('ville')
+                ->andWhere('ville.nom = :ville')
+                ->setParameter('ville',$ville);
+        }
 
-//    public function findAll()
-//    {
-////        $this->createQueryBuilder('a')
-////            ->leftJoin('')
-//    }
+        $result = $query->getQuery()->execute();
+        if(count($result) < 50 ){
+            $result = array_merge($result,$this->queryFindAll(true,$typeAnnonce)->getQuery()->execute());
+        }
+        return $result;
+    }
 
-    public function getAnnonceEnVedette(){
-        return $this->createQueryBuilder('a')
-            ->leftJoin('a.likes','user')
-            ->addSelect('count(user.id) as u')
+    /**
+     * @param bool $findByType
+     * @param null $typeAnnonce
+     * @return \Doctrine\ORM\QueryBuilder
+     * @throws \Exception
+     */
+    private function queryFindAll($findByType = false,$typeAnnonce = null){
+        $query =  $this->createQueryBuilder('a')
+            ->leftJoin('a.category','category')
+            ->leftJoin('a.quartier','quartier')
+            ->leftJoin('a.user','user')
+            ->leftJoin('a.caracteristiques','caracteristiques')
+            ->leftJoin('a.galleries','galleries')
+            ->leftJoin('a.typeAnnonce','typeAnnonce')
+            ->leftJoin('a.likes','likes')
+            ->leftJoin('a.rating','rating')
+            ->addSelect('category')
+            ->addSelect('quartier')
             ->addSelect('user')
+            ->addSelect('caracteristiques')
+            ->addSelect('galleries')
+            ->addSelect('typeAnnonce')
+            ->addSelect('likes')
+            ->addSelect('rating');
+        if($findByType){
+            if(!$typeAnnonce){
+                throw new \Exception('typeAnnonce is required');
+            }
+            $query->where('typeAnnonce.valeur = :type')
+                ->setParameter('type',$typeAnnonce);
+        }
+        return $query;
+    }
+
+    public function getAnnonceEnVedette($ville = null){
+        $q = $this->queryAnnonceEnVedette();
+        if($ville){
+            $q
+                ->leftJoin('quartier.ville','ville')
+                ->addSelect('ville')
+                ->where('ville.nom = :ville')
+                ->setParameter('ville',$ville);
+        }
+        $result = $q->getQuery()->execute();
+        if(count($result) < 50){
+            $result = array_merge($result,$this->queryAnnonceEnVedette()->getQuery()->execute());
+        }
+        return $result;
+    }
+
+    private function queryAnnonceEnVedette(){
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.category','category')
+            ->leftJoin('a.quartier','quartier')
+            ->leftJoin('a.user','user')
+            ->leftJoin('a.caracteristiques','caracteristiques')
+            ->leftJoin('a.galleries','galleries')
+            ->leftJoin('a.typeAnnonce','typeAnnonce')
+            ->leftJoin('a.likes','likes')
+            ->leftJoin('a.rating','rating')
+            ->addSelect('category')
+            ->addSelect('quartier')
+            ->addSelect('user')
+            ->addSelect('caracteristiques')
+            ->addSelect('galleries')
+            ->addSelect('typeAnnonce')
+            ->addSelect('likes')
+            ->addSelect('rating')
+            ->addSelect('count(likes.id) as u')
             ->groupBy('a.id')
 //            ->having('count(user.id) > 0')
             ->orderBy('u','desc')
-            ->getQuery()
-            ->execute();
+        ;
+    }
+
+    private function queryAnnoncePlusNoter($ville= null){
+
     }
 
     public function getMoyenneRating($id){

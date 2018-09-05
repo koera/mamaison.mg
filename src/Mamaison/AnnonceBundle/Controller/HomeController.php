@@ -14,6 +14,7 @@ use Mamaison\AnnonceBundle\Entity\TypeAnnonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class HomeController
@@ -27,32 +28,27 @@ class HomeController extends Controller
      * @Route("/", name="homepage")
      * @Method({"GET"})
      */
-    public function indexAction(){
+    public function indexAction(Request $request){
+
+        $ville = $request->cookies->get('ville');
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-            ->getAnnonceEnVedette();
+            ->getAnnonceEnVedette($ville);
+
         $annonceMeilleur = [];
+
         foreach ($annonces as $annonce)
             $annonceMeilleur[] = $annonce[0];
 
         $annonceVente = $this->getDoctrine()->getRepository(Annonce::class)
-            ->findBy(
-                ['typeAnnonce'
-                    => $this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A vendre'])
-                ]
-            );
+            ->findAnnonceByType('A vendre',$ville);
+
         $annonceALouerParMois = $this->getDoctrine()->getRepository(Annonce::class)
-            ->findBy(
-                ['typeAnnonce'
-                => $this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par mois'])
-                ]
-            );
+            ->findAnnonceByType('A louer par mois',$ville);
+
         $annonceALouerParJours = $this->getDoctrine()->getRepository(Annonce::class)
-            ->findBy(
-                ['typeAnnonce'
-                => $this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par jours'])
-                ]
-            );
+            ->findAnnonceByType('A louer par jours',$ville);
+
         return $this->render('home/index.html.twig',
             [
                 'annonceAVendre'=>$annonceVente,
