@@ -33,25 +33,13 @@ class AnnonceController extends Controller
         $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
 
             $em = $this->getDoctrine()->getManager();
 
-            //gallery
-
-            foreach ($request->files->get('gallery') as $file){
-                if ($file instanceof UploadedFile) {
-                    $g = new Gallery();
-                    $this->removeOldFile($g);
-                    $filename = md5(uniqid()). '.' . $file->guessClientExtension();
-                    $file->move('uploads/galleries/', $filename);
-                    $g->setImage($filename);
-                    $em->persist($g);
-                    $annonce->addGallery($g);
-                }
-            }
-
+        
             // quartier ville and region
 
             $quartierRequest = $form->get('neighborhood')->getData();
@@ -86,6 +74,14 @@ class AnnonceController extends Controller
 
             $annonce->setUser($this->getUser());
 
+            // galleries
+            foreach ($request->request->get('image') as $image_id){
+                if ($image_id) {
+                    $g = $em->getRepository(Gallery::class)->find($image_id);
+                    $annonce->addGallery($g);
+                }
+            }
+
             $em->persist($annonce);
 
             $em->flush();
@@ -96,10 +92,26 @@ class AnnonceController extends Controller
             return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId(),'title' => $annonce->getTitre()));
         }
 
+        dump($this->_getImages($request));
+
         return $this->render('annonce/new.html.twig', array(
             'annonce' => $annonce,
+            'images'=> $this->_getImages($request),
             'form' => $form->createView()
         ));
+    }
+
+    private function _getImages($request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $images = [];
+        foreach ($request->request->get('image') as $image_id){
+            if ($image_id) {
+                $images[] = $em->getRepository(Gallery::class)->find($image_id);
+            }
+        }
+        return $images;
+        
     }
 
     /**

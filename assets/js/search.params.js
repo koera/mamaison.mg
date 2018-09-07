@@ -1,13 +1,5 @@
-const FORM_NAME_NO_ARRAY = {
-    'adresse' : ['adresse', 'ville.nom', 'region.nom', 'quartier.nom', 'titre', 'descripton'],
-    'ville': 'ville.id',
-    'region': 'region.id',
-    'quartier': 'quartier.id'
-}
-const FORM_NAME_ARRAY = {
-    'category[]': 'category.id',
-    'caracteristique[]': 'caracteristique.id'
-}
+import { FORM_NAME_NO_ARRAY, FORM_NAME_ARRAY } from './constant'
+
 class FormSearch
 {
     constructor(form)

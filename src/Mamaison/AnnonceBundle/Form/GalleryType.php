@@ -14,14 +14,15 @@ class GalleryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('image',FileType::class);
+        $builder->add('file',FileType::class);
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Mamaison\AnnonceBundle\Entity\Gallery'
+            'data_class' => 'Mamaison\AnnonceBundle\Entity\Gallery',
+            'csrf_protection'=>false
         ));
     }
 

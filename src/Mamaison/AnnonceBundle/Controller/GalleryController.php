@@ -5,19 +5,20 @@ namespace Mamaison\AnnonceBundle\Controller;
 use Mamaison\AnnonceBundle\Entity\Gallery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Gallery controller.
  *
- * @Route("gallery")
  */
 class GalleryController extends Controller
 {
     /**
      * Lists all gallery entities.
      *
-     * @Route("/", name="gallery_index")
+     * @Route("/", name="mamaison.gallery_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -34,43 +35,50 @@ class GalleryController extends Controller
     /**
      * Creates a new gallery entity.
      *
-     * @Route("/new", name="gallery_new")
+     * @Route("/mon-compte/ajout-propriete/gallery", name="mamaison.gallery_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
         $gallery = new Gallery();
         $form = $this->createForm('Mamaison\AnnonceBundle\Form\GalleryType', $gallery);
-        $form->handleRequest($request);
+        $response = new Response();
+        $response->headers->set('content-type','application/json');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($gallery);
-            $em->flush();
-
-            return $this->redirectToRoute('gallery_show', array('id' => $gallery->getId()));
+        if ($request->isMethod('POST')) {
+            $form->submit($request->files->all());
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $gallery->upload();
+                $em->persist($gallery);
+                $em->flush();
+                $response->setContent(json_encode(array('success'=>'L\'image a été bien enregistré.','gallery_id'=>$gallery->getId())));
+                return $response;
+            }
+            
+            $errors = $form->getErrors();
         }
-
-        return $this->render('gallery/new.html.twig', array(
-            'gallery' => $gallery,
-            'form' => $form->createView(),
-        ));
+        $response->setContent(json_encode(array('error'=>$errors)));
+        return $response;
     }
 
     /**
      * Finds and displays a gallery entity.
      *
-     * @Route("/{id}", name="gallery_show")
+     * @Route("/mon-compte/ajout-propriete/gallery/{id}", name="mamaison.gallery_show")
      * @Method("GET")
      */
     public function showAction(Gallery $gallery)
     {
-        $deleteForm = $this->createDeleteForm($gallery);
+        $response = new Response();
+        $em = $this->getDoctrine()->getManager();
+        $image = $em->getRepository('MamaisonAnnonceBundle:Gallery')->find($gallery->getId());
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $image->getImage());
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Content-Type', 'image/jpeg');
+        $response->setContent(file_get_contents($image->getRootPath()));
 
-        return $this->render('gallery/show.html.twig', array(
-            'gallery' => $gallery,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $response;
     }
 
     /**

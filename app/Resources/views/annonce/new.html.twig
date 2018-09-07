@@ -192,17 +192,57 @@
                                     <div class="property-media">
                                         <div class="media-gallery">
                                             <div class="row">
-                                                <div id="coba"></div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-0' data-input-index="0"/>
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-0">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                        <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-1' data-input-index="1" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-1">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-2' data-input-index="2" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-2">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-3' data-input-index="3" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-3">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-4' data-input-index="4" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-4">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="media-drag-drop">
+                                        <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
+                                        <h4>or</h4>
+                                        <label class="btn btn-default btn-file" style="width:auto">
+                                            Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="btn-upload-image">
+                                        </label>
 
-                                        {#<div id="drop" class="media-drag-drop js-drug-and-drop">#}
-                                            {#<h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>#}
-                                            {#<h4>or</h4>#}
-                                            {#<label class="btn btn-default btn-file" style="width:auto">#}
-                                                {#Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="upload-file-button">#}
-                                            {#</label>#}
-                                        {#</div>#}
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -220,41 +260,14 @@
     </section>
 {% endblock %}
 {% block specificScript %}
-    <script src="{{ asset('assets/js/gallery/spartan-multi-image-picker-min.js') }}"></script>
-    <script type="text/javascript">
-        $(function(){
-
-            $("#coba").spartanMultiImagePicker({
-                fieldName:        'gallery[]',
-                maxCount:         5,
-                rowHeight:        '200px',
-                groupClassName:   'col-md-4 col-sm-4 col-xs-6',
-                maxFileSize:      '',
-                placeholderImage: {
-                    image: '{{ asset('assets/images/placeholder.png')}}',
-                    width : '100%'
-                },
-                dropFileLabel : "Drop Here",
-                onAddRow:       function(index){
-                    console.log(index);
-                    console.log('add new row');
-                },
-                onRenderedPreview : function(index){
-                    console.log(index);
-                    console.log('preview rendered');
-                },
-                onRemoveRow : function(index){
-                    console.log(index);
-                },
-                onExtensionErr : function(index, file){
-                    console.log(index, file,  'extension err');
-                    alert('Please only input png or jpg type file')
-                },
-                onSizeErr : function(index, file){
-                    console.log(index, file,  'file size too big');
-                    alert('File size too big');
-                }
-            });
-        });
-    </script>
+<script src="{{ asset('build/upload.js') }}"></script>
+<script type="text/javascript">
+    function loadImage(){
+        {%set index = 0 %}
+        {% for image in images %}
+            $("{{'#image-'~index}}").attr('src', "{{ asset( image.image ) }}");
+            {%set index = index +1 %}
+        {% endfor %}
+    }
+</script>
 {% endblock %}

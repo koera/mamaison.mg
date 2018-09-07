@@ -1,3 +1,4 @@
 {
-  "build/search.js": "/build/search.js"
+  "build/search.js": "/build/search.js",
+  "build/upload.js": "/build/upload.js"
 }
