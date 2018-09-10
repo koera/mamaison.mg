@@ -22,7 +22,6 @@ class AVendreController extends Controller {
      * @Route("/", name="a_vendre_tous")
      */
     public function indexAction(Request $request){
-
         // get all annonces
         if(!$request->get('page') )
             $annonces = $this->getDoctrine()->getRepository(Annonce::class)

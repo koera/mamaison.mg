@@ -138,6 +138,7 @@ class AnnonceController extends Controller
      */
     public function showAction(Request $request,$title,$id)
     {
+        $ville = $request->cookies->get('ville');
         $annonce = $this->getDoctrine()->getRepository(Annonce::class)
             ->find($id);
 
@@ -147,7 +148,7 @@ class AnnonceController extends Controller
         $annonceLesPlusNoter = [];
 
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
-                     ->getAnnoncePlusNote() as $a)
+                     ->getAnnoncePlusNote($ville) as $a)
             $annonceLesPlusNoter[] = $a[0];
 
         return $this->render('annonce/show.html.twig', array(

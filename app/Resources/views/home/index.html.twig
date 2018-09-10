@@ -206,9 +206,7 @@
                                                 <div class="item-foot date hide-on-list">
                                                     <div class="item-foot-left">
                                                         <p>
-                                                            {#<i class="fa fa-user"></i>#}
-                                                            {#<a href="#">Nalitiana Jery</a>#}
-                                                            {% if annonce.user.type == 'simple' %}
+                                                        {% if annonce.user.type == 'simple' %}
                                                         <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
                                                         {% elseif annonce.user.type == 'society' %}
                                                             <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
@@ -218,15 +216,7 @@
                                                     <div class="item-foot-right">
 
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                            {% set leftDays = difference.days %}
-                                                            {% if leftDays == 1 %}
-                                                                Il y a 1 jour
-                                                            {% elseif leftDays < 1 %}
-                                                                à l'instant
-                                                            {% else %}
-                                                                il y a {{ leftDays }} jours
-                                                            {% endif %}
+                                                            {{ annonce.updatedAt | ago }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -424,7 +414,7 @@
                                                     </div>
                                                     <div class="item-foot-right">
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {{ annonce.createdAt|ago }}
+                                                            {{ annonce.updatedAt|ago }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -623,7 +613,7 @@
                                                     <div class="item-foot-right">
 
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {{ annonce.createdAt|ago }}
+                                                            {{ annonce.updatedAt|ago }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -822,7 +812,7 @@
                                                     <div class="item-foot-right">
 
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {{ annonce.createdAt|ago }}
+                                                            {{ annonce.updatedAt|ago }}
                                                         </p>
                                                     </div>
                                                 </div>
