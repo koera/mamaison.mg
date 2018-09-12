@@ -31,14 +31,18 @@ class ALouerParMoisController extends Controller
      */
     public function indexAction(Request $request){
 
-        // get all annonces
-        if(!$request->get('page') )
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy(1, 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par mois'])]);
-        else
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy($request->get('page'), 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A louer par mois'])]);
+        $ville = $request->cookies->get('ville');
 
+        $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+            ->findAnnonceByType('A louer par mois',$ville);
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $annonces,
+            $request->query->getInt('page', 1),
+            4
+        );
         $annonceLesPlusNoter = [];
 
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
@@ -46,7 +50,7 @@ class ALouerParMoisController extends Controller
             $annonceLesPlusNoter[] = $a[0];
 
         return $this->render('annonce/type.html.twig',
-            array('annonces'=>$annonces,'annoncePlusNote' => $annonceLesPlusNoter));
+            array('annonces'=>$pagination,'annoncePlusNote' => $annonceLesPlusNoter));
     }
 
 

@@ -31,21 +31,21 @@
                 </div>
                 <div class="col-md-9 col-sm-8 user-dashboard-right">
                     <div class="account-block">
-                        <div class="list-tabs">
-                            <div class="tabs">
-                                <ul>
-                                    <li>
-                                        <a href="#" class="active">TOUS</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">à vendre</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">à Louer</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {#<div class="list-tabs">#}
+                            {#<div class="tabs">#}
+                                {#<ul>#}
+                                    {#<li>#}
+                                        {#<a href="#" class="active">TOUS</a>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                        {#<a href="#">à vendre</a>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                        {#<a href="#">à Louer</a>#}
+                                    {#</li>#}
+                                {#</ul>#}
+                            {#</div>#}
+                        {#</div>#}
                         <div class="my-property-search">
                             <form>
                                 <div class="table-list">
@@ -160,24 +160,7 @@
                     </div>
 
                     <hr>
-
-                    <!--start Pagination-->
-                    {% if annonces.total > 0 %}
-                        <div class="pagination-main">
-                            <ul class="pagination">
-                                <li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
-                                {% for i in 1..annonces.pages %}
-                                    {% if i == annonces.page %}
-                                        <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
-                                    {% else %}
-                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                                <li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                            </ul>
-                        </div>
-                    {% endif %}
-                    <!--end Pagination-->
+                    {{ knp_pagination_render(annonces) }}
                 </div>
             </div>
         </div>

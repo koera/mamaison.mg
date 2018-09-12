@@ -34,7 +34,6 @@ class AnnonceController extends Controller
         $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
 
@@ -123,14 +122,17 @@ class AnnonceController extends Controller
      * @Method({"GET"})
      */
     public function mesproprietesAction(Request $request){
-        if(!$request->get('page') )
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy(1, 3, ['user'=>$this->getUser()]);
-        else
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy($request->get('page'), 3, ['user'=>$this->getUser()]);
+       $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+           ->getProprieteById($this->getUser()->getId());
 
-        return $this->render('annonce/mes-proprietes.html.twig', array('annonces'=>$annonces));
+       $paginator  = $this->get('knp_paginator');
+
+       $pagination = $paginator->paginate(
+           $annonces,
+           $request->query->getInt('page', 1),
+           4
+       );
+       return $this->render('annonce/mes-proprietes.html.twig', array('annonces'=>$pagination));
     }
 
     /**
@@ -140,14 +142,20 @@ class AnnonceController extends Controller
      * @Method({"GET"})
      */
     public function mesproprietesfavoritesAction(Request $request){
-        if(!$request->get('page') )
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->getProprieteFavorite(0, 3, $this->getUser()->getId());
-        else
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->getProprieteFavorite(1, 3, $this->getUser()->getId());
-        dump($annonces);
-        return $this->render('annonce/mes-proprietes-favorites.html.twig', array('user'=>$this->getUser()));
+        $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+                                    ->getProprieteFavorite($this->getUser()->getId());
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $annonces,
+            $request->query->getInt('page', 1),
+            4
+        );
+
+        return $this->render('annonce/mes-proprietes-favorites.html.twig', [
+            'annonces' => $pagination
+        ]);
     }
 
     /**
@@ -160,22 +168,23 @@ class AnnonceController extends Controller
     {
         $ville = $request->cookies->get('ville');
         $annonce = $this->getDoctrine()->getRepository(Annonce::class)
-            ->find($id);
+            ->findAnnonceById($id);
+        if($annonce){
+            $category = $this->getDoctrine()->getRepository(Category::class)
+                ->findAll();
 
-        $category = $this->getDoctrine()->getRepository(Category::class)
-            ->findAll();
+            $annonceLesPlusNoter = [];
 
-        $annonceLesPlusNoter = [];
-
-        foreach ($this->getDoctrine()->getRepository(Annonce::class)
-                     ->getAnnoncePlusNote($ville) as $a)
-            $annonceLesPlusNoter[] = $a[0];
-
-        return $this->render('annonce/show.html.twig', array(
-            'annonce' => $annonce,
-            'category' => $category,
-            'annoncePlusNote' => $annonceLesPlusNoter
-        ));
+            foreach ($this->getDoctrine()->getRepository(Annonce::class)
+                         ->getAnnoncePlusNote($ville) as $a)
+                $annonceLesPlusNoter[] = $a[0];
+            return $this->render('annonce/show.html.twig', array(
+                'annonce' => $annonce,
+                'category' => $category,
+                'annoncePlusNote' => $annonceLesPlusNoter
+            ));
+        }
+        return new Response("Propriete not found");
     }
 
 

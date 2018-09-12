@@ -70,13 +70,7 @@
                             <div class="tab-content">
 
                                 <div id="gallery" class="tab-pane fade active in">
-                                    {% set i =0 %}
-                                        {% for gallery in annonce.galleries %}
-                                            {% set i = i+1 %}
-                                            {% if i == 1 %}
-                                                <img src="{{ asset(gallery.image)}}" alt="Image" width="1170" height="600">
-                                            {% endif %}
-                                        {% endfor %}
+                                    <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}" width="1170" height="600">
                                     <div class="form-small form-media">
                                         <div class="media agent-media">
                                             <div class="media-left">
@@ -197,7 +191,7 @@
                                         {% for gallery in annonce.galleries %}
                                             {% set i = i+1 %}
                                             <div class="column">
-                                                <img class="demo cursor" id="image{{ i }}" src="{{ asset(gallery.image) }}" style="width:100%"  alt="The Woods">
+                                                <img class="demo cursor" id="image{{ i }}" src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" style="width:100%"  alt="The Woods">
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -366,200 +360,7 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
-                                {#<div class="detail-title-inner">#}
-                                    {#<h4 class="title-inner">Détails supplémentaires</h4>#}
-                                {#</div>#}
-                                {#<ul class="list-three-col">#}
-                                    {#<li><strong>Dépôt:</strong> 20%</li>#}
-                                    {#<li><strong>Taille du pool:</strong> 300m²</li>#}
-                                    {#<li><strong>Dernière année de remodelage:</strong>2017</li>#}
-                                    {#<li><strong>Equipement:</strong> Clubhouse</li>#}
-                                    {#<li><strong>Chambres supplémentaire:</strong> Guest Bath</li>#}
-                                    {#<li><strong>Equipment:</strong> Grill - Gas</li>#}
-                                {#</ul>#}
                             </div>
-                            {#<div id="features" class="detail-features detail-block target-block">#}
-                                {#<div class="detail-title">#}
-                                    {#<h2 class="title-left">En vedettes</h2>#}
-                                {#</div>#}
-                                {#<ul class="list-three-col list-features">#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Air Conditionner</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Barbeque</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Séchoir</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Gym</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Blanchisserie</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Pelouse</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Four micro onde</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Douche extérieure</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Refrigerateur</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Sauna</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Cable TV</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Machine à laver</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>WiFi</a></li>#}
-                                    {#<li><a href="#"><i class="fa fa-check"></i>Couvertures de fenêtre</a></li>#}
-                                {#</ul>#}
-                            {#</div>#}
-                            {#<div id="floor-plan" class="property-plans detail-block target-block">#}
-                                {#<div class="detail-title">#}
-                                    {#<h2 class="title-left">Plans d'étage</h2>#}
-                                {#</div>#}
-                                {#<div class="accord-block">#}
-                                    {#<div class="accord-tab">#}
-                                        {#<h3>Plan d'étage A</h3>#}
-                                        {#<ul>#}
-                                            {#<li>Taille: <strong>1,234 m²</strong></li>#}
-                                            {#<li>Lits: <strong>4</strong></li>#}
-                                            {#<li>Chambres: <strong>3</strong></li>#}
-                                            {#<li>Prix: <strong>$1,200/mo</strong></li>#}
-                                        {#</ul>#}
-                                        {#<div class="expand-icon active"></div>#}
-                                    {#</div>#}
-                                    {#<div class="accord-content" style="display: block">#}
-                                        {#<img src="images/floor-image.png" alt="img" width="400" height="436">#}
-                                    {#</div>#}
-                                    {#<div class="accord-tab">#}
-                                        {#<h3>Floor Plan B</h3>#}
-                                        {#<ul>#}
-                                            {#<li>Size: <strong>1,234 sqft</strong></li>#}
-                                            {#<li>Beds: <strong>4</strong></li>#}
-                                            {#<li>Baths: <strong>3</strong></li>#}
-                                            {#<li>Price: <strong>$1,200/mo</strong></li>#}
-                                        {#</ul>#}
-                                        {#<div class="expand-icon"></div>#}
-                                    {#</div>#}
-                                    {#<div class="accord-content">#}
-                                        {#<img src="images/floor-image.png" alt="img" width="400" height="436">#}
-                                    {#</div>#}
-                                    {#<div class="accord-tab">#}
-                                        {#<h3>Floor Plan C</h3>#}
-                                        {#<ul>#}
-                                            {#<li>Size: <strong>1,234 sqft</strong></li>#}
-                                            {#<li>Beds: <strong>4</strong></li>#}
-                                            {#<li>Baths: <strong>3</strong></li>#}
-                                            {#<li>Price: <strong> AR 1,200/m²</strong></li>#}
-                                        {#</ul>#}
-                                        {#<div class="expand-icon"></div>#}
-                                    {#</div>#}
-                                    {#<div class="accord-content">#}
-                                        {#<img src="images/floor-image.png" alt="img" width="400" height="436">#}
-                                    {#</div>#}
-                                {#</div>#}
-                                {#<div class="detail-title-inner">#}
-                                    {#<h4 class="title-inner">Documents de la propriété</h4>#}
-                                {#</div>#}
-                                {#<ul class="document-list">#}
-                                    {#<li>#}
-                                        {#<div class="pull-left">#}
-                                            {#<i class="fa fa-file-o"></i> Plan de la propriété en PDF#}
-                                        {#</div>#}
-                                        {#<div class="pull-right">#}
-                                            {#<a href="#">Télécharger</a>#}
-                                        {#</div>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                        {#<div class="pull-left">#}
-                                            {#<i class="fa fa-file-o"></i> Brochure PDF#}
-                                        {#</div>#}
-                                        {#<div class="pull-right">#}
-                                            {#<a href="#">Télécharger</a>#}
-                                        {#</div>#}
-                                    {#</li>#}
-                                {#</ul>#}
-                            {#</div>#}
-                            {#<div id="video" class="property-video detail-block target-block">#}
-                                {#<div class="detail-title">#}
-                                    {#<h2 class="title-left">Video</h2>#}
-                                {#</div>#}
-                                {#<div class="video-block">#}
-                                    {#<a href="https://www.youtube.com/watch?v=QK66RK7ogKU" data-fancy="property_video" title="YouTube demo">#}
-                                        {#<span class="play-icon"><img src="images/icons/video-play-icon.png" alt="YouTube demo" width="70" height="50"></span>#}
-                                        {#<img src="http://placehold.it/750x388" alt="thumb" class="video-thumb">#}
-                                    {#</a>#}
-                                {#</div>#}
-                            {#</div>#}
-                            {#<div id="contact-info" class="detail-contact detail-block target-block">#}
-                                {#<div class="detail-title">#}
-                                    {#<h2 class="title-left"> Info contact </h2>#}
-                                    {#<div class="title-right"><strong><a href="#">Voir ma liste</a></strong></div>#}
-                                {#</div>#}
-                                {#<div class="media agent-media">#}
-                                    {#<div class="media-left">#}
-                                        {#<a href="#">#}
-                                            {#<img src="http://placehold.it/74x74" class="media-object" alt="image" width="74" height="74">#}
-                                        {#</a>#}
-                                    {#</div>#}
-                                    {#<div class="media-body">#}
-                                        {#<h4 class="media-heading">CONTACTE DE AGENT</h4>#}
-                                        {#<ul>#}
-                                            {#<li><i class="fa fa-user"></i> Koera sam</li>#}
-                                            {#<li>#}
-                                                {#<span><i class="fa fa-phone"></i>+261 33 62 410 20 </span>#}
-                                                {#<span><a href="#"><i class="fa fa-skype"></i>Koera-sam</a></span>#}
-                                            {#</li>#}
-                                            {#<li>#}
-                                                {#<span><a href="#"><i class="fa fa-facebook-square"></i> Facebook</a></span>#}
-                                            {#</li>#}
-                                        {#</ul>#}
-                                    {#</div>#}
-                                {#</div>#}
-                                {#<div class="detail-title-inner">#}
-                                    {#<h4 class="title-inner">Renseignez-vous sur cette propriété</h4>#}
-                                {#</div>#}
-                                {#<form>#}
-                                    {#<div class="row">#}
-                                        {#<div class="col-sm-4 col-xs-12">#}
-                                            {#<div class="form-group">#}
-                                                {#<input class="form-control" placeholder="Votre nom" type="text">#}
-                                            {#</div>#}
-                                        {#</div>#}
-                                        {#<div class="col-sm-4 col-xs-12">#}
-                                            {#<div class="form-group">#}
-                                                {#<input class="form-control" placeholder="Téléphone" type="text">#}
-                                            {#</div>#}
-                                        {#</div>#}
-                                        {#<div class="col-sm-4 col-xs-12">#}
-                                            {#<div class="form-group">#}
-                                                {#<input class="form-control" placeholder="E-mail" type="email">#}
-                                            {#</div>#}
-                                        {#</div>#}
-                                        {#<div class="col-sm-12 col-xs-12">#}
-                                            {#<div class="form-group">#}
-                                                {#<textarea class="form-control" rows="5" placeholder="Emplacement"></textarea>#}
-                                            {#</div>#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                    {#<button class="btn btn-secondary">Demande d'information</button>#}
-                                {#</form>#}
-                            {#</div>#}
-
-                            {#<div class="next-prev-block clearfix">#}
-                                {#<div class="prev-box pull-left">#}
-                                    {#<div class="media">#}
-                                        {#<div class="media-left">#}
-                                            {#<a href="#">#}
-                                                {#<img src="http://placehold.it/99x99" class="media-object" alt="image" width="99" height="99">#}
-                                            {#</a>#}
-                                        {#</div>#}
-                                        {#<div class="media-body media-middle">#}
-                                            {#<h3 class="media-heading"><a href="#"><i class="fa fa-angle-left"></i>Ancien propriètaire</a></h3>#}
-                                            {#<h4>Villa à vendre</h4>#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
-                                {#<div class="next-box pull-right">#}
-                                    {#<div class="media">#}
-                                        {#<div class="media-body media-middle text-right">#}
-                                            {#<h3 class="media-heading"><a href="#">Ancien propriètaire <i class="fa fa-angle-right"></i></a></h3>#}
-                                            {#<h4>Villa a vendre</h4>#}
-                                        {#</div>#}
-                                        {#<div class="media-right">#}
-                                            {#<a href="#">#}
-                                                {#<img src="http://placehold.it/99x99" class="media-object" alt="image" width="99" height="99">#}
-                                            {#</a>#}
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-md-offset-0 col-sm-offset-3 container-sidebar">
@@ -613,7 +414,7 @@
                                             {% set count = count + 1 %}
                                         {% endfor %}
                                         {% endif %}
-                                        Moyenne : {{ rating.getMoyenne(annonce) }} / 5
+                                        {#Moyenne : {{ rating.getMoyenne(annonce) }} / 5#}
                                     </span>
                                 </div>
                             </div>
@@ -627,7 +428,7 @@
                                         <div class="media-left">
                                             <figure class="item-thumb">
                                                 <a class="hover-effect" href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                    <img alt="thumb" src="{{ annonce.galleries|last }}" width="100" height="75" style="width: 100px; height: 75px;">
+                                                    <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}"  width="100" height="75" style="width: 100px; height: 75px;" alt="{{ annonce.titre }}">
                                                 </a>
                                                 <figcaption class="thumb-caption">
 

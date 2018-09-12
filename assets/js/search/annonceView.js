@@ -23,13 +23,6 @@ export default class AnnonceView
                                     <a href="#">
                                         <img src="${IMAGE_URL}/${ annonce.id }" alt="thumb" width="364" height="244">
                                     </a>
-                                    <figcaption class="thumb-caption cap-actions clearfix">
-                                        <div class="pull-left hidden-xs">
-                                        <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Photos">
-                                            <i class="fa fa-camera"></i> <span class="count">{{ annonce.galleries |length }}</span>
-                                        </span>
-                                        </div>
-                                    </figcaption>
                                 </figure>
                             </div>
                         </div>

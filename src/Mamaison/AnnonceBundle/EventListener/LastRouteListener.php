@@ -30,6 +30,9 @@ class LastRouteListener
         if ($routeName[0] == '_') {
             return;
         }
+        if($routeName == 'mamaison.thumb'){
+            return;
+        }
         $routeData = ['name' => $routeName, 'params' => $routeParams];
 
         // Do not save same matched route twice

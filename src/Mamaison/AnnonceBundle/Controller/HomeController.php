@@ -48,6 +48,7 @@ class HomeController extends Controller
 
         $annonceALouerParJours = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByType('A louer par jours',$ville);
+
         return $this->render('home/index.html.twig',
             [
                 'annonceAVendre'=>$annonceVente,

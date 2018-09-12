@@ -35,7 +35,7 @@
                     <div class="account-block">
                         <div class="property-listing list-view">
                             <div class="row">
-                                {% for annonce in user.annonces %}
+                                {% for annonce in annonces %}
                                 <div class="item-wrap">
                                     <div class="property-item table-list">
                                         <div class="table-cell">
@@ -186,21 +186,7 @@
                     </div>
                     <hr>
 
-                    {#{% if annonces.total > 0 %}#}
-                        {#<div class="pagination-main">#}
-                            {#<ul class="pagination">#}
-                                {#<li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>#}
-                                {#{% for i in 1..annonces.pages %}#}
-                                    {#{% if i == annonces.page %}#}
-                                        {#<li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>#}
-                                    {#{% else %}#}
-                                        {#<li><a href="?page={{ i }}">{{ i }}</a></li>#}
-                                    {#{% endif %}#}
-                                {#{% endfor %}#}
-                                {#<li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>#}
-                            {#</ul>#}
-                        {#</div>#}
-                    {#{% endif %}#}
+                    {{ knp_pagination_render(annonces) }}
                 </div>
             </div>
         </div>

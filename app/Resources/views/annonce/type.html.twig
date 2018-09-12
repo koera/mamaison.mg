@@ -1,6 +1,5 @@
 {% extends 'template.html.twig' %}
 {% block content %}
-
     <section id="section-body">
         <div class="container">
             <div class="page-title breadcrumb-top">
@@ -183,24 +182,9 @@
                             </div>
                         </div>
                         <!--end property items-->
-                        <hr>
-                        {% if annonces.total > 0 %}
-                            <!--start Pagination-->
-                            <div class="pagination-main">
-                                <ul class="pagination">
-                                    <li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
-                                    {% for i in 1..annonces.pages %}
-                                        {% if i == annonces.page %}
-                                            <li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
-                                        {% else %}
-                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    <li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                                </ul>
-                            </div>
-                            <!--start Pagination-->
-                        {% endif %}
+
+                        {{ knp_pagination_render(annonces) }}
+                        
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-md-offset-0 col-sm-offset-3 container-sidebar">

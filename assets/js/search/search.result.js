@@ -12,10 +12,11 @@ class SearchResult
     render()
     {
         console.log('annonce', this.annonces)
-        // let display = new StyleDisplay().render();
+        let display = new StyleDisplay().render();
         let grid = new AnnonceList(this.annonces).render()
 
         return `<div class="container">
+                    ${display}
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 list-grid-area">
                             <div id="content-area">
