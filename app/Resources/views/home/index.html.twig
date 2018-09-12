@@ -70,9 +70,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                {% if annonce.galleries %}
-                                                                    <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
-                                                                {% endif %}
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -267,9 +265,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                {% if annonce.galleries %}
-                                                                    <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
-                                                                {% endif %}
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -465,9 +461,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                {% if annonce.galleries %}
-                                                                    <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
-                                                                {% endif %}
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -664,9 +658,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                {% if annonce.galleries %}
-                                                                    <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
-                                                                {% endif %}
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">

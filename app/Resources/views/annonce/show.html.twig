@@ -70,7 +70,13 @@
                             <div class="tab-content">
 
                                 <div id="gallery" class="tab-pane fade active in">
-                                    <img src="{{ annonce.galleries |first }}" alt="Image" width="1170" height="600">
+                                    {% set i =0 %}
+                                        {% for gallery in annonce.galleries %}
+                                            {% set i = i+1 %}
+                                            {% if i == 1 %}
+                                                <img src="{{ asset(gallery.image)}}" alt="Image" width="1170" height="600">
+                                            {% endif %}
+                                        {% endfor %}
                                     <div class="form-small form-media">
                                         <div class="media agent-media">
                                             <div class="media-left">
@@ -191,7 +197,7 @@
                                         {% for gallery in annonce.galleries %}
                                             {% set i = i+1 %}
                                             <div class="column">
-                                                <img class="demo cursor" id="image{{ i }}" src="{{ gallery }}" style="width:100%"  alt="The Woods">
+                                                <img class="demo cursor" id="image{{ i }}" src="{{ asset(gallery.image) }}" style="width:100%"  alt="The Woods">
                                             </div>
                                         {% endfor %}
                                     </div>

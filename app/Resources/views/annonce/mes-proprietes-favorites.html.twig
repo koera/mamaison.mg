@@ -48,9 +48,7 @@
                                                     </div>
                                                     <a href="#">
                                                         {#<img src="http://placehold.it/364x244" alt="thumb"> 254x170#}
-                                                        {% if annonce.galleries %}
-                                                            <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
-                                                        {% endif %}
+                                                        <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
                                                     </a>
                                                     <figcaption class="thumb-caption cap-actions clearfix">
                                                         <ul class="list-unstyled actions pull-right">
@@ -188,19 +186,21 @@
                     </div>
                     <hr>
 
-                    <!--start Pagination-->
-                    <div class="pagination-main">
-                        <ul class="pagination">
-                            <li class="disabled"><a aria-label="Previous" href="#"><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
-                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a aria-label="Next" href="#"><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                        </ul>
-                    </div>
-                    <!--start Pagination-->
+                    {#{% if annonces.total > 0 %}#}
+                        {#<div class="pagination-main">#}
+                            {#<ul class="pagination">#}
+                                {#<li><a aria-label="Previous" href=""><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>#}
+                                {#{% for i in 1..annonces.pages %}#}
+                                    {#{% if i == annonces.page %}#}
+                                        {#<li class="active"><a href="#">{{ i }}<span class="sr-only">(current)</span></a></li>#}
+                                    {#{% else %}#}
+                                        {#<li><a href="?page={{ i }}">{{ i }}</a></li>#}
+                                    {#{% endif %}#}
+                                {#{% endfor %}#}
+                                {#<li><a aria-label="Next" href=""><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>#}
+                            {#</ul>#}
+                        {#</div>#}
+                    {#{% endif %}#}
                 </div>
             </div>
         </div>

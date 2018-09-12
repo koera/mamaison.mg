@@ -1,15 +1,15 @@
-<form method="POST" action="{{action}}">
+<form method="POST" class="form-search" data-type-annonce="{{typeAnnonce}}">
     <div class="row">
         <div class="col-md-3 col-sm-3">
             <div class="form-group">
-                <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... " name="adresse" />
+                <input class="form-control" placeholder="Entrer un lieu, une adresse ou un zip... " name="adresse" />
             </div>
         </div>
         <div class="col-md-9 col-sm-9">
             <div class="row">
                 <div class="col-sm-2 col-xs-12">
                     <div class="form-group no-margin">
-                        <select name="region" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                        <select name="region" class="selectpicker bs-select-hidden search-region" data-live-search="false" data-live-search-style="begins">
                             <option value="" selected>Régions</option>
                             {% for region in getAllRegions() %}
                                 <option value="{{ region.id }}">{{ region.nom }}</option> 
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-sm-2 col-xs-12">
                     <div class="form-group no-margin">
-                        <select name="ville" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                        <select name="ville" class="selectpicker bs-select-hidden search-ville" data-live-search="false" data-live-search-style="begins">
                             <option value="" selected>Villes</option>
                             {% for ville in getAllVilles() %}
                                 <option value="{{ ville.id }}">{{ ville.nom }}</option> 
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-sm-3 col-xs-12">
                     <div class="form-group no-margin">
-                        <select name="quartier" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                        <select name="quartier" class="selectpicker bs-select-hidden search-quartier" data-live-search="false" data-live-search-style="begins">
                             <option value="">Quartiers</option>
                             {% for quartier in getAllQuartiers() %}
                                 <option value="{{ quartier.id }}">{{ quartier.nom }}</option> 

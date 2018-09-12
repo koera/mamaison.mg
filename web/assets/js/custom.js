@@ -1991,6 +1991,8 @@ $(document).ready(function() {
         }
     }
 
+    loadImage();
+
 });
 /* fuction forcotroller page momcompte */
 function ShowHideDiv(chkPassport) {

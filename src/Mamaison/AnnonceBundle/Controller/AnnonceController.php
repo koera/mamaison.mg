@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Annonce controller.
@@ -33,25 +34,13 @@ class AnnonceController extends Controller
         $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
 
             $em = $this->getDoctrine()->getManager();
 
-            //gallery
-
-            foreach ($request->files->get('gallery') as $file){
-                if ($file instanceof UploadedFile) {
-                    $g = new Gallery();
-                    $this->removeOldFile($g);
-                    $filename = md5(uniqid()). '.' . $file->guessClientExtension();
-                    $file->move('uploads/galleries/', $filename);
-                    $g->setImage($filename);
-                    $em->persist($g);
-                    $annonce->addGallery($g);
-                }
-            }
-
+        
             // quartier ville and region
 
             $quartierRequest = $form->get('neighborhood')->getData();
@@ -86,6 +75,14 @@ class AnnonceController extends Controller
 
             $annonce->setUser($this->getUser());
 
+            // galleries
+            foreach ($request->request->get('image') as $image_id){
+                if ($image_id) {
+                    $g = $em->getRepository(Gallery::class)->find($image_id);
+                    $annonce->addGallery($g);
+                }
+            }
+
             $em->persist($annonce);
 
             $em->flush();
@@ -96,10 +93,27 @@ class AnnonceController extends Controller
             return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId(),'title' => $annonce->getTitre()));
         }
 
+
         return $this->render('annonce/new.html.twig', array(
             'annonce' => $annonce,
+            'images'=> $this->_getImages($request),
             'form' => $form->createView()
         ));
+    }
+
+
+    private function _getImages($request)
+    {
+        if($request->request->get('image')) {
+            $em = $this->getDoctrine()->getManager();
+            $images = [];
+            foreach ($request->request->get('image') as $image_id) {
+                if ($image_id) {
+                    $images[] = $em->getRepository(Gallery::class)->find($image_id);
+                }
+            }
+            return $images;
+        }
     }
 
     /**
@@ -125,8 +139,14 @@ class AnnonceController extends Controller
      * @Route("/mon-compte/mes-proprietes-favorites", name="annonce_mon_proprietes_favorites")
      * @Method({"GET"})
      */
-    public function mesproprietesfavoritesAction(){
-
+    public function mesproprietesfavoritesAction(Request $request){
+        if(!$request->get('page') )
+            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+                ->getProprieteFavorite(0, 3, $this->getUser()->getId());
+        else
+            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+                ->getProprieteFavorite(1, 3, $this->getUser()->getId());
+        dump($annonces);
         return $this->render('annonce/mes-proprietes-favorites.html.twig', array('user'=>$this->getUser()));
     }
 
