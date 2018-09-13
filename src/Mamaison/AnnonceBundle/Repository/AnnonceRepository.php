@@ -45,6 +45,75 @@ class AnnonceRepository extends EntityRepository
         return $resultVille;
     }
 
+    public function findAnnonceByTypeAndCategory($ville,$type,$category){
+        $query = $this->queryfindAnnonceByTypeAndCategoryInVille($ville, $type, $category);
+        $resultVille = $query->getQuery()->execute();
+
+        if (count($resultVille) < 50) {
+            $resultVille = array_merge($resultVille, $this->queryfindAnnonceByTypeAndCategoryInNotVille($ville, $type,$category)->getQuery()->execute());
+        }
+        return $resultVille;
+    }
+
+    private function queryfindAnnonceByTypeAndCategoryInVille($ville,$type,$category){
+        $query = $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'category')
+            ->leftJoin('a.quartier', 'quartier')
+            ->leftJoin('a.user', 'user')
+            ->leftJoin('a.caracteristiques', 'caracteristiques')
+            ->leftJoin('a.galleries', 'galleries')
+            ->leftJoin('a.typeAnnonce', 'typeAnnonce')
+            ->leftJoin('a.likes', 'likes')
+            ->leftJoin('a.rating', 'rating')
+            ->addSelect('category')
+            ->addSelect('quartier')
+            ->addSelect('user')
+            ->addSelect('caracteristiques')
+            ->addSelect('galleries')
+            ->addSelect('typeAnnonce')
+            ->addSelect('likes')
+            ->addSelect('rating')
+            ->leftJoin('quartier.ville', 'ville')
+            ->addSelect('ville')
+            ->where('ville.nom = :ville')
+            ->setParameter('ville', $ville)
+            ->andWhere('typeAnnonce.valeur = :typeAnnonce')
+            ->setParameter('typeAnnonce',$type)
+            ->andWhere('category.type = :category')
+            ->setParameter('category',$category);
+        return $query;
+    }
+
+
+    private function queryfindAnnonceByTypeAndCategoryInNotVille($ville,$type,$category){
+        $query = $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'category')
+            ->leftJoin('a.quartier', 'quartier')
+            ->leftJoin('a.user', 'user')
+            ->leftJoin('a.caracteristiques', 'caracteristiques')
+            ->leftJoin('a.galleries', 'galleries')
+            ->leftJoin('a.typeAnnonce', 'typeAnnonce')
+            ->leftJoin('a.likes', 'likes')
+            ->leftJoin('a.rating', 'rating')
+            ->addSelect('category')
+            ->addSelect('quartier')
+            ->addSelect('user')
+            ->addSelect('caracteristiques')
+            ->addSelect('galleries')
+            ->addSelect('typeAnnonce')
+            ->addSelect('likes')
+            ->addSelect('rating')
+            ->leftJoin('quartier.ville', 'ville')
+            ->addSelect('ville')
+            ->where('ville.nom != :ville')
+            ->setParameter('ville', $ville)
+            ->andWhere('typeAnnonce.valeur = :typeAnnonce')
+            ->setParameter('typeAnnonce',$type)
+            ->andWhere('category.type = :category')
+            ->setParameter('category',$category);
+        return $query;
+    }
+
     /**
      * @param bool $findByType
      * @param null $typeAnnonce
@@ -277,14 +346,14 @@ class AnnonceRepository extends EntityRepository
 
     public function getProprieteFavorite($user)
     {
-        $query = $this->queryFindAll();
+        $query = $this->queryInVilleFindAll();
         $q = $query->where($query->expr()->in('likes', $user));
         return $q->getQuery();
     }
 
     public function getProprieteById($user)
     {
-        $query = $this->queryFindAll();
+        $query = $this->queryInVilleFindAll();
         $query = $query->where('user.id = :id')
             ->setParameter('id', $user);
         return $query->getQuery()->execute();

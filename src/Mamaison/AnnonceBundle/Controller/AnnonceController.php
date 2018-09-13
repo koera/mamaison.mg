@@ -173,8 +173,6 @@ class AnnonceController extends Controller
             $category = $this->getDoctrine()->getRepository(Category::class)
                 ->findAll();
 
-            $annonceLesPlusNoter = [];
-
             foreach ($this->getDoctrine()->getRepository(Annonce::class)
                          ->getAnnoncePlusNote($ville) as $a)
                 $annonceLesPlusNoter[] = $a[0];

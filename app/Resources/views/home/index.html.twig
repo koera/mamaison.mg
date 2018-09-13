@@ -7,31 +7,31 @@
     <!--start section page body-->
     <section id="section-body">
 
-        <div class="houzez-module-main module-white-bg">
-            <div class="houzez-module text-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-xs-12">
-                            <h2>Div pour pub partenaire</h2>
-                        </div>
-                    </div>
+        {#<div class="houzez-module-main module-white-bg">#}
+            {#<div class="houzez-module text-center">#}
+                {#<div class="container">#}
+                    {#<div class="row">#}
+                        {#<div class="col-sm-12 col-xs-12">#}
+                            {#<h2>Div pour pub partenaire</h2>#}
+                        {#</div>#}
+                    {#</div>#}
 
-                </div>
-            </div>
-        </div>
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
 
-        <div class="houzez-module-main">
-            <div class="houzez-module text-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-xs-12">
-                            <h2>Div pour pub agence</h2>
-                        </div>
-                    </div>
+        {#<div class="houzez-module-main">#}
+            {#<div class="houzez-module text-center">#}
+                {#<div class="container">#}
+                    {#<div class="row">#}
+                        {#<div class="col-sm-12 col-xs-12">#}
+                            {#<h2>Div pour pub agence</h2>#}
+                        {#</div>#}
+                    {#</div>#}
 
-                </div>
-            </div>
-        </div>
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
 
         <!--start carousel module-->
         <div class="houzez-module-main module-white-bg">
@@ -150,7 +150,7 @@
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
-                                                                    <a href="#">{{ annonce.titre }}</a>
+                                                                    <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a>
                                                                 </h2>
                                                                 <h4 class="property-location">{{ annonce.adresse }}</h4>
                                                             </div>

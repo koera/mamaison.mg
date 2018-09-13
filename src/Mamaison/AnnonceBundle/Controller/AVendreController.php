@@ -36,14 +36,8 @@ class AVendreController extends Controller {
             4
         );
 
-        $annonceLesPlusNoter = [];
-
-        foreach ($this->getDoctrine()->getRepository(Annonce::class)
-                     ->getAnnoncePlusNote() as $a)
-            $annonceLesPlusNoter[] = $a[0];
-
         return $this->render('annonce/type.html.twig',
-            array('annonces'=>$pagination,'annoncePlusNote' => $annonceLesPlusNoter));
+            array('annonces'=>$pagination));
     }
 
 
@@ -59,25 +53,22 @@ class AVendreController extends Controller {
         foreach ($slug as $key => $word)
             $categoryName .= $word.' ';
 
-        if(!$request->get('page') )
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy(1, 3,
-                    [
-                        'typeAnnonce' => $this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre']),
-                        'category' => $this->getDoctrine()->getRepository(Category::class)->findOneBy(['type'=>$categoryName])
-                    ]);
-        else
-            $annonces = $this->getDoctrine()->getRepository(Annonce::class)
-                ->findPageBy($request->get('page'), 3, ['typeAnnonce'=>$this->getDoctrine()->getRepository(TypeAnnonce::class)->findOneBy(['valeur'=>'A Vendre'])]);
+        $type = 'A Vendre';
+        $ville = $request->cookies->get('ville');
 
-        $annonceLesPlusNoter = [];
+        $annonces = $this->getDoctrine()->getRepository(Annonce::class)
+            ->findAnnonceByTypeAndCategory($ville,$type,$categoryName);
 
-        foreach ($this->getDoctrine()->getRepository(Annonce::class)
-                     ->getAnnoncePlusNote() as $a)
-            $annonceLesPlusNoter[] = $a[0];
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $annonces,
+            $request->query->getInt('page', 1),
+            4
+        );
 
         return $this->render('annonce/category.html.twig',
-            array('annonces'=>$annonces,'annoncePlusNote' => $annonceLesPlusNoter));
+            array('annonces'=>$pagination));
     }
 
 
