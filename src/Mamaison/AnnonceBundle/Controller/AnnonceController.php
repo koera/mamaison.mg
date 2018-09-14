@@ -100,6 +100,82 @@ class AnnonceController extends Controller
         ));
     }
 
+    /**
+     * @param Request $request
+     * @param Annonce $annonce
+     * @Route("/mon-compte/mes-proprietes/update/{id}", name="annonce.update")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function editAction(Request $request,Annonce $annonce){
+        $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            // quartier ville and region
+
+            $quartierRequest = $form->get('neighborhood')->getData();
+            $villeRequest = $form->get('ville')->getData();
+            $regionRequest = $form->get('region')->getData();
+
+            $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($regionRequest)]);
+            if(is_null($region)){
+                $region = new Region();
+                $region->setNom(strtolower($regionRequest));
+                $em->persist($region);
+            }
+
+            $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($villeRequest)]);
+            if(is_null($ville)){
+                $ville = new Ville();
+                $ville->setNom(strtolower($villeRequest));
+                $ville->setRegion($region);
+                $em->persist($ville);
+            }
+
+            $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($quartierRequest)]);
+
+            if(is_null($quartier)){
+                $quartier = new Quartier();
+                $quartier->setNom(strtolower($quartierRequest))
+                    ->setVille($ville);
+                $em->persist($quartier);
+            }
+
+            $annonce->setQuartier($quartier);
+
+            $annonce->setUser($this->getUser());
+
+            // galleries
+            foreach ($request->request->get('image') as $image_id){
+                if ($image_id) {
+                    $g = $em->getRepository(Gallery::class)->find($image_id);
+                    $annonce->addGallery($g);
+                }
+            }
+
+            $em->persist($annonce);
+
+            $em->flush();
+
+
+            $this->addFlash("success", "Annnonce ajouter avec success");
+
+            return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId(),'title' => $annonce->getTitre()));
+        }
+
+
+        return $this->render('annonce/edit.html.twig', array(
+            'annonce' => $annonce,
+            'images'=> $annonce->getGalleries(),
+            'form' => $form->createView()
+        ));
+    }
+
 
     private function _getImages($request)
     {
