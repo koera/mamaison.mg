@@ -2,7 +2,7 @@ import { BASE_URL } from './constant'
 
 const $ = require('jquery')
 
-let imageIndex = 0
+let imageIndex = $('#image-index').val()
 
 const url = `${BASE_URL}/mon-compte/ajout-propriete/gallery`
 
@@ -17,6 +17,11 @@ $('#btn-upload-image').on('change',function(event){
     let file = event.target.files
     let data = new FormData();
     data.append('file',file[0])
+
+
+    if(typeof imageIndex === 'undefined'){
+        imageIndex = 0
+    }
 
     $.ajax({
         url: url,

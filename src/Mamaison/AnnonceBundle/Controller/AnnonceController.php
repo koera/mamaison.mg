@@ -77,7 +77,9 @@ class AnnonceController extends Controller
             // galleries
             foreach ($request->request->get('image') as $image_id){
                 if ($image_id) {
+                    /** @var Gallery $g */
                     $g = $em->getRepository(Gallery::class)->find($image_id);
+                    $g->setUsed(true);
                     $annonce->addGallery($g);
                 }
             }
@@ -87,9 +89,8 @@ class AnnonceController extends Controller
             $em->flush();
 
 
-            $this->addFlash("success", "Annnonce ajouter avec success");
+            $this->addFlash("success", "Annnonce modifier avec success");
 
-            return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId(),'title' => $annonce->getTitre()));
         }
 
 
@@ -103,11 +104,14 @@ class AnnonceController extends Controller
     /**
      * @param Request $request
      * @param Annonce $annonce
-     * @Route("/mon-compte/mes-proprietes/update/{id}", name="annonce.update")
+     * @Route("/mon-compte/mes-proprietes/modifier/{id}", name="annonce.update")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request,Annonce $annonce){
         $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
+        $form->get('neighborhood')->setData($annonce->getQuartier()->getNom());
+        $form->get('ville')->setData($annonce->getQuartier()->getVille()->getNom());
+        $form->get('region')->setData($annonce->getQuartier()->getVille()->getRegion()->getNom());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -153,19 +157,19 @@ class AnnonceController extends Controller
             // galleries
             foreach ($request->request->get('image') as $image_id){
                 if ($image_id) {
+                    /** @var Gallery $g */
                     $g = $em->getRepository(Gallery::class)->find($image_id);
+                    $g->setUsed(true);
                     $annonce->addGallery($g);
                 }
             }
 
-            $em->persist($annonce);
+            $em->merge($annonce);
 
             $em->flush();
 
 
-            $this->addFlash("success", "Annnonce ajouter avec success");
-
-            return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId(),'title' => $annonce->getTitre()));
+            $this->addFlash("success", "Annnonce modifier avec success");
         }
 
 
@@ -248,10 +252,11 @@ class AnnonceController extends Controller
         if($annonce){
             $category = $this->getDoctrine()->getRepository(Category::class)
                 ->findAll();
-
+            $annonceLesPlusNoter = [];
             foreach ($this->getDoctrine()->getRepository(Annonce::class)
                          ->getAnnoncePlusNote($ville) as $a)
                 $annonceLesPlusNoter[] = $a[0];
+
             return $this->render('annonce/show.html.twig', array(
                 'annonce' => $annonce,
                 'category' => $category,

@@ -28,7 +28,7 @@
                         <ul class="list-unstyled my-menu">
                             <li> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
                             <li> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
-                            <li class="active"> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
+                            <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
                             <li> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
                             <li> <a href="{{ path('logout') }}"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
                         </ul>
@@ -233,6 +233,14 @@
                                                         <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                     </figure>
                                                 </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-5' data-input-index="5" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-5">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="media-drag-drop">
@@ -251,6 +259,7 @@
                         <div class="account-block text-right">
                             <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
                         </div>
+                        <input id="image-index" type="hidden" value="{{ images|length }}">
                     </form>
                 </div>
             </div>

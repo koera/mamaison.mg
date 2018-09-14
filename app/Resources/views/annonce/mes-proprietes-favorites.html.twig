@@ -45,7 +45,7 @@
                                                         <h3>AR {{ annonce.prix }}</h3>
                                                     </div>
                                                     <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                        <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
+                                                        <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
                                                     </a>
                                                     <figcaption class="thumb-caption cap-actions clearfix">
                                                         <ul class="list-unstyled actions pull-right">

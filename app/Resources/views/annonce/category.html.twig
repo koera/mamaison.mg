@@ -19,8 +19,7 @@
                                                 {#<p class="rant">AR 21,000/m²</p>#}
                                             </div>
                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}" width="364"
-                                                     height="244">
+                                                <img class="img-thumbnail" src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}">
                                             </a>
                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                 <ul class="list-unstyled actions pull-right">

@@ -70,7 +70,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -257,7 +257,9 @@
                                                     <div class="figure-block">
                                                         <figure class="item-thumb">
                                                             <div class="label-wrap hide-on-list">
-                                                                <div class="label-status label label-default">{{ annonce.typeAnnonce.valeur }}</div>
+                                                                <div class="label-status label label-default">
+                                                                    {{ annonce.typeAnnonce.valeur }}
+                                                                </div>
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -265,7 +267,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -345,7 +347,7 @@
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
-                                                                    <a href="#">{{ annonce.titre }}</a>
+                                                                    <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a>
                                                                 </h2>
                                                                 <h4 class="property-location">{{ annonce.adresse }}</h4>
                                                             </div>
@@ -399,8 +401,6 @@
                                                 <div class="item-foot date hide-on-list">
                                                     <div class="item-foot-left">
                                                         <p>
-                                                            {#<i class="fa fa-user"></i>#}
-                                                            {#<a href="#">Nalitiana Jery</a>#}
                                                             {% if annonce.user.type == 'simple' %}
                                                         <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
                                                         {% elseif annonce.user.type == 'society' %}
@@ -409,8 +409,9 @@
                                                         </p>
                                                     </div>
                                                     <div class="item-foot-right">
+
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {{ annonce.updatedAt|ago }}
+                                                            {{ annonce.updatedAt | ago }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -453,7 +454,9 @@
                                                     <div class="figure-block">
                                                         <figure class="item-thumb">
                                                             <div class="label-wrap hide-on-list">
-                                                                <div class="label-status label label-default">{{ annonce.typeAnnonce.valeur }}</div>
+                                                                <div class="label-status label label-default">
+                                                                    {{ annonce.typeAnnonce.valeur }}
+                                                                </div>
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -461,7 +464,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -541,7 +544,7 @@
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
-                                                                    <a href="#">{{ annonce.titre }}</a>
+                                                                    <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a>
                                                                 </h2>
                                                                 <h4 class="property-location">{{ annonce.adresse }}</h4>
                                                             </div>
@@ -595,8 +598,6 @@
                                                 <div class="item-foot date hide-on-list">
                                                     <div class="item-foot-left">
                                                         <p>
-                                                            {#<i class="fa fa-user"></i>#}
-                                                            {#<a href="#">Nalitiana Jery</a>#}
                                                             {% if annonce.user.type == 'simple' %}
                                                         <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
                                                         {% elseif annonce.user.type == 'society' %}
@@ -607,7 +608,7 @@
                                                     <div class="item-foot-right">
 
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {{ annonce.updatedAt|ago }}
+                                                            {{ annonce.updatedAt | ago }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -650,7 +651,9 @@
                                                     <div class="figure-block">
                                                         <figure class="item-thumb">
                                                             <div class="label-wrap hide-on-list">
-                                                                <div class="label-status label label-default">à vendre</div>
+                                                                <div class="label-status label label-default">
+                                                                    {{ annonce.typeAnnonce.valeur }}
+                                                                </div>
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -658,7 +661,7 @@
                                                                 {#<p class="rant">AR 21,000</p>#}
                                                             </div>
                                                             <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
-                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" style="width: 364px; height: 244px;" alt="{{ annonce.titre }}">
+                                                                <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
                                                             </a>
                                                             <figcaption class="thumb-caption cap-actions clearfix">
                                                                 <div class="pull-right">
@@ -738,7 +741,7 @@
                                                                     <span class="star-text-right">{{ annonce.likes| length }} Evaluation</span>
                                                                 </div>
                                                                 <h2 class="property-title">
-                                                                    <a href="#">{{ annonce.titre }}</a>
+                                                                    <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a>
                                                                 </h2>
                                                                 <h4 class="property-location">{{ annonce.adresse }}</h4>
                                                             </div>
@@ -765,7 +768,7 @@
                                                                 </div>
                                                                 <div class="cell">
                                                                     <div class="phone">
-                                                                        <a href="{{ path('annonce_show',{'title':annonce.titre|slugify,'id':annonce.id}) }}" class="btn btn-primary">Details
+                                                                        <a href="{{ path('annonce_show',{'title':annonce.titre| slugify,'id':annonce.id}) }}" class="btn btn-primary">Details
                                                                             <i class="fa fa-angle-right fa-right"></i>
                                                                         </a>
                                                                         <p>
@@ -792,8 +795,6 @@
                                                 <div class="item-foot date hide-on-list">
                                                     <div class="item-foot-left">
                                                         <p>
-                                                            {#<i class="fa fa-user"></i>#}
-                                                            {#<a href="#">Nalitiana Jery</a>#}
                                                             {% if annonce.user.type == 'simple' %}
                                                         <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
                                                         {% elseif annonce.user.type == 'society' %}
@@ -804,7 +805,7 @@
                                                     <div class="item-foot-right">
 
                                                         <p><i class="fa fa-calendar"></i>
-                                                            {{ annonce.updatedAt|ago }}
+                                                            {{ annonce.updatedAt | ago }}
                                                         </p>
                                                     </div>
                                                 </div>

@@ -51,6 +51,7 @@ class GalleryController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $gallery->upload();
+                $gallery->setUsed(false);
                 $em->persist($gallery);
                 $em->flush();
                 $response->setContent(json_encode(array('success'=>'L\'image a été bien enregistré.','gallery_id'=>$gallery->getId())));
