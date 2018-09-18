@@ -3,6 +3,7 @@
 namespace Mamaison\AnnonceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -112,6 +113,11 @@ class Gallery
         $this->file->move($this->getRootDir(), $fileName);
 
         $this->image = $fileName;
+    }
+
+    public function removeFile(){
+        $file = new File($this->getRootPath());
+        @unlink($file->getRealPath());
     }
 
     /**

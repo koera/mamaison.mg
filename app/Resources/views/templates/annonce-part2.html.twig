@@ -7,15 +7,17 @@
             <div class="widget-body">
                 <div class="figure-block">
                     <figure class="item-thumb">
-                        <span class="label-featured label label-success">vedette</span>
+                        {% if annonceEnVedette %}
                         <a class="hover-effect"
-                           href="{{ path('annonce_show',{'title':annonceEnVedette.titre | slugify,'id':annonceEnVedette.id}) }}">
+                           href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonceEnVedette.category.type|slugify,'type':annonceEnVedette.typeAnnonce.valeur|slugify,'title':annonceEnVedette.titre | slugify,'id':annonceEnVedette.id}) }}">
                             <img src="{{ path('mamaison.thumb',{'id':annonceEnVedette.id}) }}"
                                  width="290" height="194" alt="thumb">
                         </a>
                         <figcaption class="thumb-caption clearfix">
                             <div class="cap-price pull-left">AR {{ annonceEnVedette.prix }}</div>
                         </figcaption>
+
+                        {% endif %}
                     </figure>
                 </div>
             </div>
@@ -30,7 +32,7 @@
                         <div class="media-left">
                             <figure class="item-thumb">
                                 <a class="hover-effect"
-                                   href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                   href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonceEnVedette.id}) }}">
                                     <img alt="thumb"
                                          src="{{ path('mamaison.thumb',{'id':annonce.id}) }}"
                                          width="100" height="75" style="width: 100px; height: 75px;">
@@ -51,7 +53,7 @@
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading"><a
-                                        href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a>
+                                        href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a>
                             </h3>
                             <div class="rating">
                                 <span class="star-text-left"> AR {{ annonce.prix }}</span>

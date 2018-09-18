@@ -12,18 +12,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 /**
  * Class AVendreController
  * @package Mamaison\AnnonceBundle\Controller
- * @Route("/a-vendre")
  */
 class AVendreController extends Controller {
 
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/", name="a_vendre_tous")
+     * @Route("/{ville}/propriete-a-vendre/", name="a_vendre_tous")
      */
-    public function indexAction(Request $request){
+    public function indexAction(Request $request,$ville){
 
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByType('A vendre',$ville);
@@ -44,9 +47,9 @@ class AVendreController extends Controller {
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/{slug}", name="a_vendre_category")
+     * @Route("/{ville}/propriete-a-vendre/{slug}", name="a_vendre_category")
      */
-    public function categoryAction(Request $request,$slug){
+    public function categoryAction(Request $request,$slug,$ville){
         $slug = explode ('-', $slug);
         $categoryName = '';
 
@@ -55,6 +58,10 @@ class AVendreController extends Controller {
 
         $type = 'A Vendre';
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByTypeAndCategory($ville,$type,$categoryName);

@@ -24,17 +24,25 @@ class TemplateAnnonceController extends Controller
     {
 
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonceLesPlusNoter = [];
 
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
-                     ->getAnnoncePlusNote($ville) as $a)
+                     ->getAnnoncePlusNote($ville) as $a){
             $annonceLesPlusNoter[] = $a[0];
+        }
+
 
         $annonceMeilleur = $this->getDoctrine()->getRepository(Annonce::class)
             ->getAnnonceEnVedette($ville);
-
-        $annonceMeilleur = $annonceMeilleur[0][0];
+        if($annonceMeilleur)
+            $annonceMeilleur = $annonceMeilleur[0][0];
+        else
+            $annonceMeilleur = [];
 
         return $this->render('templates/annonce-part2.html.twig',
             [

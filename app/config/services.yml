@@ -40,3 +40,6 @@ services:
         public: false
         tags:
           - { name: doctrine.event_listener, event: preFlush, method: preFlush }
+
+    AppBundle\Commande\DeleteUnusedGalleryFileCommand:
+        arguments: ['@doctrine.orm.default_entity_manager']

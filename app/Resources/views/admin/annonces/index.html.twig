@@ -1,0 +1,181 @@
+{% extends "template-admin.html.twig" %}
+
+{% block css %}
+    <!-- DataTables CSS -->
+    <link href="{{ asset('assets/admin/datatables/dataTables.bootstrap.css') }}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{{ asset('assets/admin/datatables/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Annonces</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
+                        <thead>
+                        <th>
+                            Annonces
+                        </th>
+                        <th>
+                            Valide
+                        </th>
+                        <th>
+                            Date creation
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                        </thead>
+                        <tbody>
+                        {% set i = 0 %}
+                        {% for annonce in annonces %}
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-4 text-center">
+                                            <a data-toggle="modal" data-target="#myModal{{ i }}">
+                                                <img class="my-avatar" src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}">
+                                            </a>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <address>
+                                                <strong>{{ annonce.titre }}</strong>
+                                                <br>{{ annonce.adresse }} {{ annonce.quartier.nom }} {{ annonce.quartier.ville.nom }}
+                                                <br>User : {{ annonce.user.email }}
+                                                <br>Categorie : {{ annonce.category.type }}
+                                                <br>Type : {{ annonce.typeAnnonce.valeur }}
+                                                <br>Date creation : {{ annonce.createdAt|ago }}
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="myModal{{ i }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <img class="my-avatar" src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}">
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8">
+                                                            <h4>{{ annonce.titre }}</h4>
+                                                            <blockquote>
+                                                                <p>{{ annonce.description }}</p>
+                                                            </blockquote>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row text-center">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            {% for caracteristique in annonce.caracteristiques %}
+                                                                - {{ caracteristique.nom }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        {% for gallery in annonce.galleries %}
+                                                                <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" class="my-avatar">
+                                                        {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if annonce.valide %}
+                                        <i class="fa fa-check-circle" style="color: green"> Valider </i>
+                                    {% else %}
+                                        <i class="fa fa-times-circle" style="color: red"> Refuser </i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ annonce.createdAt|date('d M Y') }}
+                                </td>
+                                <td>
+                                    <a href="">
+                                        <i class="fa  fa-trash-o"> Supprimer</i>
+                                    </a>
+                                    <br>
+                                    <a href="{{ path('admin.annonces.active',{'id' : annonce.id }) }}">
+                                        <i class="fa  fa-check-circle-o"> Accepter</i>
+                                    </a>
+                                    <br>
+                                    <a data-toggle="modal" data-target="#modal-desactive{{ i }}">
+                                        <i class="fa  fa-times-circle-o"> Refuser</i>
+                                    </a>
+                                    <div class="modal fade" id="modal-desactive{{ i }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Refuser</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ path('admin.annonces.desactive') }}" method="post" role="form">
+                                                        <div class="form-group">
+                                                            <label>Commentaire :</label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" rows="3" name="comments"></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Envoyer" class="btn btn-primary">
+                                                            <input type="hidden" name="id" value="{{ annonce.id }}">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                </td>
+                            </tr>
+                            {% set i = i+1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}
+
+{% block script %}
+
+    <!-- DataTables JavaScript -->
+    <script src="{{ asset('assets/admin/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/datatables/dataTables.responsive.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTables').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}

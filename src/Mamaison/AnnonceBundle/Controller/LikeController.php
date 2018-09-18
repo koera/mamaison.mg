@@ -61,12 +61,10 @@ class LikeController extends Controller
         $em->flush();
 
         //redirect to last route
+
         $session = $request->getSession();
         $lastRoute = $session->get('last_route', []);
-        $params = [];
-        foreach($lastRoute['params'] as $key => $value)
-            $params = [$key => $value];
-        return $this->redirectToRoute($lastRoute['name'],$params);
+        return $this->redirectToRoute($lastRoute['name'],$lastRoute['params']);
     }
 
 }

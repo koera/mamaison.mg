@@ -20,18 +20,21 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class ALouerParMoisController
  * @package Mamaison\AnnonceBundle\Controller
- * @Route("/a-louer-par-mois")
  */
 class ALouerParMoisController extends Controller
 {
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/", name="a_louer_mois_tous")
+     * @Route("/{ville}/propriete-a-louer-par-mois/", name="a_louer_mois_tous")
      */
-    public function indexAction(Request $request){
+    public function indexAction(Request $request,$ville){
 
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByType('A louer par mois',$ville);
@@ -52,9 +55,9 @@ class ALouerParMoisController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/{slug}", name="a_louer_mois_category")
+     * @Route("/{ville}/propriete-a-louer-par-mois/{slug}", name="a_louer_mois_category")
      */
-    public function categoryAction(Request $request,$slug){
+    public function categoryAction(Request $request,$slug,$ville){
         $slug = explode ('-', $slug);
         $categoryName = '';
 
@@ -63,6 +66,10 @@ class ALouerParMoisController extends Controller
 
         $type = 'A louer par mois';
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByTypeAndCategory($ville,$type,$categoryName);

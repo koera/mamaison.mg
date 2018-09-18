@@ -311,8 +311,8 @@
                                             </a>
                                             {% set count = count + 1 %}
                                         {% endfor %}
-                                        {% endif %}
-                                        {#Moyenne : {{ rating.getMoyenne(annonce) }} / 5#}
+                                        {% endif %}<br/>
+                                        {#Vous avez donne : {{ annonce.rating.value }} Etoiles a cette annonces#}
                                     </span>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@
                                     <div class="media">
                                         <div class="media-left">
                                             <figure class="item-thumb">
-                                                <a class="hover-effect" href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                                <a class="hover-effect" href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
                                                     <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}"  width="100" height="75" style="width: 100px; height: 75px;" alt="{{ annonce.titre }}">
                                                 </a>
                                                 <figcaption class="thumb-caption">
@@ -341,7 +341,7 @@
                                             </figure>
                                         </div>
                                         <div class="media-body">
-                                            <h3 class="media-heading"><a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a></h3>
+                                            <h3 class="media-heading"><a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a></h3>
                                             <div class="rating">
                                                 <span class="star-text-left"> AR {{ annonce.prix }}</span>
 

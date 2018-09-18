@@ -155,6 +155,14 @@ class Annonce
 
 
     /**
+     * @var boolean
+     * @ORM\Column(name="valide", type="boolean")
+     *
+     */
+    private $valide;
+
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -656,5 +664,29 @@ class Annonce
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set valide
+     *
+     * @param boolean $valide
+     *
+     * @return Annonce
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * Get valide
+     *
+     * @return boolean
+     */
+    public function getValide()
+    {
+        return $this->valide;
     }
 }

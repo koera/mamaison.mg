@@ -19,18 +19,21 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class ALouerParJoursController
  * @package Mamaison\AnnonceBundle\Controller
- * @Route("/a-louer-par-jours")
  */
 class ALouerParJoursController extends Controller
 {
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/", name="a_louer_jours_tous")
+     * @Route("/{ville}/propriete-a-louer-par-jours/", name="a_louer_jours_tous")
      */
-    public function indexAction(Request $request){
+    public function indexAction(Request $request,$ville){
 
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByType('A louer par jours',$ville);
@@ -51,17 +54,23 @@ class ALouerParJoursController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/{slug}", name="a_louer_jours_category")
+     * @Route("/{ville}/propriete-a-louer-par-jours/{slug}", name="a_louer_jours_category")
      */
-    public function categoryAction(Request $request,$slug){
+    public function categoryAction(Request $request,$slug,$ville){
         $slug = explode ('-', $slug);
         $categoryName = '';
 
         foreach ($slug as $key => $word)
             $categoryName .= $word.' ';
 
-        $type = 'A louer par jours';
         $ville = $request->cookies->get('ville');
+
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
+
+        $type = 'A louer par jours';
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceByTypeAndCategory($ville,$type,$categoryName);

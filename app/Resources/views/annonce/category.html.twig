@@ -18,7 +18,7 @@
                                                 <h3> AR {{ annonce.prix }}</h3>
                                                 {#<p class="rant">AR 21,000/m²</p>#}
                                             </div>
-                                            <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                            <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
                                                 <img class="img-thumbnail" src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}">
                                             </a>
                                             <figcaption class="thumb-caption cap-actions clearfix">
@@ -85,7 +85,7 @@
                                                         </span>
                                                 <span>{{ annonce.rating |length }} Votes</span>
                                             </div>
-                                            <h2 class="property-title"><a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.typeAnnonce.valeur }}</a>
+                                            <h2 class="property-title"><a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.typeAnnonce.valeur }}</a>
                                             </h2>
                                             <h4 class="property-location">{{ annonce.adresse }}</h4>
                                         </div>
@@ -116,7 +116,7 @@
                                             {#<p class="rant"> AR 21,000/m²</p>#}
                                         </div>
                                         <div class="info-row phone text-right">
-                                            <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Détails <i
+                                            <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Détails <i
                                                         class="fa fa-angle-right fa-right"></i></a>
                                             <p><a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{% if annonce.user.type == 'simple' %}
                                                         {{ annonce.user.profileSimpleUser.telephone }}
@@ -138,7 +138,7 @@
                                         </div>
                                         <div class="cell">
                                             <div class="phone">
-                                                <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}"
+                                                <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}"
                                                    class="btn btn-primary">Détails <i
                                                             class="fa fa-angle-right fa-right"></i></a>
                                                 <p><a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{% if annonce.user.type == 'simple' %}

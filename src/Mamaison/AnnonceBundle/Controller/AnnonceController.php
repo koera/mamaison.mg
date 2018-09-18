@@ -241,12 +241,16 @@ class AnnonceController extends Controller
     /**
      * Finds and displays a annonce entity.
      *
-     * @Route("/propriete/{title}/{id}", name="annonce_show")
+     * @Route("/{ville}/{type}/{category}/{title}/{id}", name="annonce_show")
      * @Method("GET")
      */
-    public function showAction(Request $request,$title,$id)
+    public function showAction(Request $request,$ville,$category,$type,$title,$id)
     {
         $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
         $annonce = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAnnonceById($id);
         if($annonce){

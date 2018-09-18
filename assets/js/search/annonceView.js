@@ -11,7 +11,7 @@ export default class AnnonceView
     render()
     {
         let annonce = this._annonce;
-        return `<div class="item-wrap">
+        return `<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
                     <div class="property-item table-list">
                         <div class="table-cell">
                             <div class="figure-block">

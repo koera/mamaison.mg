@@ -23,6 +23,9 @@ $('#btn-upload-image').on('change',function(event){
         imageIndex = 0
     }
 
+    if( imageIndex == 6)
+        imageIndex = 0;
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -53,6 +56,8 @@ $('#btn-upload-image').on('change',function(event){
         error: function(jqXHR, textStatus, errorThrown)
         {
             console.log('ERRORS: ' + textStatus);
+            console.log('ERRORS: ' + jqXHR);
+            console.log('ERRORS: ' + errorThrown);
         }
     });
 });

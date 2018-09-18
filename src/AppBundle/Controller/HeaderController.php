@@ -20,7 +20,12 @@ use Symfony\Component\HttpFoundation\Response;
 class HeaderController extends Controller
 {
 
-    public function indexAction(){
+    public function indexAction(Request $request){
+        $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
         $category = $this->getDoctrine()->getRepository(Category::class)
             ->findAll();
         return $this->render('templates/header.html.twig',['categories'=>$category]);

@@ -30,7 +30,13 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request){
 
+
         $ville = $request->cookies->get('ville');
+
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
 
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->getAnnonceEnVedette($ville);

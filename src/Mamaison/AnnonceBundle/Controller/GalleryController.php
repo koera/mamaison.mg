@@ -67,7 +67,7 @@ class GalleryController extends Controller
     /**
      * Finds and displays a gallery entity.
      *
-     * @Route("/gallery/thumbs/{id}", name="mamaison.thumb")
+     * @Route("/gallery/view/thumbs/{id}", name="mamaison.thumb")
      * @Method("GET")
      */
     public function showAction(Annonce $annonce)

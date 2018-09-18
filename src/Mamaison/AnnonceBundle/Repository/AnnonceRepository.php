@@ -27,9 +27,9 @@ class AnnonceRepository extends EntityRepository
     {
         $query = $this->queryInVilleFindAll($ville);
         $result = $query->getQuery()->execute();
-        if (count($result) < 50) {
-            $result = array_merge($result, $this->queryInNotVilleFindAll($ville)->getQuery()->execute());
-        }
+//        if (count($result) < 50) {
+//            $result = array_merge($result, $this->queryInNotVilleFindAll($ville)->getQuery()->execute());
+//        }
         return $result;
     }
 
@@ -39,9 +39,9 @@ class AnnonceRepository extends EntityRepository
         $query = $this->queryInVilleFindAll($ville, true, $typeAnnonce);
         $resultVille = $query->getQuery()->execute();
 
-        if (count($resultVille) < 50) {
-            $resultVille = array_merge($resultVille, $this->queryInNotVilleFindAll($ville, true, $typeAnnonce)->getQuery()->execute());
-        }
+//        if (count($resultVille) < 50) {
+//            $resultVille = array_merge($resultVille, $this->queryInNotVilleFindAll($ville, true, $typeAnnonce)->getQuery()->execute());
+//        }
         return $resultVille;
     }
 
@@ -49,9 +49,9 @@ class AnnonceRepository extends EntityRepository
         $query = $this->queryfindAnnonceByTypeAndCategoryInVille($ville, $type, $category);
         $resultVille = $query->getQuery()->execute();
 
-        if (count($resultVille) < 50) {
-            $resultVille = array_merge($resultVille, $this->queryfindAnnonceByTypeAndCategoryInNotVille($ville, $type,$category)->getQuery()->execute());
-        }
+//        if (count($resultVille) < 50) {
+//            $resultVille = array_merge($resultVille, $this->queryfindAnnonceByTypeAndCategoryInNotVille($ville, $type,$category)->getQuery()->execute());
+//        }
         return $resultVille;
     }
 
@@ -200,9 +200,9 @@ class AnnonceRepository extends EntityRepository
     {
         $q = $this->queryAnnonceEnVedetteInVille($ville);
         $result = $q->getQuery()->execute();
-        if (count($result) < 50) {
-            $result = array_merge($result, $this->queryAnnonceEnVedetteInNotVille($ville)->getQuery()->execute());
-        }
+//        if (count($result) < 50) {
+//            $result = array_merge($result, $this->queryAnnonceEnVedetteInNotVille($ville)->getQuery()->execute());
+//        }
         return $result;
     }
 
@@ -338,9 +338,9 @@ class AnnonceRepository extends EntityRepository
     {
         $q = $this->queryAnnoncePlusNoterInVille($ville);
         $result = $q->getQuery()->execute();
-        if (count($result) < 50) {
-            $result = array_merge($result, $this->queryAnnoncePlusNoterInNotVille($ville)->getQuery()->execute());
-        }
+//        if (count($result) < 50) {
+//            $result = array_merge($result, $this->queryAnnoncePlusNoterInNotVille($ville)->getQuery()->execute());
+//        }
         return $result;
     }
 
