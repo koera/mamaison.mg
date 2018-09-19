@@ -11,11 +11,12 @@ class SearchResult
     }
     render()
     {
-        console.log('annonce', this.annonces)
-        let display = new StyleDisplay().render();
-        let grid = new AnnonceList(this.annonces).render()
+        console.log('annonce', this.response.hits.total)
 
-        return `<div class="container">
+        if(this.response.hits.total > 0){
+            let display = new StyleDisplay().render();
+            let grid = new AnnonceList(this.annonces).render()
+            return `<div class="container">
                     ${display}
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 list-grid-area">
@@ -24,6 +25,23 @@ class SearchResult
                                 <div class="property-listing grid-view">
                                     <div class="row">
                                         ${grid}
+                                    </div>
+                                </div>
+                                <!--end property items-->
+                            </div>
+                        </div>
+                    </div>
+                <div>`
+        }
+        else
+            return `<div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 list-grid-area">
+                            <div id="content-area">
+                                <!--start property items-->
+                                <div class="property-listing grid-view">
+                                    <div class="row">
+                                       <h1>Result not found</h1>
                                     </div>
                                 </div>
                                 <!--end property items-->

@@ -1,4 +1,4 @@
-<form>
+<form class="form-search" >
     <div class="form-group search-long">
         <div class="search">
             <div class="input-search input-icon">
@@ -63,16 +63,26 @@
                 </br>
             </div>
 
-            <div class="col-sm-6 col-xs-12">
-                <div class="range-advanced-main">
-                    <div class="range-text">
-                        <input type="hidden" class="min-price-range-hidden range-input" readonly>
-                        <input type="hidden" class="max-price-range-hidden range-input" readonly>
-                        <p><span class="range-title">Échelle des prix:</span> de  <span class="min-price-range"></span> à  <span class="max-price-range"></span></p>
-                    </div>
-                    <div class="range-wrap">
-                        <div class="price-range-advanced"></div>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label><span class="text-uppercase">Prix min</span>(en Ariary)</label>
+                    <select name="prix[min]" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                        <option value="">Prix min</option>
+                        {% for val, min in rangePriceMin() %}
+                            <option value="{{ val }}">{{ min }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label><span class="text-uppercase">Prix max</span>(en Ariary)</label>
+                    <select name="prix[max]" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                        <option value="">Prix max</option>
+                        {% for val, max in rangePriceMax() %}
+                            <option value="{{ val }}">{{ max }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>

@@ -1,0 +1,115 @@
+<form class="form-search">
+    <div class="single-search-wrap">
+        <div class="single-search-inner advance-btn">
+            <button class="table-cell text-left" type="button"><i class="fa fa-gear"></i></button>
+        </div>
+        <div class="single-search-inner single-search">
+            <input type="text" class="form-control table-cell" placeholder="Entrer une adresse, une ville, une rue ou un zip ..." name="adresse">
+        </div>
+        <div class="single-search-inner single-seach-btn">
+            <button class="table-cell text-right" type="submit"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="advance-fields">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <select name="region" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Region">
+                        <option value="" selected>Régions</option>
+                        {% for region in getAllRegions() %}
+                            <option value="{{ region.id }}">{{ region.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <select name="ville" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Ville">
+                        <option value="" selected>Villes</option>
+                        {% for ville in getAllVilles() %}
+                            <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <select name="quartier" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Quartier">
+                        <option value="">Quartiers</option>
+                        {% for quartier in getAllQuartiers() %}
+                            <option value="{{ quartier.id }}">{{ quartier.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="features-list">
+                <label class="text-uppercase title">Categories</label>
+                <div class="clearfix"></div>
+                <div class="row">
+                    {% for categorie in getAllCategories() %}
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="category[]" value="{{ categorie.id }}"> {{categorie.type}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                </br>
+            </div>
+
+
+
+            <div class="features-list">
+                <label class="text-uppercase title">Caracteristique generale</label>
+                <div class="clearfix"></div>
+                <div class="row">
+                    {% for caracteristique in getAllCaracteristiques() %}
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="caracteristique[]" value="{{caracteristique.id}}"> {{caracteristique.nom}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                </br>
+            </div>
+            <div class="col-sm-12  col-xs-12">
+                <div class="col-sm-6 col-xs-8">
+                    <div class="form-group">
+                        <label><span class="text-uppercase">Prix min</span>(en Ariary)</label>
+                        <select name="prix[min]" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                            <option value="">Prix min</option>
+                            {% for val, min in rangePriceMin() %}
+                                <option value="{{ val }}">{{ min }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-8">
+                    <div class="form-group">
+                        <label><span class="text-uppercase">Prix max</span>(en Ariary)</label>
+                        <select name="prix[max]" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                            <option value="">Prix max</option>
+                            {% for val, max in rangePriceMax() %}
+                                <option value="{{ val }}">{{ max }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-2">
+            </div>
+            <div class="col-sm-6 col-xs-8">
+                </br>
+                <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search pull-left"></i> Recherche </button>
+            </div>
+            <div class="col-sm-3 col-xs-2">
+            </div>
+        </div>
+    </div>
+</form>

@@ -12,4 +12,4 @@ export const FORM_NAME_ARRAY = {
 export const BASE_URL = 'https://www.mamaison.mg/app_dev.php'
 
 
-export const IMAGE_URL = BASE_URL + '/gallery/thumbs';
+export const IMAGE_URL = BASE_URL + '/gallery/view/thumbs';
