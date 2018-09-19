@@ -44,7 +44,7 @@
                                                     <div class="price hide-on-list">
                                                         <h3>AR {{ annonce.prix }}</h3>
                                                     </div>
-                                                    <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                                    <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
                                                         <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
                                                     </a>
                                                     <figcaption class="thumb-caption cap-actions clearfix">
@@ -70,7 +70,7 @@
 
                                             <div class="body-left table-cell">
                                                 <div class="info-row">
-                                                    <h2 class="property-title"><a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a></h2>
+                                                    <h2 class="property-title"><a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a></h2>
                                                     <h4 class="property-location">{{ annonce.adresse }}</h4>
                                                 </div>
                                                 <div class="info-row amenities hide-on-grid">
@@ -94,7 +94,7 @@
                                                     {#<p class="rant"> AR 21,000/mo</p>#}
                                                 </div>
                                                 <div class="info-row phone text-right">
-                                                    <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
+                                                    <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
                                                     <p>
                                                         <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
                                                             {% if annonce.user.type == 'simple' %}
@@ -125,7 +125,7 @@
                                                 </div>
                                                 <div class="cell">
                                                     <div class="phone">
-                                                        <a href="{{ path('annonce_show',{'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
+                                                        <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
                                                         <p><a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
                                                                 {% if annonce.user.type == 'simple' %}
                                                                     {% if annonce.user.profileSimpleUser.telephone %}

@@ -9,7 +9,7 @@ export const FORM_NAME_ARRAY = {
     'caracteristique[]': 'caracteristique.id'
 }
 
-export const BASE_URL = 'http://mamaison.mg/app_dev.php'
+export const BASE_URL = 'https://www.mamaison.mg/app_dev.php'
 
 
 export const IMAGE_URL = BASE_URL + '/gallery/thumbs';

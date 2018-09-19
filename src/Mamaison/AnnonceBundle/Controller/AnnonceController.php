@@ -108,76 +108,76 @@ class AnnonceController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request,Annonce $annonce){
-        $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
-        $form->get('neighborhood')->setData($annonce->getQuartier()->getNom());
-        $form->get('ville')->setData($annonce->getQuartier()->getVille()->getNom());
-        $form->get('region')->setData($annonce->getQuartier()->getVille()->getRegion()->getNom());
-        $form->handleRequest($request);
+        if($annonce->getUser() == $this->getUser()){
+            $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
+            $form->get('neighborhood')->setData($annonce->getQuartier()->getNom());
+            $form->get('ville')->setData($annonce->getQuartier()->getVille()->getNom());
+            $form->get('region')->setData($annonce->getQuartier()->getVille()->getRegion()->getNom());
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
+                $em = $this->getDoctrine()->getManager();
 
-            $em = $this->getDoctrine()->getManager();
+                // quartier ville and region
 
+                $quartierRequest = $form->get('neighborhood')->getData();
+                $villeRequest = $form->get('ville')->getData();
+                $regionRequest = $form->get('region')->getData();
 
-            // quartier ville and region
-
-            $quartierRequest = $form->get('neighborhood')->getData();
-            $villeRequest = $form->get('ville')->getData();
-            $regionRequest = $form->get('region')->getData();
-
-            $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($regionRequest)]);
-            if(is_null($region)){
-                $region = new Region();
-                $region->setNom(strtolower($regionRequest));
-                $em->persist($region);
-            }
-
-            $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($villeRequest)]);
-            if(is_null($ville)){
-                $ville = new Ville();
-                $ville->setNom(strtolower($villeRequest));
-                $ville->setRegion($region);
-                $em->persist($ville);
-            }
-
-            $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($quartierRequest)]);
-
-            if(is_null($quartier)){
-                $quartier = new Quartier();
-                $quartier->setNom(strtolower($quartierRequest))
-                    ->setVille($ville);
-                $em->persist($quartier);
-            }
-
-            $annonce->setQuartier($quartier);
-
-            $annonce->setUser($this->getUser());
-
-            // galleries
-            foreach ($request->request->get('image') as $image_id){
-                if ($image_id) {
-                    /** @var Gallery $g */
-                    $g = $em->getRepository(Gallery::class)->find($image_id);
-                    $g->setUsed(true);
-                    $annonce->addGallery($g);
+                $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($regionRequest)]);
+                if(is_null($region)){
+                    $region = new Region();
+                    $region->setNom(strtolower($regionRequest));
+                    $em->persist($region);
                 }
+
+                $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($villeRequest)]);
+                if(is_null($ville)){
+                    $ville = new Ville();
+                    $ville->setNom(strtolower($villeRequest));
+                    $ville->setRegion($region);
+                    $em->persist($ville);
+                }
+
+                $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($quartierRequest)]);
+
+                if(is_null($quartier)){
+                    $quartier = new Quartier();
+                    $quartier->setNom(strtolower($quartierRequest))
+                        ->setVille($ville);
+                    $em->persist($quartier);
+                }
+
+                $annonce->setQuartier($quartier);
+
+                $annonce->setUser($this->getUser());
+
+                // galleries
+                foreach ($request->request->get('image') as $image_id){
+                    if ($image_id) {
+                        /** @var Gallery $g */
+                        $g = $em->getRepository(Gallery::class)->find($image_id);
+                        $g->setUsed(true);
+                        $annonce->addGallery($g);
+                    }
+                }
+
+                $em->merge($annonce);
+
+                $em->flush();
+
+
+                $this->addFlash("success", "Annnonce modifier avec success");
             }
 
-            $em->merge($annonce);
 
-            $em->flush();
-
-
-            $this->addFlash("success", "Annnonce modifier avec success");
+            return $this->render('annonce/edit.html.twig', array(
+                'annonce' => $annonce,
+                'images'=> $annonce->getGalleries(),
+                'form' => $form->createView()
+            ));
         }
-
-
-        return $this->render('annonce/edit.html.twig', array(
-            'annonce' => $annonce,
-            'images'=> $annonce->getGalleries(),
-            'form' => $form->createView()
-        ));
     }
 
 
@@ -241,7 +241,7 @@ class AnnonceController extends Controller
     /**
      * Finds and displays a annonce entity.
      *
-     * @Route("/{ville}/{type}/{category}/{title}/{id}", name="annonce_show")
+     * @Route("/{ville}/propriete-{type}/{category}/{title}/{id}", name="annonce_show")
      * @Method("GET")
      */
     public function showAction(Request $request,$ville,$category,$type,$title,$id)

@@ -195,7 +195,7 @@
                                                 <div class="col-sm-2">
                                                     <figure class="gallery-thumb">
                                                         <input type="hidden" name="image[]" id='input-image-0' data-input-index="0" class="hidden"/>
-                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-0" onclick="$('#btn-upload-image').click();">
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-0">
                                                         <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
                                                         <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
                                                         <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
@@ -268,12 +268,105 @@
     </section>
 {% endblock %}
 {% block specificScript %}
-    <script src="{{ asset('build/upload.js') }}"></script>
+
+    <script src="{{ asset('build/edit.js') }}"></script>
+    <script>
+        var index = 0;
+        var edited = false;
+
+        function editImage(imageId, imageIndex){
+
+            var url = '{{ url('mamaison.gallery_delete') }}';
+
+            var data = new FormData();
+            data.append('image-id',imageId)
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(resp, textStatus, jqXHR)
+                {
+                    console.log(resp);
+                    index = imageIndex
+                    edited = true;
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.log('ERRORS: ' + textStatus);
+                    console.log('ERRORS: ' + jqXHR);
+                    console.log('ERRORS: ' + errorThrown);
+                }
+            });
+
+            $("#btn-upload-image").click();
+        }
+
+        $('#btn-upload-image').on('change',function(event){
+
+            var imageIndex = $('#image-index').val()
+
+            if(index == 0 && !edited){
+                index = imageIndex;
+            }
+
+            var file = event.target.files
+
+            var data = new FormData();
+            data.append('file',file[0])
+            var url = '{{ url('mamaison.gallery_new') }}';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(data, textStatus, jqXHR)
+                {
+                    if(typeof data.error === 'undefined')
+                    {
+                        var reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            $('#image-'+index+'').attr('src', e.target.result);
+                            $('#input-image-'+index+'').attr('value', data.gallery_id);
+                        }
+
+                        reader.readAsDataURL(file[0]);
+                    }
+                    else
+                    {
+                        console.log('ERRORS: ' + data.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.log('ERRORS: ' + textStatus);
+                    console.log('ERRORS: ' + jqXHR);
+                    console.log('ERRORS: ' + errorThrown);
+                }
+            });
+        });
+    </script>
     <script type="text/javascript">
         function loadImage(){
             {%set index = 0 %}
             {% for image in images %}
-            $("{{'#image-'~index}}").attr('src', "{{ asset( image.uploadDir ~ '/' ~ image.image ) }}");
+
+                $("{{'#image-'~index}}").attr('src', "{{ asset( image.uploadDir ~ '/' ~ image.image ) }}");
+
+                $("{{'#image-'~index}}").attr('gallery-id', "{{ image.id }}");
+
+                $("{{'#image-'~index}}").on('click',function(){
+
+                   editImage({{ image.id }},{{ index }})
+
+                });
             {%set index = index +1 %}
             {% endfor %}
         }

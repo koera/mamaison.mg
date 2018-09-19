@@ -58,7 +58,7 @@
                             <div class="rating">
                                 <span class="star-text-left"> AR {{ annonce.prix }}</span>
 
-                                <span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip">
+                                <span data-title="Average Rate: {{ rating.getMoyenne(annonce) }} / 5" class="bottom-ratings tip">
                                                 {% if (rating.getMoyenne(annonce)) > 0 %}
                                                     {% for i in 1..rating.getMoyenne(annonce) %}
                                                         <span class="fa fa-star"></span>
