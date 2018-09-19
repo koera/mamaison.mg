@@ -43,3 +43,6 @@ services:
 
     AppBundle\Commande\DeleteUnusedGalleryFileCommand:
         arguments: ['@doctrine.orm.default_entity_manager']
+
+    AppBundle\Commande\CreateUserAdminCommand:
+        arguments: ['@doctrine.orm.default_entity_manager']

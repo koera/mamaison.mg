@@ -2,6 +2,7 @@
 
 namespace Mamaison\AnnonceBundle\Controller;
 
+use AppBundle\Entity\User;
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Mamaison\AnnonceBundle\Entity\Category;
 use Mamaison\AnnonceBundle\Entity\Gallery;
@@ -30,6 +31,7 @@ class AnnonceController extends Controller
      */
     public function newAction(Request $request)
     {
+
         $annonce = new Annonce();
         $form = $this->createForm('Mamaison\AnnonceBundle\Form\AnnonceType', $annonce);
         $form->handleRequest($request);
@@ -74,6 +76,8 @@ class AnnonceController extends Controller
 
             $annonce->setUser($this->getUser());
 
+            $annonce->setValide(false);
+
             // galleries
             foreach ($request->request->get('image') as $image_id){
                 if ($image_id) {
@@ -90,6 +94,7 @@ class AnnonceController extends Controller
 
 
             $this->addFlash("success", "Annnonce modifier avec success");
+            return $this->redirectToRoute('annonce.update',['id'=>$annonce->getId()]);
 
         }
 
