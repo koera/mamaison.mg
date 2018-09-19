@@ -76,11 +76,16 @@
                                             <div class="media-left">
                                                 <a href="#">
                                                     {% if annonce.user.type == 'simple' %}
-                                                        <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" class="media-object" alt="image" width="74" height="74">
+                                                        {% if annonce.user.profileSimpleUser.avatar %}
+                                                            <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                        {% elseif annonce.user.profileSimpleUser.avatarUrlFb %}
+                                                            <img src="{{ annonce.user.profileSimpleUser.avatarUrlFb }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                        {%  else %}
+                                                            <img src="http://placehold.it/50x50" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                        {% endif %}
                                                     {% elseif annonce.user.type == 'society' %}
                                                         <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" class="media-object" alt="image" width="74" height="74">
                                                     {% endif %}
-
                                                 </a>
                                             </div>
                                             <div class="media-body">
