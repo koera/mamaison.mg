@@ -43,4 +43,12 @@ $(document).ready(function() {
             console.log(err);
         });
     });
+
+    $('#property-title').keyup(function(e) {
+        let key = $('#property-title').val();
+        if(key.length >= 3){
+            $('.form-search').submit();
+        }
+    });
+
 });
