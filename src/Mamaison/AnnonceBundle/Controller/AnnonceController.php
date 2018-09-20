@@ -328,7 +328,7 @@ class AnnonceController extends Controller
      * @return Response
      * Used in JS Result search
      *
-     * @Route("/propriete/get-detail-url/{id}", name="annonce.detail.url")
+     * @Route("/propriete/detail/{id}", name="annonce.detail.url")
      */
     public function getUrlDetailAction(Request $request,Annonce $annonce){
         $ville = $request->cookies->get('ville');
