@@ -14,6 +14,8 @@ export const BASE_URL = 'https://www.mamaison.mg/app_dev.php'
 
 export const IMAGE_URL = BASE_URL + '/gallery/view/thumbs';
 
+export const IMAGE_DETAIL_URL = BASE_URL + '/propriete/get-detail-url'
+
 export const INDEX_NAME = 'mamaison'
 
 export const TYPE_NAME = 'annonces'

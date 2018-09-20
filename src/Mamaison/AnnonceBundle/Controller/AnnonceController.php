@@ -320,5 +320,57 @@ class AnnonceController extends Controller
         $this->addFlash("success", "Propriete supprime :)");
         return $this->redirectToRoute('annonce_mon_proprietes');
     }
+
+
+    /**
+     * @param Request $request
+     * @param Annonce $annonce
+     * @return Response
+     * Used in JS Result search
+     *
+     * @Route("/propriete/get-detail-url/{id}", name="annonce.detail.url")
+     */
+    public function getUrlDetailAction(Request $request,Annonce $annonce){
+        $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
+        return $this->redirectToRoute('annonce_show',
+            [
+                'ville' =>$ville,
+                'category' => $this->slugify($annonce->getCategory()->getType()),
+                'type' => $this->slugify($annonce->getTypeAnnonce()->getValeur()),
+                'title' => $this->slugify($annonce->getTitre()),
+                'id' => $annonce->getId()
+            ]);
+    }
+
+    private function slugify($string)
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\pL\d]+~u', '-', $string);
+
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // remove duplicate -
+        $text = preg_replace('~-+~', '-', $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
+    }
 }
 

@@ -1,5 +1,7 @@
 
 import {IMAGE_URL} from './../constant';
+import {IMAGE_DETAIL_URL} from './../constant';
+
 
 export default class AnnonceView
 {
@@ -39,7 +41,7 @@ export default class AnnonceView
                                         <p>${ annonce.category.type }</p>
                                     </div>
                                     <div class="body-right info-row">
-                                    <a href="#" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
+                                    <a href="${IMAGE_DETAIL_URL}/${ annonce.id }" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
                                 </div>
                                 </div>
                             </div>
