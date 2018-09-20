@@ -232,7 +232,8 @@ class AnnonceRepository extends EntityRepository
             ->setParameter('ville', $ville)
             ->groupBy('a.id')
 //            ->having('count(user.id) > 0')
-            ->orderBy('u', 'desc');
+            ->orderBy('u', 'desc')
+            ->setMaxResults(50);
     }
 
     private function queryAnnonceEnVedetteInNotVille($ville)

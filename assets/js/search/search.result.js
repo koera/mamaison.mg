@@ -1,21 +1,25 @@
 import AnnonceBuilder from "./annonceBuilder";
 import StyleDisplay from "./styleDisplay";
 import AnnonceList from "./annonceList";
+import Pagination from "./search.pagination";
 
 class SearchResult
 {
-    constructor( response )
+    constructor( query , response , client, page)
     {
         this.response = response
         this.annonces = new AnnonceBuilder( response.hits.hits ).build()
+        this.client = client
+        this.page = page
+        this.query = query
     }
     render()
     {
-        console.log('annonce', this.response.hits.total)
 
         if(this.response.hits.total > 0){
-            let display = new StyleDisplay().render();
+            let display = new StyleDisplay(this.response).render();
             let grid = new AnnonceList(this.annonces).render()
+            let pagination = new Pagination(this.query, this.response,this.client,this.page).render();
             return `<div class="container">
                     ${display}
                     <div class="row">
@@ -30,6 +34,7 @@ class SearchResult
                                 <!--end property items-->
                             </div>
                         </div>
+                        ${pagination}
                     </div>
                 <div>`
         }
