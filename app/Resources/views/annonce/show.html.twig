@@ -74,7 +74,7 @@
                                     <div class="form-small form-media">
                                         <div class="media agent-media">
                                             <div class="media-left">
-                                                <a href="#">
+                                                <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
                                                     {% if annonce.user.type == 'simple' %}
                                                         {% if annonce.user.profileSimpleUser.avatar %}
                                                             <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
@@ -109,20 +109,28 @@
                                                 {#<a href="#" class="view">Voir ma liste</a>#}
                                             </div>
                                         </div>
-                                        <form>
+                                        <form action="{{ path('contact.agent') }}" method="post">
                                             <div class="form-group">
-                                                <input class="form-control" type="text" placeholder="Votre Nom">
+                                                <input class="form-control" name="nom" type="text" placeholder="Votre Nom">
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" type="text" placeholder="Téléphone">
+                                                <input class="form-control" name="telephone" type="text" placeholder="Téléphone">
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" type="email" placeholder="E-mail">
+                                                <input class="form-control" name="email" type="email" placeholder="E-mail">
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" rows="5" placeholder="Emplacement"></textarea>
+                                                <textarea class="form-control" name="message" rows="5" placeholder="Emplacement"></textarea>
                                             </div>
-                                            <button class="btn btn-secondary btn-block">Demande d'information</button>
+                                            <input type="hidden" value="{{ annonce.user.id }}" name="agent">
+                                            {% for message in app.flashes('success') %}
+                                                <div class="alert alert-success">
+                                                    <i class="fa fa-check-circle">
+                                                        {{ message }}
+                                                    </i>
+                                                </div>
+                                            {% endfor %}
+                                            <button class="btn btn-secondary btn-block" type="submit">Demande d'information</button>
                                         </form>
                                     </div>
                                 </div>

@@ -10,7 +10,6 @@ namespace AppBundle\Command;
 
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
 use Mamaison\AnnonceBundle\Entity\Gallery;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

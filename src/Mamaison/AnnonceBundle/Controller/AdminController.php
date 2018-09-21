@@ -32,13 +32,32 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $nombreUsers = count($em->getRepository(User::class)
             ->findAll());
-        $nombreAnnonces = count($em->getRepository(Annonce::class)
-            ->findAllAnnonce());
+        $annonces = $em->getRepository(Annonce::class)
+            ->findAllAnnonce();
+
+        $nombreVente = 0;
+        $nombreAlouerParJours = 0;
+        $nombreAlouerParMois = 0;
+        foreach ($annonces as $annonce){
+            if($annonce->getTypeAnnonce()->getValeur() == 'A vendre'){
+                $nombreVente++;
+            }
+            if($annonce->getTypeAnnonce()->getValeur() == 'A louer par mois'){
+                $nombreAlouerParMois++;
+            }
+            if($annonce->getTypeAnnonce()->getValeur() == 'A louer par jours'){
+                $nombreAlouerParJours++;
+            }
+
+        }
 
         return $this->render('admin/index.html.twig',
             [
-                'nombreUsers'       => $nombreUsers,
-                'nombreAnnonces'    => $nombreAnnonces
+                'nombreUsers'           => $nombreUsers,
+                'nombreAnnonces'        => count($annonces),
+                'nombreVente'           => $nombreVente,
+                'nombreAlouerParJours'  => $nombreAlouerParJours,
+                'nombreAlouerParMois'   => $nombreAlouerParMois
             ]
         );
     }

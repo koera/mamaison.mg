@@ -4,19 +4,19 @@
             <div class="input-search input-icon">
                 <input class="form-control" id="property-title" placeholder="Entrer un lieu, une adresse ou un zip... " name="adresse">
             </div>
-            <select name="region" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+            <select name="region" class="selectpicker bs-select-hidden search-region search-select" data-live-search="false" data-live-search-style="begins">
                 <option value="" selected>Régions</option>
                 {% for region in getAllRegions() %}
                     <option value="{{ region.id }}">{{ region.nom }}</option> 
                 {% endfor %}
             </select>
-            <select name="ville" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+            <select name="ville" class="selectpicker bs-select-hidden search-ville search-select" data-live-search="false" data-live-search-style="begins">
                 <option value="" selected>Villes</option>
                 {% for ville in getAllVilles() %}
                     <option value="{{ ville.id }}">{{ ville.nom }}</option> 
                 {% endfor %}
             </select>
-            <select name="quartier" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+            <select name="quartier" class="selectpicker bs-select-hidden search-quartier search-select" data-live-search="false" data-live-search-style="begins">
                 <option value="">Quartiers</option>
                 {% for quartier in getAllQuartiers() %}
                     <option value="{{ quartier.id }}">{{ quartier.nom }}</option> 

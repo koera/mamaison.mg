@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-sm-12 col-xs-12">
                 <div class="form-group">
-                    <select name="region" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Region">
+                    <select name="region" class="selectpicker search-region search-select" data-live-search="true" data-live-search-style="begins" title="Region">
                         <option value="" selected>Régions</option>
                         {% for region in getAllRegions() %}
                             <option value="{{ region.id }}">{{ region.nom }}</option>
@@ -26,7 +26,7 @@
 
             <div class="col-sm-12 col-xs-12">
                 <div class="form-group">
-                    <select name="ville" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Ville">
+                    <select name="ville" class="selectpicker search-ville search-select" data-live-search="true" data-live-search-style="begins" title="Ville">
                         <option value="" selected>Villes</option>
                         {% for ville in getAllVilles() %}
                             <option value="{{ ville.id }}">{{ ville.nom }}</option>
@@ -37,7 +37,7 @@
 
             <div class="col-sm-12 col-xs-12">
                 <div class="form-group">
-                    <select name="quartier" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Quartier">
+                    <select name="quartier" class="selectpicker search-quartier search-select" data-live-search="true" data-live-search-style="begins" title="Quartier">
                         <option value="">Quartiers</option>
                         {% for quartier in getAllQuartiers() %}
                             <option value="{{ quartier.id }}">{{ quartier.nom }}</option>

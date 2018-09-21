@@ -43,13 +43,7 @@ class SearchResult
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 list-grid-area">
                             <div id="content-area">
-                                <!--start property items-->
-                                <div class="property-listing grid-view">
-                                    <div class="row">
-                                       <h1>Result not found</h1>
-                                    </div>
-                                </div>
-                                <!--end property items-->
+                                Aucun resultat trouve
                             </div>
                         </div>
                     </div>

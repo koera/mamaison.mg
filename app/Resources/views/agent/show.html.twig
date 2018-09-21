@@ -86,12 +86,12 @@
                                         {% endif %}
 
                                     </ul>
-                                    <ul class="profile-social">
-                                        <li><a href="#"><i class="fa fa-phone-square"></i></a></li>
-                                        <li><a href="#" class="btn-facebook"><i class="fa fa-facebook-square"></i></a></li>
-                                        <li><a href="#" class="btn-twitter"><i class="fa fa-twitter-square"></i></a></li>
-                                        <li><a href="#" class="btn-linkedin"><i class="fa fa-linkedin-square"></i></a></li>
-                                    </ul>
+                                    {#<ul class="profile-social">#}
+                                        {#<li><a href="#"><i class="fa fa-phone-square"></i></a></li>#}
+                                        {#<li><a href="" class="btn-facebook"><i class="fa fa-facebook-square"></i></a></li>#}
+                                        {#<li><a href="#" class="btn-twitter"><i class="fa fa-twitter-square"></i></a></li>#}
+                                        {#<li><a href="#" class="btn-linkedin"><i class="fa fa-linkedin-square"></i></a></li>#}
+                                    {#</ul>#}
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12 col-xs-12">
@@ -101,15 +101,15 @@
                                         {% elseif user.type == 'society' %}
                                             {{ user.profileSocietyUser.nom }}
                                         {% endif %}</h3>
-                                    <form>
+                                    <form action="{{ path('contact.agent') }}" method="post">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Votre Nom" class="form-control">
+                                            <input class="form-control" name="nom" type="text" placeholder="Votre Nom">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" placeholder="Téléphone" class="form-control">
+                                            <input class="form-control" name="telephone" type="text" placeholder="Téléphone">
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" placeholder="Adresse e-mail" class="form-control">
+                                            <input class="form-control" name="email" type="email" placeholder="E-mail">
                                         </div>
                                         <div class="form-group">
                                             <textarea placeholder="Salut
@@ -118,9 +118,17 @@
                                                 {% elseif user.type == 'society' %}
                                                     {{ user.profileSocietyUser.nom }}
                                                 {% endif %}
-                                        , j'ai vu ton profil sur MaMaison et je voulais voir si tu pouvais m'aider." rows="3" class="form-control"></textarea>
+                                        , j'ai vu ton profil sur MaMaison et je voulais voir si tu pouvais m'aider." name="message" rows="5" class="form-control"></textarea>
                                         </div>
-                                        <button class="btn btn-secondary btn-block">ENVOYER</button>
+                                        <input type="hidden" value="{{ user.id }}" name="agent">
+                                        {% for message in app.flashes('success') %}
+                                            <div class="alert alert-success">
+                                                <i class="fa fa-check-circle">
+                                                    {{ message }}
+                                                </i>
+                                            </div>
+                                        {% endfor %}
+                                        <button class="btn btn-secondary btn-block" type="submit">Demande d'information</button>
                                     </form>
                                 </div>
                             </div>

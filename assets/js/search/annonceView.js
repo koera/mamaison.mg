@@ -22,8 +22,8 @@ export default class AnnonceView
                                     <div class="price hide-on-list">
                                         <h3> AR ${ annonce.prix }</h3>
                                     </div>
-                                    <a href="#">
-                                        <img src="${IMAGE_URL}/${ annonce.id }" alt="thumb" width="364" height="244">
+                                    <a href="${IMAGE_DETAIL_URL}/${ annonce.id }" target="_blank">
+                                        <img src="${IMAGE_URL}/${ annonce.id }" alt="${annonce.titre}" width="364" height="244">
                                     </a>
                                 </figure>
                             </div>
@@ -31,7 +31,7 @@ export default class AnnonceView
                         <div class="item-body table-cell">
                             <div class="body-left table-cell">
                                 <div class="info-row">
-                                    <h2 class="property-title"><a href="#">${ annonce.titre }</a></h2>
+                                    <h2 class="property-title"><a href="${IMAGE_DETAIL_URL}/${ annonce.id }" target="_blank">${ annonce.titre }</a></h2>
                                     <h4 class="property-location">${ annonce.typeAnnonce.valeur } - ${ annonce.adresse }</h4>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@ export default class AnnonceView
                                         <p>${ annonce.category.type }</p>
                                     </div>
                                     <div class="body-right info-row">
-                                    <a href="${IMAGE_DETAIL_URL}/${ annonce.id }" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
+                                    <a target="_blank" href="${IMAGE_DETAIL_URL}/${ annonce.id }" class="btn btn-primary">Détails <i class="fa fa-angle-right fa-right"></i></a>
                                 </div>
                                 </div>
                             </div>

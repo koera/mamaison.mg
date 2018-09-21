@@ -6,6 +6,8 @@
 
     <!-- DataTables Responsive CSS -->
     <link href="{{ asset('assets/admin/datatables/dataTables.responsive.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/admin/chart/morris.css')}}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -111,43 +113,28 @@
                                     {{ annonce.createdAt|date('d M Y') }}
                                 </td>
                                 <td>
-                                    <a href="">
+                                    <a class="btn btn-primary" href="">
                                         <i class="fa  fa-trash-o"> Supprimer</i>
                                     </a>
-                                    <br>
-                                    <a href="{{ path('admin.annonces.active',{'id' : annonce.id }) }}">
-                                        <i class="fa  fa-check-circle-o"> Accepter</i>
-                                    </a>
-                                    <br>
-                                    <a data-toggle="modal" data-target="#modal-desactive{{ i }}">
-                                        <i class="fa  fa-times-circle-o"> Refuser</i>
-                                    </a>
-                                    <div class="modal fade" id="modal-desactive{{ i }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    <h4 class="modal-title" id="myModalLabel">Refuser</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ path('admin.annonces.desactive') }}" method="post" role="form">
-                                                        <div class="form-group">
-                                                            <label>Commentaire :</label>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <textarea class="form-control" rows="3" name="comments"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Envoyer" class="btn btn-primary">
-                                                            <input type="hidden" name="id" value="{{ annonce.id }}">
-                                                        </div>
-                                                    </form>
-                                                </div>
+
+                                    {% if annonce.valide %}
+                                        <form action="{{ path('admin.annonces.desactive') }}" method="post" role="form">
+                                            <div class="form-group">
+                                                <label>Commentaire :</label>
                                             </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" rows="3" name="comments"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Refuser" class="btn btn-primary">
+                                                <input type="hidden" name="id" value="{{ annonce.id }}">
+                                            </div>
+                                        </form>
+                                    {% else %}
+                                        <a class="btn btn-primary" href="{{ path('admin.annonces.active',{'id' : annonce.id }) }}">
+                                            <i class="fa  fa-check-circle-o"> Accepter</i>
+                                        </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% set i = i+1 %}
@@ -171,10 +158,30 @@
     <script src="{{ asset('assets/admin/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/admin/datatables/dataTables.responsive.js') }}"></script>
 
+    <!-- Chart -->
+    <script src="{{ asset('assets/admin/chart/raphael.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/chart/morris.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('#dataTables').DataTable({
                 responsive: true
+            });
+        });
+        $(function() {
+            Morris.Donut({
+                element: 'morris-donut-chart',
+                data: [{
+                    label: "Download Sales",
+                    value: 12
+                }, {
+                    label: "In-Store Sales",
+                    value: 30
+                }, {
+                    label: "Mail-Order Sales",
+                    value: 20
+                }],
+                resize: true
             });
         });
     </script>
