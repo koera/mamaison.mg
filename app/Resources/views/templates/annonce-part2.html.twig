@@ -33,7 +33,7 @@
                             <figure class="item-thumb">
                                 <a class="hover-effect"
                                    href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonceEnVedette.id}) }}">
-                                    <img alt="thumb"
+                                    <img alt="{{ annonce.titre }}"
                                          src="{{ path('mamaison.thumb',{'id':annonce.id}) }}"
                                          width="100" height="75" style="width: 100px; height: 75px;">
                                 </a>

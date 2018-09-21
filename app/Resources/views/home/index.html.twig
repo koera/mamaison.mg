@@ -63,6 +63,11 @@
                                                                 <div class="label-status label label-default">
                                                                      {{ annonce.typeAnnonce.valeur }}
                                                                 </div>
+                                                                {% if annonce.status == 'vendu' %}
+                                                                    <span class="label label-danger">Vendu</span>
+                                                                {% elseif annonce.status == 'louer' %}
+                                                                    <span class="label label-danger">Louer</span>
+                                                                {% endif %}
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -260,6 +265,11 @@
                                                                 <div class="label-status label label-default">
                                                                     {{ annonce.typeAnnonce.valeur }}
                                                                 </div>
+                                                                {% if annonce.status == 'vendu' %}
+                                                                    <span class="label label-danger">Vendu</span>
+                                                                {% elseif annonce.status == 'louer' %}
+                                                                    <span class="label label-danger">Louer</span>
+                                                                {% endif %}
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -457,6 +467,11 @@
                                                                 <div class="label-status label label-default">
                                                                     {{ annonce.typeAnnonce.valeur }}
                                                                 </div>
+                                                                {% if annonce.status == 'vendu' %}
+                                                                    <span class="label label-danger">Vendu</span>
+                                                                {% elseif annonce.status == 'louer' %}
+                                                                    <span class="label label-danger">Louer</span>
+                                                                {% endif %}
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">
@@ -654,6 +669,11 @@
                                                                 <div class="label-status label label-default">
                                                                     {{ annonce.typeAnnonce.valeur }}
                                                                 </div>
+                                                                {% if annonce.status == 'vendu' %}
+                                                                    <span class="label label-danger">Vendu</span>
+                                                                {% elseif annonce.status == 'louer' %}
+                                                                    <span class="label label-danger">Louer</span>
+                                                                {% endif %}
                                                             </div>
                                                             <!--<span class="label-featured label label-success">En vedette</span>-->
                                                             <div class="price hide-on-list">

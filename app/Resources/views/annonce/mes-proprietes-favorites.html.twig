@@ -41,6 +41,16 @@
                                         <div class="table-cell">
                                             <div class="figure-block">
                                                 <figure class="item-thumb">
+                                                    <div class="label-wrap hide-on-list">
+                                                        <div class="label-status label label-default">
+                                                            {{ annonce.typeAnnonce.valeur }}
+                                                        </div>
+                                                        {% if annonce.status == 'vendu' %}
+                                                            <span class="label label-danger">Vendu</span>
+                                                        {% elseif annonce.status == 'louer' %}
+                                                            <span class="label label-danger">Louer</span>
+                                                        {% endif %}
+                                                    </div>
                                                     <div class="price hide-on-list">
                                                         <h3>AR {{ annonce.prix }}</h3>
                                                     </div>

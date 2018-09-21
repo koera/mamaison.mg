@@ -158,6 +158,8 @@ class AnnonceController extends Controller
 
                 $annonce->setUser($this->getUser());
 
+                $annonce->setStatus($request->get('status'));
+
                 // galleries
                 foreach ($request->request->get('image') as $image_id){
                     if ($image_id) {
@@ -182,6 +184,8 @@ class AnnonceController extends Controller
                 'images'=> $annonce->getGalleries(),
                 'form' => $form->createView()
             ));
+        }else{
+            return new Response("Propriete non trouve");
         }
     }
 

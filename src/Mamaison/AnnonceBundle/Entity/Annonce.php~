@@ -161,6 +161,13 @@ class Annonce
      */
     private $valide;
 
+    /**
+     * @var string
+     * @ORM\Column(name="status", type="string", nullable=true)
+     *
+     */
+    private $status;
+
 
     /**
      * @ORM\PrePersist
@@ -664,5 +671,29 @@ class Annonce
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set valide
+     *
+     * @param boolean $valide
+     *
+     * @return Annonce
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * Get valide
+     *
+     * @return boolean
+     */
+    public function getValide()
+    {
+        return $this->valide;
     }
 }

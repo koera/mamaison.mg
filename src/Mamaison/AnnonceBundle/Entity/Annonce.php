@@ -161,6 +161,13 @@ class Annonce
      */
     private $valide;
 
+    /**
+     * @var string
+     * @ORM\Column(name="status", type="string", nullable=false, options={"default" : "disponible"})
+     *
+     */
+    private $status;
+
 
     /**
      * @ORM\PrePersist
@@ -688,5 +695,29 @@ class Annonce
     public function getValide()
     {
         return $this->valide;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Annonce
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

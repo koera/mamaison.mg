@@ -43,6 +43,38 @@
                                 </div>
                             {% endfor %}
                             <div class="add-title-tab">
+                                <h3>Status</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content" style="display: block;">
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="radio" {% if annonce.status == 'disponible' %} checked {% endif %} id="mamaison_annoncebundle_annonce_status" name="status" required="required" value="disponible">
+                                                        <label class="form-check-label">Disponible</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="radio" {% if annonce.status == 'vendu' %} checked {% endif %} id="mamaison_annoncebundle_annonce_status" name="status" required="required" value="vendu">
+                                                        <label class="form-check-label">Vendu</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="radio" {% if annonce.status == 'louer' %} checked {% endif %} id="mamaison_annoncebundle_annonce_status" name="status" required="required" value="louer">
+                                                        <label class="form-check-label">Louer</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-title-tab">
                                 <h3>Description de la propriété et prix</h3>
                                 <div class="add-expand"></div>
                             </div>

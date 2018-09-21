@@ -16,16 +16,16 @@ class AnnonceRepository extends EntityRepository
     public function findAnnonceById($annonce)
     {
         $query = $this->queryInVilleFindAll();
-        $result = $query->where('a.id = :id')
+        $result = $query->andWhere('a.id = :id')
             ->setParameter("id", $annonce)
             ->getQuery()
             ->execute();
         return $result != null ? $result[0] : null;
     }
 
-    public function findAllAnnonce($ville = null)
+    public function findAllAnnonce($ville = null,$admin=false)
     {
-        $query = $this->queryInVilleFindAll($ville);
+        $query = $this->queryInVilleFindAll($ville,false,false,$admin);
         $result = $query->getQuery()->execute();
 //        if (count($result) < 50) {
 //            $result = array_merge($result, $this->queryInNotVilleFindAll($ville)->getQuery()->execute());
@@ -120,7 +120,7 @@ class AnnonceRepository extends EntityRepository
      * @return \Doctrine\ORM\QueryBuilder
      * @throws \Exception
      */
-    private function queryInVilleFindAll($ville = null, $findByType = false, $typeAnnonce = null)
+    private function queryInVilleFindAll($ville = null, $findByType = false, $typeAnnonce = null,$admin=false)
     {
         $query = $this->createQueryBuilder('a')
             ->leftJoin('a.category', 'category')
@@ -140,7 +140,7 @@ class AnnonceRepository extends EntityRepository
             ->addSelect('likes')
             ->addSelect('rating');
         if ($ville) {
-            $query = $query->leftJoin('quartier.ville', 'ville')
+            $query->leftJoin('quartier.ville', 'ville')
                 ->addSelect('ville')
                 ->where('ville.nom = :ville')
                 ->setParameter('ville', $ville);
@@ -151,6 +151,10 @@ class AnnonceRepository extends EntityRepository
             }
             $query->andWhere('typeAnnonce.valeur = :type')
                 ->setParameter('type', $typeAnnonce);
+        }
+        if(!$admin){
+            $query->andWhere('a.valide = :valide')
+                ->setParameter('valide',true);
         }
         return $query;
     }
@@ -230,6 +234,8 @@ class AnnonceRepository extends EntityRepository
             ->addSelect('ville')
             ->where('ville.nom = :ville')
             ->setParameter('ville', $ville)
+            ->andWhere('a.valide = :valide')
+            ->setParameter('valide',true)
             ->groupBy('a.id')
 //            ->having('count(user.id) > 0')
             ->orderBy('u', 'desc')
@@ -289,6 +295,8 @@ class AnnonceRepository extends EntityRepository
             ->addSelect('ville')
             ->where('ville.nom = :ville')
             ->setParameter('ville', $ville)
+            ->andWhere('a.valide = :valide')
+            ->setParameter('valide',true)
             ->groupBy('a.id')
             ->orderBy('moyenne', 'desc');
     }

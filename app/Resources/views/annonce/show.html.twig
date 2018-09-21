@@ -18,7 +18,11 @@
                                     {{ annonce.titre }}
                                     <span class="label-wrap">
                                         <span class="label label-primary">{{ annonce.typeAnnonce.valeur }}</span>
-                                        {#<span class="label label-danger">Vendu</span>#}
+                                        {% if annonce.status == 'vendu' %}
+                                            <span class="label label-danger">Vendu</span>
+                                        {% elseif annonce.status == 'louer' %}
+                                            <span class="label label-danger">Louer</span>
+                                        {% endif %}
                                     </span>
                                 </h1>
                                 <p>{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }} - {{ annonce.adresse }}</p>

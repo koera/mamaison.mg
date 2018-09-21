@@ -14,10 +14,18 @@
                                 <div class="table-cell">
                                     <div class="figure-block">
                                         <figure class="item-thumb">
-                                            <span class="label-featured label label-success">En vedette</span>
+                                            <div class="label-wrap hide-on-list">
+                                                <div class="label-status label label-default">
+                                                    {{ annonce.typeAnnonce.valeur }}
+                                                </div>
+                                                {% if annonce.status == 'vendu' %}
+                                                    <span class="label label-danger">Vendu</span>
+                                                {% elseif annonce.status == 'louer' %}
+                                                    <span class="label label-danger">Louer</span>
+                                                {% endif %}
+                                            </div>
                                             <div class="price hide-on-list">
                                                 <h3> AR {{ annonce.prix }}</h3>
-                                                {#<p class="rant">AR 21,000/m²</p>#}
                                             </div>
                                             <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
                                                 <img class="img-thumbnail" src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}">

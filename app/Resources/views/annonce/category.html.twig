@@ -14,6 +14,16 @@
                                 <div class="table-cell">
                                     <div class="figure-block">
                                         <figure class="item-thumb">
+                                            <div class="label-wrap hide-on-list">
+                                                <div class="label-status label label-default">
+                                                    {{ annonce.typeAnnonce.valeur }}
+                                                </div>
+                                                {% if annonce.status == 'vendu' %}
+                                                    <span class="label label-danger">Vendu</span>
+                                                {% elseif annonce.status == 'louer' %}
+                                                    <span class="label label-danger">Louer</span>
+                                                {% endif %}
+                                            </div>
                                             <div class="price hide-on-list">
                                                 <h3> AR {{ annonce.prix }}</h3>
                                                 {#<p class="rant">AR 21,000/m²</p>#}
@@ -90,11 +100,6 @@
                                             <h4 class="property-location">{{ annonce.adresse }}</h4>
                                         </div>
                                         <div class="info-row amenities hide-on-grid">
-                                            {#<p>#}
-                                            {#<span>Lits: 3</span>#}
-                                            {#<span>Chambres: 2</span>#}
-                                            {#<span>m²: 1,965</span>#}
-                                            {#</p>#}
                                             <p>{{ annonce.category.type }}</p>
                                         </div>
                                         <div class="info-row date hide-on-grid">
@@ -113,7 +118,6 @@
                                     <div class="body-right table-cell hidden-gird-cell">
                                         <div class="info-row price">
                                             <h3> AR {{ annonce.prix }}</h3>
-                                            {#<p class="rant"> AR 21,000/m²</p>#}
                                         </div>
                                         <div class="info-row phone text-right">
                                             <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Détails <i
@@ -128,11 +132,6 @@
                                     <div class="table-list full-width hide-on-list">
                                         <div class="cell">
                                             <div class="info-row amenities">
-                                                {#<p>#}
-                                                {#<span>Lits: 3</span>#}
-                                                {#<span>Chambres: 2</span>#}
-                                                {#<span>M²: 1,965</span>#}
-                                                {#</p>#}
                                                 <p>{{ annonce.category.type }}</p>
                                             </div>
                                         </div>

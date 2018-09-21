@@ -81,7 +81,7 @@ class AdminController extends Controller
     public function annoncesAction(){
         $annonces = $this->getDoctrine()->getManager()
             ->getRepository(Annonce::class)
-            ->findAllAnnonce();
+            ->findAllAnnonce('',true);
         return $this->render('admin/annonces/index.html.twig',[
             'annonces' => $annonces
         ]);

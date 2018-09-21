@@ -67,6 +67,16 @@ class FormSearch
                     }
                 });
         }
+        //get if annonce is valide
+        this.query.push({
+            bool: {
+                filter: {
+                    term: {
+                        "valide": true
+                    }
+                }
+            }
+        });
         // get if not deleted
         this.query.push({
             bool: {
