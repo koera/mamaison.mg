@@ -36,6 +36,7 @@ $(document).ready(function() {
             }
         }).then(function (resp) {
             let resulta_html = new SearchResult(query,resp,client,1)
+            console.log(resp)
             let divResultat = $('#section-body')
             divResultat.empty()
             divResultat.append(resulta_html.render())

@@ -67,6 +67,16 @@ class FormSearch
                     }
                 });
         }
+        // get if not deleted
+        this.query.push({
+            bool: {
+                must_not: {
+                    exists: {
+                        "field": "deletedat"
+                    }
+                }
+            }
+        });
         this.addPrixQuery()
         return this.query;
     }

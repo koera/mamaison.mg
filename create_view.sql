@@ -10,6 +10,8 @@ select
     a.adresse,
     a.created_at,
     a.updated_at,
+    a.deletedAt,
+    a.valide,
     json_object("id",a.user_id, "nom",u.username) as 'user',
     json_object("id",a.type_annonce_id, "valeur",ta.valeur) as 'type_annonce',
     json_object("id",a.category_id, "type",cat.type) as 'category',
