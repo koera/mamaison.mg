@@ -22,7 +22,11 @@
                 <div class="col-md-3 col-sm-4 user-dashboard-left">
                     <div class="my-sidebar">
                         <ul class="list-unstyled my-menu">
-                            <li> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% if app.user.type == 'simple' %}
+                                <li> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% elseif app.user.type == 'society' %}
+                                <li> <a href="{{ path('compte.edit',{'societyName':app.user.profileSocietyUser.nom}) }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% endif %}
                             <li> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
                             <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
                             <li class="active"> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>

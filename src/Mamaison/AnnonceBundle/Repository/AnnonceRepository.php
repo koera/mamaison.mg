@@ -36,7 +36,7 @@ class AnnonceRepository extends EntityRepository
     public function findAnnonceByType($typeAnnonce, $ville = null)
     {
 
-        $query = $this->queryInVilleFindAll($ville, true, $typeAnnonce);
+        $query = $this->queryInVilleFindAll($ville, true, $typeAnnonce,false);
         $resultVille = $query->getQuery()->execute();
 
 //        if (count($resultVille) < 50) {
@@ -80,7 +80,9 @@ class AnnonceRepository extends EntityRepository
             ->andWhere('typeAnnonce.valeur = :typeAnnonce')
             ->setParameter('typeAnnonce',$type)
             ->andWhere('category.type = :category')
-            ->setParameter('category',$category);
+            ->setParameter('category',$category)
+            ->andWhere('a.valide = :valide')
+            ->setParameter('valide',true);
         return $query;
     }
 
@@ -152,7 +154,7 @@ class AnnonceRepository extends EntityRepository
             $query->andWhere('typeAnnonce.valeur = :type')
                 ->setParameter('type', $typeAnnonce);
         }
-        if(!$admin){
+        if($admin == false){
             $query->andWhere('a.valide = :valide')
                 ->setParameter('valide',true);
         }
@@ -356,15 +358,16 @@ class AnnonceRepository extends EntityRepository
     public function getProprieteFavorite($user)
     {
         $query = $this->queryInVilleFindAll();
-        $q = $query->where($query->expr()->in('likes', $user));
+        $q = $query->andWhere($query->expr()->in('likes', $user));
         return $q->getQuery();
     }
 
     public function getProprieteById($user)
     {
         $query = $this->queryInVilleFindAll();
-        $query = $query->where('user.id = :id')
+        $query = $query->andWhere('user.id = :id')
             ->setParameter('id', $user);
+        dump($query->getDQL());
         return $query->getQuery()->execute();
     }
 

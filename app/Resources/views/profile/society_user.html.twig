@@ -1,98 +1,120 @@
-{#{{ form(edit_form) }}#}
-
 {% extends 'template.html.twig' %}
 
 {% block content %}
 
-<section id="section-body">
-    <div class="container">
-        <div class="page-title">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="page-title-left">
-                        <h2>Profil entreprise</h2>
-                    </div>
-                    {% for message in app.flashes('success') %}
-                        <div class="alert alert-success">
-                            {{ message }}
+    <section id="section-body">
+
+        <div class="container">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-left">
+                            <h2>Mon profil</h2>
                         </div>
-                    {% endfor %}
-                    <div class="page-title-right">
-                        <a href="{{ path('logout') }}">Deconnecter</a>
-                        <ol class="breadcrumb"><li><a href="/"><i class="fa fa-home"></i></a></li><li class="active">Profil</li></ol>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb"><li><a href="/"><i class="fa fa-home"></i></a></li><li class="active">Mon profil</li></ol>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                {#{{ form(edit_form) }}#}
-                <div class="col-sm-12">
-                    <div class="profile-detail-block company-detail">
-                        <div class="row">
-                            {{ form_start(edit_form) }}
-                                <div class="col-md-3 col-sm-3 col-xs-12">
-                                    <div class="profile-image">
-                                        {% if profile.avatar %}
-                                            <img src="{{ asset('uploads/avatars/'~profile.avatar) }}" alt="Avatar">
-                                        {% else %}
-                                            <img src="http://placehold.it/50x50" alt="Avatar">
-                                        {% endif %}
-                                        {{ form_widget(edit_form.avatarFile) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-5 col-sm-5 col-xs-12">
-                                    <div class="profile-description">
-                                        <h3>{{ user.societyName }}</h3>
-                                        <ul class="profile-contact">
-                                            <li><span>Nom du responsable:</span> <a href="#">{{ user.username }}</a></li>
-                                            <li><span>E-mail:</span> <a href="#">{{ user.email }}</a></li>
-                                            <li><span>TELEPHONE:</span> <a href="#">{{ profile.telephone }}</a></li>
-                                            <li><span>ADRESSE:</span> <a href="#">{{ profile.adresse }}</a></li>
-                                        </ul>
 
-                                        <ul class="profile-rating">
-                                            <li><span>Propriétés répertoriées:</span> 32</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <div class="form-small">
-                                            <div class="form-group">
-                                                {#<input type="text" placeholder="Nom de l'entreprise" class="form-control">#}
-                                                {{ form_widget(edit_form.nom,{'attr':{'placeholder':'Nom de l\'entreprise'} }) }}
-                                                {{ form_errors(edit_form.nom) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_widget(edit_form.adresse,{'attr':{'placeholder':'Adresse de l\'entreprise'} }) }}
-                                                {{ form_errors(edit_form.adresse) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_widget(edit_form.telephone,{'attr':{'placeholder':'Telephone de l\'entreprise'} }) }}
-                                                {{ form_errors(edit_form.telephone) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_widget(edit_form.siteweb,{'attr':{'placeholder':'Siteweb de l\'entreprise'} }) }}
-                                                {{ form_errors(edit_form.siteweb) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {#<textarea placeholder="Message de l'entreprise" rows="3" class="form-control"></textarea>#}
-                                                {{ form_widget(edit_form.bio,{'attr':{'placeholder':'Presentation de l\'entreprise'} }) }}
-                                                {{ form_errors(edit_form.bio) }}
-                                            </div>
-                                            <!--mon radio -->
-                                                {{ form_widget(edit_form.type) }}
-                                            <button class="btn btn-secondary btn-block">Enregistrer</button>
-                                    </div>
-                                </div>
-                            {{ form_end(edit_form) }}
-                        </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-4 user-dashboard-left">
+                    <div class="my-sidebar">
+                        <ul class="list-unstyled my-menu">
+                            <li class="active"> <a href="{{ path('compte.edit',{'societyName':profile.nom}) }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            <li> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
+                            <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
+                            <li> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
+                            <li> <a href="{{ path('logout') }}"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8 user-dashboard-right">
+                    <div class="profile-area account-block white-block">
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {{ form_start(edit_form) }}
                         <div class="row">
+                            <div class="col-md-4 col-sm-5">
+                                {% if profile.nom %}
+                                    <h4>Bienvenue, {{ profile.nom  }}!</h4>
+                                {% else %}
+                                    <h4>Bienvenue, {{ user.username }}!</h4>
+                                {% endif %}
+                                <div class="my-avatar">
+                                    {% if profile.avatar %}
+                                        <img src="{{ asset('uploads/avatars/'~profile.avatar) }}" alt="Avatar">
+                                    {% else %}
+                                        <img src="http://placehold.it/50x50" alt="Avatar">
+                                    {% endif %}
+                                    <label class="btn btn-default btn-file">
+                                        Importez image {{ form_widget(edit_form.avatarFile, {'attr':{'class':'btn btn-primary btn-block'} } ) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-7">
+                                <h4>Information</h4>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="firstname">Nom</label>
+                                            {{ form_widget(edit_form.nom) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+
+                                            <label for="lastname">Adresse</label>
+                                            {{ form_widget(edit_form.adresse) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Telephone</label>
+                                            {{ form_widget(edit_form.telephone) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Siteweb</label>
+                                            {{ form_widget(edit_form.siteweb) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Type</label>
+                                            {{ form_widget(edit_form.type) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="about">À propos de moi</label>
+                                            {{ form_widget(edit_form.bio) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 text-right">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </div>
+                        {{ form_end(edit_form) }}
+                    </div>
+                        <div class="profile-area account-block white-block">
+                            <h4>Changer votre mots de passe</h4>
                             {{ form_start(changePassword_form) }}
-                            <div class="error-left">
-                                {{ form_errors(changePassword_form.oldPassword) }}<br/>
-                                {{ form_errors(changePassword_form.password.first) }}<br/>
-                                {{ form_errors(changePassword_form.password.second) }}<br/>
+                            <div class="error">
+                                <p class="error">{{ form_errors(changePassword_form.oldPassword) }}</p>
+                                <p class="error">{{ form_errors(changePassword_form.password.first) }}</p>
+                                <p class="error">{{ form_errors(changePassword_form.password.second) }}</p>
+
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
@@ -117,418 +139,10 @@
                             <button type="submit" class="btn btn-primary">Mettre à jour le mot de passe</button>
                             {{ form_end(changePassword_form) }}
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div id="content-area">
-                    <div class="profile-tab-area">
-                        <ul class="profile-tabs">
-                            <li class="active">APERÇU</li>
-                            <li>PROPRIÉTÉS</li>
-                            <li>ADD PROPRIETES</li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="profile-tab-pane tab-pane fade active in">
-                                <div class="profile-tab-content profile-overview">
-                                    <h3 class="title">Présentation de l'entreprise</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-                                </div>
-                            </div>
-                            <div class="profile-tab-pane tab-pane fade">
-                                <div class="profile-tab-content profile-properties">
-                                    <!--start property items-->
-                                    <div class="property-listing grid-view">
 
-                                        <div class="row">
-                                            {% for annonce in myProprietes %}
-                                                <div class="item-wrap">
-                                                    <div class="property-item table-list">
-                                                        <div class="table-cell">
-                                                            <div class="figure-block">
-                                                                <figure class="item-thumb">
-                                                                    <span class="label-featured label label-success">En vedette</span>
-                                                                    <div class="price hide-on-list">
-                                                                        <h3>AR {{ annonce.prix }}</h3>
-                                                                        {#<p class="rant"> AR 21,000/mo</p>#}
-                                                                    </div>
-                                                                    <a href="#">
-                                                                        {#<img src="http://placehold.it/364x244" alt="thumb"> 254x170#}
-                                                                        {% if annonce.galleries %}
-                                                                            <img src="{{ annonce.galleries|last }}" style="width: 364px; height: 244px;" alt="thumb">
-                                                                        {% endif %}
-                                                                    </a>
-                                                                    <figcaption class="thumb-caption cap-actions clearfix">
-                                                                        <ul class="list-unstyled actions pull-right">
-                                                                            <li>
-                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Favorite">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </span>
-                                                                            </li>
-                                                                            <li class="share-btn">
-                                                                                <div class="share_tooltip fade">
-                                                                                    <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                                                    <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                                                </div>
-                                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Partage"><i class="fa fa-share-alt"></i></span>
-                                                                            </li>
-                                                                            <li>
-                                                                <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Photos (12)">
-                                                                    <i class="fa fa-camera"></i> <!--<span class="count">(12)</span>-->
-                                                                </span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </figcaption>
-                                                                </figure>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-body table-cell">
-
-                                                            <div class="body-left table-cell">
-                                                                <div class="info-row">
-                                                                    {#<div class="rating">#}
-                                                                    {#<span data-title="Average Rate: 4.67 / 5" class="bottom-ratings tip"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 93.4%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span>#}
-                                                                    {#</span>#}
-                                                                    {#<span class="star-text-right">15 Votes</span>#}
-                                                                    {#</div>#}
-                                                                    <h2 class="property-title"><a href="#">{{ annonce.titre }}</a></h2>
-                                                                    <h4 class="property-location">{{ annonce.adresse }}</h4>
-                                                                </div>
-                                                                <div class="info-row amenities hide-on-grid">
-                                                                    <p>{{ annonce.category.type }}</p>
-                                                                    {#<p>#}
-                                                                    {#{% for caracteristique in annonce.caracteristiques %}#}
-                                                                    {#<span><input type="checkbox" checked readonly="readonly"/>{{ caracteristique.nom }}</span>#}
-                                                                    {#{% endfor %}#}
-                                                                    {#</p>#}
-                                                                </div>
-                                                                <div class="info-row date hide-on-grid">
-                                                                    {% if annonce.user.type == 'simple' %}
-                                                                        <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
-                                                                    {% elseif annonce.user.type == 'society' %}
-                                                                        <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
-                                                                    {% endif %}
-                                                                    <p><i class="fa fa-calendar"></i>
-                                                                        {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                                        {% set leftDays = difference.days %}
-                                                                        {% if leftDays == 1 %}
-                                                                            Il y a 1 jour
-                                                                        {% else %}
-                                                                            il y a {{ leftDays }} jours
-                                                                        {% endif %}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="body-right table-cell hidden-gird-cell">
-                                                                <div class="info-row price">
-                                                                    <h3> AR {{ annonce.prix }}</h3>
-                                                                    {#<p class="rant"> AR 21,000/mo</p>#}
-                                                                </div>
-                                                                <div class="info-row phone text-right">
-                                                                    <a href="#" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
-                                                                    <p>
-                                                                        <a href="#">
-                                                                            {% if annonce.user.type == 'simple' %}
-                                                                                {{ annonce.user.profileSimpleUser.telephone }}
-                                                                            {% elseif annonce.user.type == 'society' %}
-                                                                                {{ annonce.user.profileSocietyUser.telephone }}
-                                                                            {% endif %}
-                                                                        </a>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="table-list full-width hide-on-list">
-                                                                <div class="cell">
-                                                                    <div class="info-row amenities">
-                                                                        <p>{{ annonce.category.type }}</p>
-                                                                        {#<p>#}
-                                                                        {#{% for caracteristique in annonce.caracteristiques %}#}
-                                                                        {#<span><input type="checkbox" checked readonly="readonly"/>{{ caracteristique.nom }}</span>#}
-                                                                        {#{% endfor %}#}
-                                                                        {#</p>#}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell">
-                                                                    <div class="phone">
-                                                                        <a href="#" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
-                                                                        <p><a href="#">
-                                                                                {% if annonce.user.type == 'simple' %}
-                                                                                    {{ annonce.user.profileSimpleUser.telephone }}
-                                                                                {% elseif annonce.user.type == 'society' %}
-                                                                                    {{ annonce.user.profileSocietyUser.telephone }}
-                                                                                {% endif %}
-                                                                            </a>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-foot date hide-on-list">
-                                                        <div class="item-foot-left">
-                                                            <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
-                                                                    {% if annonce.user.type == 'simple' %}
-                                                                        {{ annonce.user.profileSimpleUser.nom }}
-                                                                    {% elseif annonce.user.type == 'society' %}
-                                                                        {{ annonce.user.profileSocietyUser.nom }}
-                                                                    {% endif %}
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                        <div class="item-foot-right">
-                                                            <p><i class="fa fa-calendar"></i>
-                                                                {% set difference = date(annonce.createdAt).diff(date("now")) %}
-                                                                {% set leftDays = difference.days %}
-                                                                {% if leftDays == 1 %}
-                                                                    Il y a 1 jour
-                                                                {% else %}
-                                                                    il y a {{ leftDays }} jours
-                                                                {% endif %}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                    <!--end property items-->
-                                </div>
-                            </div>
-                            <div class="profile-tab-pane tab-pane fade">
-                                <div class="profile-tab-content profile-agents">
-                                    <form name="mamaison_annoncebundle_annonce" method="post" enctype="multipart/form-data">
-                                        <div class="account-block">
-                                            <div class="add-title-tab">
-                                                <h3>Description de la propriété et prix</h3>
-                                                <div class="add-expand"></div>
-                                            </div>
-                                            <div class="add-tab-content" style="display: block;">
-                                                <div class="add-tab-row push-padding-bottom">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="property-title">Titre</label>
-                                                                {{ form_widget(propriete_form.titre) }}
-                                                                {{ form_errors(propriete_form.titre) }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="description">Déscription</label>
-                                                                {{ form_widget(propriete_form.description) }}
-                                                                {{ form_errors(propriete_form.description) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="add-tab-row push-padding-bottom">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label for="categories">Catégories</label>
-                                                            <div class="form-group">
-                                                                {{ form_errors(propriete_form.category) }}
-                                                                {% for child in propriete_form.category %}
-                                                                    <div class="col-md-4">
-                                                                        {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
-                                                                        {{ form_label(child) }}
-                                                                    </div>
-                                                                {% endfor %}
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group">
-                                                                <label for="caracteristiques generales">Type</label>
-                                                                {{ form_widget(propriete_form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
-                                                                {{ form_errors(propriete_form.typeAnnonce) }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 js-hide-terrain">
-                                                            <div class="form-group">
-                                                                <label for="property-price-before">Nombre de pièces</label>
-                                                                {{ form_widget(propriete_form.nombrePiece) }}
-                                                                {{ form_errors(propriete_form.nombrePiece) }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group">
-                                                                <label for="property-price">Prix</label>
-                                                                {{ form_widget(propriete_form.prix) }}
-                                                                {{ form_errors(propriete_form.prix) }}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-sm-3 js-show-terrain">
-                                                            <div class="form-group">
-                                                                <label for="property-price-before">Surface</label>
-                                                                {{ form_widget(propriete_form.surface) }}
-                                                                {{ form_errors(propriete_form.surface) }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 js-show-terrain">
-                                                            <div class="form-group">
-                                                                <label for="property-price-before">Unite surface</label>
-                                                                {{ form_widget(propriete_form.uniteSurface) }}
-                                                                {{ form_errors(propriete_form.uniteSurface) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="add-tab-row push-padding-bottom">
-                                                    <div class="row">
-                                                        <div class="col-sm-12 js-caracteristiques">
-                                                            <label for="categories">Caracteristiques</label>
-                                                            <div class="form-group">
-                                                                {{ form_errors(propriete_form.caracteristiques) }}
-                                                                {% for child in propriete_form.caracteristiques %}
-                                                                    <div class="col-md-4">
-                                                                        {{ form_widget(child) }}
-                                                                        {{ form_label(child) }}
-                                                                    </div>
-                                                                {% endfor %}
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="account-block">
-                                            <div class="add-title-tab">
-                                                <h3>Emplacement de la propriété</h3>
-                                                <div class="add-expand"></div>
-                                            </div>
-                                            <div class="add-tab-content">
-                                                <div class="add-tab-row  push-padding-bottom">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="address">Adresse</label>
-                                                                {{ form_widget(propriete_form.adresse) }}
-                                                                {{ form_errors(propriete_form.adresse) }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="quartier">Quartier</label>
-                                                                {{ form_widget(propriete_form.neighborhood) }}
-                                                                {{ form_errors(propriete_form.neighborhood) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="address">Ville</label>
-                                                                {{ form_widget(propriete_form.ville) }}
-                                                                {{ form_errors(propriete_form.ville) }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="quartier">Region</label>
-                                                                {{ form_widget(propriete_form.region) }}
-                                                                {{ form_errors(propriete_form.region) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="account-block">
-                                            <div class="add-title-tab">
-                                                <h3>Médias de propriété</h3>
-                                                <div class="add-expand"></div>
-                                            </div>
-                                            <div class="add-tab-content">
-                                                <div class="add-tab-row">
-                                                    <div class="property-media">
-                                                        <div class="media-gallery">
-                                                            <div class="row">
-                                                                <div class="col-sm-2">
-                                                                    <figure class="gallery-thumb">
-                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-0"/>
-                                                                        <span>
-                                                            {{ form_widget(propriete_form.gallery_0) }}
-                                                        </span>
-                                                                        
-                                                                    </figure>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <figure class="gallery-thumb">
-                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-1" name="image-1"/>
-                                                                        <span>
-                                                            {{ form_widget(propriete_form.gallery_1) }}
-                                                        </span>
-                                                                    </figure>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <figure class="gallery-thumb">
-                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-2" name="image-2"/>
-                                                                        <span>
-                                                            {{ form_widget(propriete_form.gallery_2) }}
-                                                        </span>
-                                                                    </figure>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <figure class="gallery-thumb">
-                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-3" name="image-3"/>
-                                                                        <span>
-                                                            {{ form_widget(propriete_form.gallery_3) }}
-                                                        </span>
-                                                                    </figure>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <figure class="gallery-thumb">
-                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-4" name="image-4"/>
-                                                                        <span>
-                                                            {{ form_widget(propriete_form.gallery_4) }}
-                                                        </span>
-                                                                    </figure>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <figure class="gallery-thumb">
-                                                                        <input type="image" class="img" src="http://placehold.it/125x125" alt="thumb" id="image-5" name="image-5"/>
-                                                                        <span>
-                                                            {{ form_widget(propriete_form.gallery_5) }}
-                                                        </span>
-                                                                    </figure>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div id="drop" class="media-drag-drop js-drug-and-drop">
-                                                            <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
-                                                            <h4>or</h4>
-                                                            <label class="btn btn-default btn-file" style="width:auto">
-                                                                Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="upload-file-button">
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="account-block text-right">
-                                            <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 {% endblock %}
+
