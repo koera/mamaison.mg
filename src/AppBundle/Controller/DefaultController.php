@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use Mamaison\AnnonceBundle\Entity\Annonce;
+use Mamaison\AnnonceBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -81,4 +83,57 @@ class DefaultController extends Controller
         echo 'Name: ' . $user['name'];
         die;
     }
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/a-propos-de-nous", name="about")
+     */
+    public function aboutAction(Request $request){
+        $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
+        $annonceLesPlusNoter = [];
+        foreach ($this->getDoctrine()->getRepository(Annonce::class)
+                     ->getAnnoncePlusNote($ville) as $a)
+            $annonceLesPlusNoter[] = $a[0];
+        $category = $this->getDoctrine()->getRepository(Category::class)
+            ->findAll();
+        return $this->render('mamaison/about.html.twig',
+            [
+                'annoncePlusNote'   => $annonceLesPlusNoter,
+                'category'          => $category
+            ]
+        );
+    }
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/faq", name="faq")
+     */
+    public function faqAction(Request $request){
+        $ville = $request->cookies->get('ville');
+        if(!$ville){
+            $request->cookies->set('ville', 'antananarivo');
+            $ville = 'antananarivo';
+        }
+        $annonceLesPlusNoter = [];
+        foreach ($this->getDoctrine()->getRepository(Annonce::class)
+                     ->getAnnoncePlusNote($ville) as $a)
+            $annonceLesPlusNoter[] = $a[0];
+        $category = $this->getDoctrine()->getRepository(Category::class)
+            ->findAll();
+        return $this->render('mamaison/faq.html.twig',
+            [
+                'annoncePlusNote'   => $annonceLesPlusNoter,
+                'category'          => $category
+            ]
+        );
+    }
+
+
+
 }
