@@ -66,7 +66,8 @@ class ResetPasswordController extends Controller
                         'text/html'
                     );
                 $this->get('mailer')->send($message);
-                return new Response("An email has been sent to ".$user->getEmail());
+//                return new Response("An email has been sent to ".$user->getEmail());
+                return $this->render('reset/email-sent.html.twig',['user'=>$user]);
             }else{
                 return new Response("We can't find this email adress");
             }
