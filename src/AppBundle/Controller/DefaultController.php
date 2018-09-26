@@ -133,16 +133,16 @@ class DefaultController extends Controller
             ]
         );
     }
-
-
-    /**
-     * @param Request $request
-     * @Route("/newsletter", name="newsletter")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function newsletterAction(Request $request){
-        $annonce = $this->getDoctrine()->getRepository(Annonce::class)
-            ->find(100);
+//
+//
+//    /**
+//     * @param Request $request
+//     * @Route("/newsletter", name="newsletter")
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     */
+//    public function newsletterAction(Request $request){
+//        $annonce = $this->getDoctrine()->getRepository(Annonce::class)
+//            ->find(100);
 //        $message = (new \Swift_Message('Confirmation instructions'))
 //            ->setFrom('no-reply@mamaison.mg')
 //            ->setTo('tolotrarazafindrabe@trustylabs.mg')
@@ -155,10 +155,10 @@ class DefaultController extends Controller
 //            );
 //
 //        $this->get('mailer')->send($message);
-        return $this->render('emails/newsletter.html.twig',[
-            'annonce' => $annonce
-        ]);
-    }
+//        return $this->render('emails/newsletter.html.twig',[
+//            'annonce' => $annonce
+//        ]);
+//    }
 
 
 
