@@ -77,9 +77,7 @@ class DefaultController extends Controller
             echo 'Facebook SDK returned an error: ' . $e->getMessage();
             exit;
         }
-        dump($response);
-        $user = $response->getGraphUser();// to get user details
-        dump($user);
+        $user = $response->getGraphUser();
         echo 'Name: ' . $user['name'];
         die;
     }
