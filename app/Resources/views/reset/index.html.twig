@@ -15,6 +15,13 @@
                         </i>
                     </div>
                 {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        <i class="fa fa-check-circle-o">
+                            {{ message }}
+                        </i>
+                    </div>
+                {% endfor %}
                 <form action="" method="post">
                     <div class="form-group field-group">
                         <div class="input-user input-icon">

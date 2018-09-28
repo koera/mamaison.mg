@@ -55,8 +55,8 @@ class ResetPasswordController extends Controller
                             'text/html'
                         );
                     $this->get('mailer')->send($message);
-//                return new Response("An email has been sent to ".$user->getEmail());
-                    return $this->render('reset/email-sent.html.twig',['user'=>$user]);
+                    $this->addFlash("success", "Un email a ete envoyer");
+                    return $this->render('reset/index.html.twig');
                 }else{
                     $this->addFlash("error", "Utilisateur non trouve");
                     return $this->render('reset/index.html.twig');
