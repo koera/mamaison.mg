@@ -62,20 +62,22 @@ class NewsLetterCommand extends Command
         $newsLetter = json_decode(curl_exec($ch));
 
         foreach ($newsLetter as $news){
-            $message = (new \Swift_Message(count($annonces). ' nouveaux immobiliers'))
-                ->setFrom('no-reply@mamaison.mg')
-                ->setTo($news->email)
-                ->setBody(
-                    $this->container->get('templating')->render(
-                        'emails/newsletter.html.twig',
-                        ['annonces' => $annonces]
-                    ),
-                    'text/html'
-                );
-            $this->mailer->send($message);
+            if(count($annonces) > 0){
+                $message = (new \Swift_Message(count($annonces). ' nouveaux immobiliers'))
+                    ->setFrom('no-reply@mamaison.mg')
+                    ->setTo($news->email)
+                    ->setBody(
+                        $this->container->get('templating')->render(
+                            'emails/newsletter.html.twig',
+                            ['annonces' => $annonces]
+                        ),
+                        'text/html'
+                    );
+                $this->mailer->send($message);
 
-            $output->writeln($i . ' Mails sent');
-            $i++;
+                $output->writeln($i . ' Mails sent');
+                $i++;
+            }
         }
 
         curl_close ($ch);
