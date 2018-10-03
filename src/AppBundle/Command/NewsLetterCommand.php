@@ -63,7 +63,7 @@ class NewsLetterCommand extends Command
 
         foreach ($newsLetter as $news){
             if(count($annonces) > 0){
-                $message = (new \Swift_Message(count($annonces). ' nouveaux immobiliers'))
+                $message = (new \Swift_Message(count($annonces). ' nouveaux immobiliers publiés sur Mamaison.mg'))
                     ->setFrom('no-reply@mamaison.mg')
                     ->setTo($news->email)
                     ->setBody(
