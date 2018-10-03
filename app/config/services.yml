@@ -46,3 +46,6 @@ services:
 
     AppBundle\Commande\CreateUserAdminCommand:
         arguments: ['@doctrine.orm.default_entity_manager']
+
+    AppBundle\Commande\NewsLetterCommand:
+        arguments: ['@doctrine.orm.default_entity_manager','@swiftmailer.mailer.default','@service_container']

@@ -10,11 +10,14 @@ namespace Mamaison\AnnonceBundle\Controller;
 
 
 use AppBundle\Entity\User;
+use Goutte\Client;
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\DomCrawler\Crawler;
+
 
 /**
  * Class AdminController
@@ -164,6 +167,19 @@ class AdminController extends Controller
             );
         $this->get('mailer')->send($message);
         return $this->redirectToRoute('admin.annonces.index');
+    }
+
+    /**
+     * @Route("/crawler")
+     */
+    public function crawlerAction(){
+        $client = new Client();
+        $string = "";
+        $crawler = $client->request('GET', 'https://www.jumia.mg/appartements-a-vendre');
+        $crawler->filter('#search-results')->each(function ($node) {
+           dump($node);
+        });
+        die();
     }
 
 

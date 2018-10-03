@@ -11,6 +11,7 @@ namespace AppBundle\Command;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Mamaison\AnnonceBundle\Entity\Annonce;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,12 +21,15 @@ class NewsLetterCommand extends Command
 {
 
     private $em;
-
+    private $mailer;
     private $container;
+    private $newsletterUrl;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(ObjectManager $em, \Swift_Mailer $mailer, ContainerInterface $container)
     {
         $this->em = $em;
+        $this->mailer = $mailer;
+        $this->container = $container;
         parent::__construct();
     }
 
@@ -36,10 +40,10 @@ class NewsLetterCommand extends Command
             // the name of the command (the part after "bin/console")
             ->setName('app:newsletter')
             // the short description shown while running "php bin/console list"
-            ->setDescription('This command sent a newsletter')
+            ->setDescription('This command send a newsletter')
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('This command sent a newsletter');
+            ->setHelp('This command send a newsletter');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -47,30 +51,33 @@ class NewsLetterCommand extends Command
         $date = date('Y-m-d H:i:s',strtotime("- 3 days"));
         $annonces = $this->em->getRepository(Annonce::class)
             ->getAnnonceForNewsLetter($date,date('Y-m-d H:i:s'));
-        $i = 0;
+        $i = 1;
 
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL,$this->container->getParameter('newsletter_domain')."/newsletter/api/getAll");
+        curl_setopt($ch, CURLOPT_URL,$this->container->getParameter('newsletter_url'));
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $newsLetter = json_decode(curl_exec($ch));
 
         foreach ($newsLetter as $news){
-            $message = (new \Swift_Message('Newsletter'))
+            $message = (new \Swift_Message(count($annonces). ' nouveaux immobiliers'))
                 ->setFrom('no-reply@mamaison.mg')
                 ->setTo($news->email)
                 ->setBody(
-                    $this->renderView(
+                    $this->container->get('templating')->render(
                         'emails/newsletter.html.twig',
                         ['annonces' => $annonces]
                     ),
                     'text/html'
                 );
-            $this->get('mailer')->send($message);
+            $this->mailer->send($message);
+
+            $output->writeln($i . ' Mails sent');
+            $i++;
         }
+
         curl_close ($ch);
-        $output->writeln($i . ' Mails sent');
     }
 }
