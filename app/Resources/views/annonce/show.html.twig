@@ -1,5 +1,8 @@
 {% extends 'template.html.twig' %}
-
+{% block title %}
+    <title>Mamaison - {{ annonce.titre }} </title>
+    <meta name="description" content="{{ annonce.description }}">
+{% endblock %}
 {% block content %}
     <section id="section-body">
         <!--start detail top-->
@@ -42,7 +45,7 @@
                                             <a href="#"><i class="fa fa-envelope"></i></a>
                                         </div>
                                         <span data-placement="right" data-toggle="tooltip" data-original-title="share"><i class="fa fa-share-alt"></i></span>
-                                    </li>
+                                    {#</li>#}
                                     <li>
                                         <span>
                                             {% if app.user %}
@@ -66,7 +69,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <h1>AR {{ annonce.prix }}</h1>
+                                <h1>{% if annonce.category.type == 'Terrain' %}AR {{ annonce.prixTotal }}{% else %} AR {{ annonce.prixTotal }} {% endif %}</h1>
                                 {#<h4>21,000<sup>2</sup></h4>#}
                             </div>
                         </div>
@@ -153,16 +156,16 @@
                                             <i class="fa fa-camera"></i>
                                         </a>
                                     </li>
-                                    <li data-placement="bottom" data-toggle="tooltip" data-original-title="Map View" class="">
-                                        <a href="#map" data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-map"></i>
-                                        </a>
-                                    </li>
-                                    <li data-placement="bottom" data-toggle="tooltip" data-original-title="Street View" class="">
-                                        <a href="#street-map" data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-street-view"></i>
-                                        </a>
-                                    </li>
+                                    {#<li data-placement="bottom" data-toggle="tooltip" data-original-title="Map View" class="">#}
+                                        {#<a href="#map" data-toggle="tab" aria-expanded="false">#}
+                                            {#<i class="fa fa-map"></i>#}
+                                        {#</a>#}
+                                    {#</li>#}
+                                    {#<li data-placement="bottom" data-toggle="tooltip" data-original-title="Street View" class="">#}
+                                        {#<a href="#street-map" data-toggle="tab" aria-expanded="false">#}
+                                            {#<i class="fa fa-street-view"></i>#}
+                                        {#</a>#}
+                                    {#</li>#}
                                 </ul>
                                 <ul class="actions">
                                     <li class="share-btn">
@@ -396,10 +399,12 @@
                                 <div class="alert alert-info">
                                     <ul class="list-three-col">
                                         <li><strong>Propriété ID:</strong> {{ annonce.id }}</li>
-                                        <li><strong>Prix:</strong> Ar {{ annonce.prix }}</li>
                                         {% if annonce.category.type == 'Terrain' %}
+                                            <li><strong>Prix:</strong> Ar {{ annonce.prix }} ({{ annonce.uniteSurface }})</li>
+                                            <li><strong>Prix total:</strong> Ar {{ annonce.prixTotal }}</li>
                                             <li><strong>Surface de la propriété : </strong> {{ annonce.surface }} {{ annonce.uniteSurface }}</li>
                                         {% else %}
+                                            <li><strong>Prix:</strong> Ar {{ annonce.prix }}</li>
                                             <li><strong>Nombre piece:</strong> {{ annonce.nombrePiece }}</li>
                                         {% endif %}
                                         {% for caracteristique in annonce.caracteristiques %}
@@ -454,14 +459,13 @@
 
                                         {% set j = 1 %}
                                         {% if (5 - rating.getMoyenne(annonce)) > 0 %}
-                                        {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
-                                            <a href="{{ path('rating',{'annonce_id':annonce.id,'value':(count)}) }}">
-                                                <span class="fa fa-star-o"></span>
-                                            </a>
-                                            {% set count = count + 1 %}
-                                        {% endfor %}
+                                            {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                <a href="{{ path('rating',{'annonce_id':annonce.id,'value':(count)}) }}">
+                                                    <span class="fa fa-star-o"></span>
+                                                </a>
+                                                {% set count = count + 1 %}
+                                            {% endfor %}
                                         {% endif %}<br/>
-                                        {#Vous avez donne : {{ annonce.rating.value }} Etoiles a cette annonces#}
                                     </span>
                                 </div>
                             </div>

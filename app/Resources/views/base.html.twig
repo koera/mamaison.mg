@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>MaMaison / Home</title>
+    {% block title %}
+    {% endblock %}
     <!--Meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +11,7 @@
     <meta name="description" content="Houzez HTML5 Template">
     <meta name="author" content="Favethemes">
     <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="{{ asset('assets/images/favicons/favicon.ico') }}"/>
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>

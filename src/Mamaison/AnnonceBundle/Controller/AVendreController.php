@@ -40,7 +40,7 @@ class AVendreController extends Controller {
         );
 
         return $this->render('annonce/type.html.twig',
-            array('annonces'=>$pagination));
+            array('annonces'=>$pagination,'type'=>strtolower('propriétés A Vendre')));
     }
 
 
@@ -75,7 +75,7 @@ class AVendreController extends Controller {
         );
 
         return $this->render('annonce/category.html.twig',
-            array('annonces'=>$pagination));
+            array('annonces'=>$pagination,'category'=>$categoryName,'type'=>strtolower($type)));
     }
 
 

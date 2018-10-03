@@ -23,6 +23,7 @@ class AnnonceType extends AbstractType
         $builder->add('titre')
             ->add('description')
             ->add('prix')
+            ->add('prixTotal')
             ->add('nombrePiece')
             ->add('surface')
             ->add('uniteSurface',ChoiceType::class, array(

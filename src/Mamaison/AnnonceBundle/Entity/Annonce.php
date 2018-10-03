@@ -168,6 +168,17 @@ class Annonce
      */
     private $status;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prixTotal", type="float", nullable=true)
+     *
+     *
+     * Si type = Terrain
+     */
+    private $prixTotal;
+
+
 
     /**
      * @ORM\PrePersist
@@ -719,5 +730,29 @@ class Annonce
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param float $prixTotal
+     *
+     * @return Annonce
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return float
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
     }
 }

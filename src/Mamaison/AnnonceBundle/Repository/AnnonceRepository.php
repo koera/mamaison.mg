@@ -367,8 +367,35 @@ class AnnonceRepository extends EntityRepository
         $query = $this->queryInVilleFindAll();
         $query = $query->andWhere('user.id = :id')
             ->setParameter('id', $user);
-        dump($query->getDQL());
         return $query->getQuery()->execute();
+    }
+
+
+    public function getAnnonceForNewsLetter($date1,$date2){
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'category')
+            ->leftJoin('a.quartier', 'quartier')
+            ->leftJoin('a.user', 'user')
+            ->leftJoin('a.caracteristiques', 'caracteristiques')
+            ->leftJoin('a.galleries', 'galleries')
+            ->leftJoin('a.typeAnnonce', 'typeAnnonce')
+            ->leftJoin('a.likes', 'likes')
+            ->leftJoin('a.rating', 'rating')
+            ->addSelect('category')
+            ->addSelect('quartier')
+            ->addSelect('user')
+            ->addSelect('caracteristiques')
+            ->addSelect('galleries')
+            ->addSelect('typeAnnonce')
+            ->addSelect('likes')
+            ->addSelect('rating')
+            ->where('a.valide = :valide')
+            ->setParameter('valide',true)
+            ->andWhere('a.updatedAt BETWEEN :date1 AND :date2')
+            ->setParameter('date1',$date1)
+            ->setParameter('date2',$date2)
+            ->getQuery()
+            ->getResult();
     }
 
 }

@@ -1851,10 +1851,12 @@ $(document).ready(function() {
             $('.js-caracteristiques').hide();
             $('.js-show-terrain').show();
             $('.js-hide-terrain').hide();
+            $('.label-terrain').html('Prix en m2 ou en Ha')
         }else{
             $('.js-caracteristiques').show();
             $('.js-show-terrain').hide();
             $('.js-hide-terrain').show();
+            $('.label-terrain').html('Prix')
         }
 
     });

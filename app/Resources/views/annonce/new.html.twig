@@ -1,5 +1,7 @@
 {% extends 'template.html.twig' %}
-
+{% block title %}
+    <title>Mamaison - Ajouter propriété </title>
+{% endblock %}
 {% block content %}
     <!--start section page body-->
     <section id="section-body">
@@ -102,9 +104,16 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="property-price">Prix</label>
+                                                <label for="property-price" class="label-terrain">Prix</label>
                                                 {{ form_widget(form.prix) }}
                                                 {{ form_errors(form.prix) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group js-show-terrain">
+                                                <label for="property-price">Prix total</label>
+                                                {{ form_widget(form.prixTotal) }}
+                                                {{ form_errors(form.prixTotal) }}
                                             </div>
                                         </div>
 

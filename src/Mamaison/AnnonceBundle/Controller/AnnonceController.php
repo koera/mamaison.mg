@@ -76,6 +76,8 @@ class AnnonceController extends Controller
 
             $annonce->setUser($this->getUser());
 
+            $annonce->setStatus('disponible');
+
             $annonce->setValide(false);
 
             // galleries
@@ -93,7 +95,7 @@ class AnnonceController extends Controller
             $em->flush();
 
 
-            $this->addFlash("success", "Annnonce modifier avec success");
+            $this->addFlash("success", "Annnonce ajouter avec success");
             return $this->redirectToRoute('annonce.update',['id'=>$annonce->getId()]);
 
         }
@@ -185,7 +187,7 @@ class AnnonceController extends Controller
                 'form' => $form->createView()
             ));
         }else{
-            return new Response("Propriete non trouve");
+            throw $this->createNotFoundException('Page not found');
         }
     }
 
@@ -276,7 +278,7 @@ class AnnonceController extends Controller
                 'annoncePlusNote' => $annonceLesPlusNoter
             ));
         }
-        return new Response("Propriete not found");
+        throw $this->createNotFoundException('Propriete not found');
     }
 
 

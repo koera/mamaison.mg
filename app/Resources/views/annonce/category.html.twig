@@ -1,4 +1,7 @@
 {% extends 'template.html.twig' %}
+{% block title %}
+    <title>Mamaison - {{ category  }} {{ type }} </title>
+{% endblock %}
 {% block content %}
     {{ render(controller(
         'MamaisonAnnonceBundle:TemplateAnnonce:renderPart1'

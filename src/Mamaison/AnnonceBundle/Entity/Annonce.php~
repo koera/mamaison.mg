@@ -163,10 +163,21 @@ class Annonce
 
     /**
      * @var string
-     * @ORM\Column(name="status", type="string", nullable=true)
+     * @ORM\Column(name="status", type="string", nullable=false, options={"default" : "disponible"})
      *
      */
     private $status;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prixTotal", type="float")
+     *
+     *
+     * Si type = Terrain
+     */
+    private $prixTotal;
+
 
 
     /**
@@ -695,5 +706,29 @@ class Annonce
     public function getValide()
     {
         return $this->valide;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Annonce
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
