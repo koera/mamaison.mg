@@ -48,10 +48,9 @@ class NewsLetterCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $date = date('Y-m-d H:i:s',strtotime("- 3 days"));
+        $date = date('Y-m-d H:i:s',strtotime("- 5 days"));
         $annonces = $this->em->getRepository(Annonce::class)
             ->getAnnonceForNewsLetter($date,date('Y-m-d H:i:s'));
-        $i = 1;
 
         $ch = curl_init();
 
@@ -61,22 +60,35 @@ class NewsLetterCommand extends Command
 
         $newsLetter = json_decode(curl_exec($ch));
 
+        $annonce = [];
+        $i= 0;
+        foreach($annonces as $a){
+            if($i<10){
+                $annonce[] = $a;
+            }else{
+                break;
+            }
+            $i++;
+        }
+
+        $count= 1;
+
         foreach ($newsLetter as $news){
-            if(count($annonces) > 0){
-                $message = (new \Swift_Message(count($annonces). ' nouveaux immobiliers publiés sur Mamaison.mg'))
+            if(count($annonce) > 0){
+                $message = (new \Swift_Message(count($annonce). ' nouveaux immobiliers publiés sur Mamaison.mg'))
                     ->setFrom('no-reply@mamaison.mg')
                     ->setTo($news->email)
                     ->setBody(
                         $this->container->get('templating')->render(
                             'emails/newsletter.html.twig',
-                            ['annonces' => $annonces]
+                            ['annonces' => $annonce]
                         ),
                         'text/html'
                     );
                 $this->mailer->send($message);
 
-                $output->writeln($i . ' Mails sent');
-                $i++;
+                $output->writeln($count . ' Mails sent');
+                $count++;
             }
         }
 

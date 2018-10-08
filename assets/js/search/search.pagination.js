@@ -33,7 +33,7 @@ export default class Pagination {
                     let divResultat = $('#section-body')
                     divResultat.empty()
                     divResultat.append(resulta_html.render())
-                    e.preventDefault();
+                    return false;
                 }, function (err) {
                     console.log(err);
                 });
@@ -54,7 +54,7 @@ export default class Pagination {
         else
             pagination = `<li><a aria-label="Previous" id="btn-pagination" data-page="${this.page - 1}" ><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>`
 
-        for (; i <= (nombrePage); i++) {
+        for (; i <= (nombrePage + 1); i++) {
             if (i == this.page)
                 pagination = pagination + `<li class="active"><a class="" id="btn-pagination" data-page="${i}">${i}</a></li>`
             else

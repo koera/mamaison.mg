@@ -1,95 +1,233 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Newsletter mamaison</title>
-</head>
-
-<body style="margin: 0; padding: 0; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
-{% for annonce in annonces %}
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="600"
-       style="border:1px solid #cccccc; border-radius:15px;margin-top: 15px; ">
+<table align="center" border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#EDF0F3"
+       style="background-color:#edf0f3;table-layout:fixed;border-collapse:separate">
+    <tbody>
     <tr>
-        <td align="left" bgcolor="#ffffff" style="border-radius: 15px 15px 0px 0px; padding: 15px;">
-            <img src="{{ absolute_url(asset('assets/images/mamaison2.png')) }}" alt="Logo" width="100" height="50"
-                 style="display: block; text-align: left;"/>
+        <td align="center">
+            <center style="width:100%">
+                <table border="0"  cellspacing="0" cellpadding="0"
+                       width="512" bgcolor="#FFFFFF"
+                       style="background-color:#ffffff;margin:0 auto;max-width:512px;width:inherit;border-collapse:separate">
+                    <tbody>
+                    <tr style="text-align:center;">
+                        <td bgcolor="#F6F8FA"
+                            style="background-color:#f6f8fa;padding:5px 16px 13px;border-bottom:1px solid #ececec">
+                            <table border="0" cellspacing="0" cellpadding="0" width="100%"
+                                   style="width:100%!important;border-collapse:separate;min-width:100%!important">
+                                <tbody>
+                                <img alt="Mamaison"
+                                src="{{ absolute_url(asset('assets/images/mamaison2.png')) }}"
+                                width="100" height="60">
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table bgcolor="#EDF0F3" border="0" cellspacing="0" cellpadding="0" width="100%"
+                                   style="border-collapse:separate">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellspacing="0" cellpadding="0" width="100%"
+                                               style="border-collapse:separate">
+                                            <tbody>
+                                            {% for a in annonces %}
+                                            <tr>
+                                                <td bgcolor="#FFFFFF" style="background-color:#ffffff">
+                                                    <table border="0" cellspacing="0" cellpadding="0" width="100%"
+                                                           style="padding:12px 24px;border-collapse:separate;border-bottom:1px solid #e5e5e5">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td align="left"><p
+                                                                        style="margin:0;color:#737373;font-weight:400;font-size:12px;line-height:1.333">
+                                                                    {{ a.category.type }} {{ a.typeAnnonce.valeur }} {{ a.adresse }} - {{ a.quartier }}</p></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="0" width="100%"
+                                                           style="padding:8px 24px;width:100%;border-collapse:separate">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <table border="0" cellspacing="0" cellpadding="0"
+                                                                       width="100%" style="border-collapse:separate">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td align="left"
+                                                                            style="padding-bottom:6px;text-align:left">
+                                                                            <a href="{{ url('annonce_show',{'ville':'antananarivo' ,'category':a.category.type|slugify,'type':a.typeAnnonce.valeur|slugify,'title':a.titre | slugify,'id':a.id}) }}"
+                                                                               style="color:#008cc9;display:inline-block;text-decoration:none"
+                                                                               target="_blank">
+                                                                                <h2 style="margin:0;color:#0077b5;font-weight:400;font-size:18px;line-height:1.3">
+                                                                                    {{ a.titre }}
+                                                                                </h2>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table border="0" cellspacing="0"
+                                                                                   cellpadding="0" width="100%"
+                                                                                   style="border-collapse:separate">
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td width="100%" valign="top"
+                                                                                        align="left"
+                                                                                        style="padding:0 16px 10px 0;width:100%;vertical-align:top;text-align:left">
+                                                                                        <a href="{{ url('annonce_show',{'ville':'antananarivo' ,'category':a.category.type|slugify,'type':a.typeAnnonce.valeur|slugify,'title':a.titre | slugify,'id':a.id}) }}"
+                                                                                           style="color:#008cc9;display:inline-block;text-decoration:none"
+                                                                                           target="_blank">
+                                                                                            <p style="padding:0 0 4px 0;margin:0;color:#737373;font-weight:400;font-size:12px;line-height:1.333;text-align:left">
+                                                                                                {% if a.user.type == 'simple' %}
+                                                                                                    {{ a.user.profileSimpleUser.nom }} {{ a.user.profileSimpleUser.prenom }}
+                                                                                                {% elseif a.user.type == 'society' %}
+                                                                                                    {{ a.user.profileSocietyUser.nom }}
+                                                                                                {% endif %}
+                                                                                            </p>
+                                                                                            <p style="margin:0;color:#737373;font-weight:300;font-size:14px;line-height:1.4;text-align:justify;white-space: nowrap;width: 368px; line-height: 57px; max-height: 57px;-webkit-line-clamp: 3;-webkit-box-orient: vertical; overflow: hidden;text-overflow: ellipsis;">
+                                                                                                {{ a.description }}
+                                                                                            </p>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                    <td valign="top"
+                                                                                        style="vertical-align:top">
+                                                                                        <div style="overflow:hidden;width:80px;height:80px">
+                                                                                            <a href="{{ url('annonce_show',{'ville':'antananarivo' ,'category':a.category.type|slugify,'type':a.typeAnnonce.valeur|slugify,'title':a.titre | slugify,'id':a.id}) }}"
+                                                                                               style="color:#008cc9;display:inline-block;text-decoration:none"
+                                                                                               target="_blank">
+                                                                                                <img
+                                                                                                    src="{{ url('mamaison.thumb',{'id':a.id}) }}"
+                                                                                                    alt="{{ a.titre }}"
+                                                                                                    width="148"
+                                                                                                    style="max-height:80px;outline:none;color:#ffffff;max-width:175px;text-decoration:none;width:auto;height:80px"
+                                                                                                    >
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <hr style="background-color:#e5e5e5;margin:0 0 8px 0;color:#d9d9d9;width:20%;border-color:#d9d9d9;border-width:0;border-style:solid;height:1px;text-align:left">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p style="margin:0;color:#737373;font-weight:400;padding-left:6px;font-size:15px;line-height:1.333;text-align:left">
+                                                                    {% if a.category.type == 'Terrain' %}
+                                                                        Prix : Ar {{ a.prix }} ({{ a.uniteSurface }}) | Prix total : AR {{ a.prixTotal }}
+                                                                    {% else %}
+                                                                        Prix : AR {{ a.prix }}
+                                                                    {% endif %}
+                                                                </p>
+                                                                <table border="0" cellspacing="0" cellpadding="0"
+                                                                       width="100%" style="border-collapse:separate">
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0 24px;border-color:#edf0f3;border-width:6px;border-style:solid"></td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td align="center" bgcolor="#F6F8FA"
+                                                    style="background-color:#f6f8fa;padding:48px 12px"><h2
+                                                            style="margin:0;color:#262626;font-weight:400;font-size:16px;padding-bottom:16px;line-height:1.2">
+                                                        Consultez plus d'annonces</h2>
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                           style="display:inline-block;border-collapse:separate">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td align="center" valign="middle"><a
+                                                                        href="{{ url('homepage') }}"
+                                                                        style="word-wrap:normal;color:#008cc9;word-break:normal;white-space:nowrap;display:block;text-decoration:none"
+                                                                        target="_blank">
+                                                                    <table border="0" cellspacing="0" cellpadding="0"
+                                                                           width="auto"
+                                                                           style="border-collapse:separate">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td bgcolor="#008CC9"
+                                                                                style="padding:6px 16px;color:#ffffff;font-weight:500;font-size:16px;border-color:#008cc9;background-color:#008cc9;border-radius:2px;border-width:1px;border-style:solid">
+                                                                                <a href="{{ url('homepage') }}"
+                                                                                   style="color:#ffffff;display:inline-block;text-decoration:none"
+                                                                                   target="_blank">
+                                                                                    Accéder à Mamaison.mg
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#EDF0F3"
+                                   align="center"
+                                   style="background-color:#edf0f3;padding:0 24px;color:#6a6c6d;border-collapse:separate;text-align:center">
+                                <tbody>
+                                <tr>
+                                    <td style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#5c5c5c;padding:25px 0">
+                                        {#<img alt="Mamaison" height="33"#}
+                                        {#src="{{ absolute_url(asset('assets/images/mamaison2-old.png')) }}"#}
+                                        {#style="display:block;margin:0 auto 1em" width="120">#}
+                                        <div>
+                                           se desabonnez du newsletter du <a href="{{ url("homepage") }}"
+                                                                                                   target="_blank">mamaison.mg</a>.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#5c5c5c">
+                                        <div>
+                                        Mamaison.mg
+                                        </div>
+                                        <div>
+                                            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">Blog</a>
+                                            ·
+                                            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">Twitter</a>
+                                            ·
+                                            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">Facebook</a>
+                                            ·
+                                            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">YouTube</a>
+                                            ·
+                                            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">LinkedIn</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </center>
         </td>
     </tr>
-    <tr>
-        <td bgcolor="#fcfdfd" style="border-radius: 0px 0px 0px 0px;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td align="center"
-                        style="font-size: 30px; color:#004374; font-family:'Arial', Times, serif; text-align: center;">
-                        <h3>{{ annonce.titre }}</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" style="font-size: 12pt; color: #3d3d3d; text-align: center;">
-                        <img alt="{{ annonce.titre }}"
-                             src="{{ url('mamaison.thumb',{'id':annonce.id}) }}"
-                             width="540" height="260">
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" style="font-size: 15px; text-align: center;">
-                        <p>{{ annonce.adresse }}</p>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td bgcolor="#003474" style="border-radius: 0px 0px 15px 15px; padding-right: 15px; padding-left: 15px;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td align="left"
-                        style="font-size: 15px; color:#004374; font-family:'Arial', Times, serif; text-align: justify;">
-                        <p style="color: #fafafa;">
-                            <u>Description</u> :
-                        </p>
-                        <p style="color: #fafafa;">
-                            {{ annonce.description }}
-                        </p>
-                        <p style="color: #fafafa;font-size: 20px;font-weight: bold;">
-                            {{ annonce.prix }} AR
-                        </p>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+    </tbody>
 </table>
-{% endfor %}
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-    <tr>
-    <td style="text-align:center;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#5c5c5c">
-        <div>
-            <h2>Mamaison.mg</h2>
-        </div>
-        <div>
-            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">Blog</a>
-            ·
-            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">Twitter</a>
-            ·
-            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">Facebook</a>
-            ·
-            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">YouTube</a>
-            ·
-            <a style="color:#3777b0;text-decoration:none" href="" target="_blank">LinkedIn</a>
-        </div>
-    </td>
-    </tr>
-    <tr>
-        <td style="text-align:center;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#5c5c5c;padding:25px 0">
-            <div>
-                Se desabonnez du newsletter de  <a href="{{ url("homepage") }}"
-                                                                       target="_blank">mamaison.mg</a>.
-            </div>
-        </td>
-    </tr>
-</table>
-</body>
-</html>
