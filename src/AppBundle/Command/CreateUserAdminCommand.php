@@ -44,7 +44,7 @@ class CreateUserAdminCommand extends Command
             ->setDescription('This command create an 50 fake data')
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('This command create an 50 fake data');
+            ->setHelp('This command create an 20 fake data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -169,19 +169,6 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin.annonces.index');
     }
 
-    /**
-     * @Route("/crawler")
-     */
-    public function crawlerAction(){
-        $client = new Client();
-        $string = "";
-        $crawler = $client->request('GET', 'https://www.jumia.mg/appartements-a-vendre');
-        $crawler->filter('#search-results')->each(function ($node) {
-           dump($node);
-        });
-        die();
-    }
-
 
     function crawl_page($url, $depth = 5)
     {
