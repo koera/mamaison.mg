@@ -6,10 +6,14 @@ use AppBundle\Entity\User;
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Mamaison\AnnonceBundle\Entity\Category;
 use Mamaison\AnnonceBundle\Entity\Gallery;
+use Mamaison\AnnonceBundle\Entity\Quartier;
+use Mamaison\AnnonceBundle\Entity\Region;
 use Mamaison\AnnonceBundle\Entity\TypeAnnonce;
+use Mamaison\AnnonceBundle\Entity\Ville;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Goutte\Client;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -213,9 +217,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/crawler-data")
+     * @Route("/crawler-data", name="crawler-data")
      */
     public function crawlerDataAction(){
+        $query = $this->getDoctrine()->getManager()->createQuery(
+            'SELECT u FROM AppBundle:User u'
+        );
+
+        $users = $query->getResult();
+        $u = new User();
+        foreach ($users as $user){
+            if(in_array('ROLE_ADMIN',$user->getRoles())){
+                $u = $user;
+            }
+        }
+
         $client = new Client();
         $string = "";
 
@@ -227,6 +243,7 @@ class DefaultController extends Controller
         $linkDescription = [];
 
         $crawler = $client->request('GET', $this->generateUrl('crawler-jumia-a-vendre',[], UrlGeneratorInterface::ABSOLUTE_URL));
+
         $crawler->filter('body > code > article > .post > .text-area > .announcement-container > .announcement-infos > .post-link')->each(function ($node) use (&$title,&$linkDescription) {
             $linkDescription[] = $node->getNode(0)->getAttribute('href');
             $title[] = $node->getNode(0)->getAttribute('title');
@@ -241,7 +258,6 @@ class DefaultController extends Controller
         });
 
         $crawler->filter('body > code > article > .post > .text-area > .announcement-container > .price-date > .price')->each(function ($node) use (&$price) {
-//            dump($node->text());
             $p = substr(trim($node->text()), 0, -3);
             $price[] = $p;
         });
@@ -253,36 +269,75 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         for($i= 0 ; $i < count($title); $i++){
+
             $annonce = new Annonce();
             $client = new Client();
             $crawler = $client->request('GET', 'https://www.jumia.mg/'.$linkDescription[$i]);
             $crawler->filter('body > #wrapper > #main > #main-holder > .singlepost > .twocolumn > .post-content > .post-text-content > p')->each(function ($node) use (&$annonce) {
-                $annonce->setDescription(trim($node->text()));
+                $annonce->setDescription(utf8_encode(html_entity_decode(trim($node->text()))));
             });
-            $annonce->setTitre($title[$i])
+
+            $crawler->filter('body > #wrapper > #main > #main-holder > .singlepost > .super-form-container > #contactPhone > .contactPhone > h2')->each(function ($node) use (&$annonce) {
+                $annonce->setUserNameCrawler(ltrim($node->text(),"Appeler "));
+            });
+
+            $crawler->filter('body > #wrapper > #main > #main-holder > .singlepost > .super-form-container > #contactPhone > .contactPhone > .phone-box > a')->each(function ($node) use (&$annonce) {
+                $annonce->setUserPhoneCrawler(trim($node->text()));
+            });
+
+            $annonce->setTitre(utf8_encode($title[$i]))
                 ->setStatus('disponible')
                 ->setValide(true)
-                ->setUser($em->getRepository(User::class)->findOneBy(['roles'=>'ROLE_ADMIN']))
+                ->setUser($u)
                 ->setTypeAnnonce($em->getRepository(TypeAnnonce::class)->findOneBy(['valeur' => 'A vendre']))
                 ->setCategory($em->getRepository(Category::class)->findOneBy(['type' => 'Appartement']))
-                ->setPrix(doubleval($price[$i]));
+                ->setPrix($price[$i]);
 
             // adresse
 
-            
+            $annonce->setAdresse($adresse[$i]);
+
+            $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($adresse[$i])]);
+            if(is_null($region)){
+                $region = new Region();
+                $region->setNom(strtolower($adresse[$i]));
+                $em->persist($region);
+            }
+
+            $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($adresse[$i])]);
+            if(is_null($ville)){
+                $ville = new Ville();
+                $ville->setNom(strtolower($adresse[$i]));
+                $ville->setRegion($region);
+                $em->persist($ville);
+            }
+
+            $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($adresse[$i])]);
+
+            if(is_null($quartier)){
+                $quartier = new Quartier();
+                $quartier->setNom(strtolower($adresse[$i]))
+                    ->setVille($ville);
+                $em->persist($quartier);
+            }
+
+            $annonce->setQuartier($quartier);
 
             // gallery
             $gallery = new Gallery();
             $gallery->setImage($image[$i]);
             $gallery->setUsed(true);
+
             $em->persist($gallery);
+
 
             $annonce->addGallery($gallery);
 
+            $annonce->setIsCrawled(true);
+
             $em->persist($annonce);
-            dump($annonce);
         }
         $em->flush();
-        die();
+        return new Response($i+1 .' data saved');
     }
 }

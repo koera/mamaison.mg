@@ -45,7 +45,7 @@ class Annonce
     /**
      * @var float
      *
-     * @ORM\Column(name="prix", type="float")
+     * @ORM\Column(name="prix", type="string")
      */
     private $prix;
 
@@ -171,13 +171,30 @@ class Annonce
     /**
      * @var float
      *
-     * @ORM\Column(name="prixTotal", type="float")
+     * @ORM\Column(name="prixTotal", type="float", nullable=true)
      *
      *
      * Si type = Terrain
      */
     private $prixTotal;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="isCrawled", type="boolean", nullable=false, options={"default" : false})
+     */
+    private $isCrawled;
+
+    /**
+     * @var string
+     * @ORM\Column(name="userNameCrawler", type="string", nullable=true)
+     */
+    private $userNameCrawler;
+
+    /**
+     * @var string
+     * @ORM\Column(name="userPhoneCrawler", type="string", nullable=true)
+     */
+    private $userPhoneCrawler;
 
 
     /**
@@ -730,5 +747,53 @@ class Annonce
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param float $prixTotal
+     *
+     * @return Annonce
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return float
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
+    }
+
+    /**
+     * Set isCrawled
+     *
+     * @param boolean $isCrawled
+     *
+     * @return Annonce
+     */
+    public function setIsCrawled($isCrawled)
+    {
+        $this->isCrawled = $isCrawled;
+
+        return $this;
+    }
+
+    /**
+     * Get isCrawled
+     *
+     * @return boolean
+     */
+    public function getIsCrawled()
+    {
+        return $this->isCrawled;
     }
 }

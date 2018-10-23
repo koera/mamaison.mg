@@ -77,16 +77,20 @@ class GalleryController extends Controller
      */
     public function showAction(Annonce $annonce)
     {
+
         $response = new Response();
         $em = $this->getDoctrine()->getManager();
         /** @var Annonce $annonce */
         $annonce = $em->getRepository(Annonce::class)->find($annonce->getId());
+        /** @var Gallery $image */
         $image = $annonce->getGalleries()->first();
-        if($image){
+        if($image && substr($image->getImage(), 0, 4) !== 'http'){
             $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $image->getImage());
             $response->headers->set('Content-Disposition', $disposition);
             $response->headers->set('Content-Type', 'image/jpeg');
             $response->setContent(file_get_contents($image->getRootPath()));
+        }elseif($image && substr($image->getImage(), 0, 4) === 'http'){
+            return $this->redirect($image->getImage());
         }
         return $response;
     }

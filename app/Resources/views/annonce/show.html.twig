@@ -79,43 +79,64 @@
                                 <div id="gallery" class="tab-pane fade active in">
                                     <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}" width="1170" height="600">
                                     <div class="form-small form-media">
-                                        <div class="media agent-media">
-                                            <div class="media-left">
-                                                <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
-                                                    {% if annonce.user.type == 'simple' %}
-                                                        {% if annonce.user.profileSimpleUser.avatar %}
-                                                            <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
-                                                        {% elseif annonce.user.profileSimpleUser.avatarUrlFb %}
-                                                            <img src="{{ annonce.user.profileSimpleUser.avatarUrlFb }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
-                                                        {%  else %}
-                                                            <img src="http://placehold.it/50x50" alt="Avatar" class="media-object" alt="image" width="74" height="74">
-                                                        {% endif %}
-                                                    {% elseif annonce.user.type == 'society' %}
-                                                        <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" class="media-object" alt="image" width="74" height="74">
-                                                    {% endif %}
-                                                </a>
+                                        {% if annonce.isCrawled %}
+                                            <div class="media agent-media">
+                                                <div class="media-left">
+                                                    <a>
+                                                        <img src="http://placehold.it/50x50" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Contact de l'Agent</h4>
+                                                    <ul>
+                                                        <li><i class="fa fa-user"></i>
+                                                            {{ annonce.userNameCrawler }}
+                                                        </li>
+                                                        <li><i class="fa fa-phone"></i>
+                                                            {{ annonce.userPhoneCrawler }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading">Contact de l'Agent</h4>
-                                                <ul>
-                                                    <li><i class="fa fa-user"></i>
+                                        {% else %}
+                                            <div class="media agent-media">
+                                                <div class="media-left">
+                                                    <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
                                                         {% if annonce.user.type == 'simple' %}
-                                                            {{ annonce.user.profileSimpleUser.nom }}
+                                                            {% if annonce.user.profileSimpleUser.avatar %}
+                                                                <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                            {% elseif annonce.user.profileSimpleUser.avatarUrlFb %}
+                                                                <img src="{{ annonce.user.profileSimpleUser.avatarUrlFb }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                            {%  else %}
+                                                                <img src="http://placehold.it/50x50" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                            {% endif %}
                                                         {% elseif annonce.user.type == 'society' %}
-                                                            {{ annonce.user.profileSocietyUser.nom }}
+                                                            <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" class="media-object" alt="image" width="74" height="74">
                                                         {% endif %}
-                                                    </li>
-                                                    <li><i class="fa fa-phone"></i>
-                                                        {% if annonce.user.type == 'simple' %}
-                                                            {{ annonce.user.profileSimpleUser.telephone }}
-                                                        {% elseif annonce.user.type == 'society' %}
-                                                            {{ annonce.user.profileSocietyUser.telephone }}
-                                                        {% endif %}
-                                                    </li>
-                                                </ul>
-                                                {#<a href="#" class="view">Voir ma liste</a>#}
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Contact de l'Agent</h4>
+                                                    <ul>
+                                                        <li><i class="fa fa-user"></i>
+                                                            {% if annonce.user.type == 'simple' %}
+                                                                {{ annonce.user.profileSimpleUser.nom }}
+                                                            {% elseif annonce.user.type == 'society' %}
+                                                                {{ annonce.user.profileSocietyUser.nom }}
+                                                            {% endif %}
+                                                        </li>
+                                                        <li><i class="fa fa-phone"></i>
+                                                            {% if annonce.user.type == 'simple' %}
+                                                                {{ annonce.user.profileSimpleUser.telephone }}
+                                                            {% elseif annonce.user.type == 'society' %}
+                                                                {{ annonce.user.profileSocietyUser.telephone }}
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
+                                                    {#<a href="#" class="view">Voir ma liste</a>#}
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                         <form action="{{ path('contact.agent') }}" method="post">
                                             <div class="form-group">
                                                 <input class="form-control" name="nom" type="text" placeholder="Votre Nom">
@@ -209,7 +230,12 @@
                                         {% for gallery in annonce.galleries %}
                                             {% set i = i+1 %}
                                             <div class="gallery">
-                                                <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" onclick="openModal();currentSlide({{ i }})" class="hover-shadow">
+                                                {% if gallery.image starts with 'http' %}
+                                                    <img src="{{ gallery.image }}" onclick="openModal();currentSlide({{ i }})" class="hover-shadow">
+                                                {% else %}
+                                                    <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" onclick="openModal();currentSlide({{ i }})" class="hover-shadow">
+                                                {% endif %}
+
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -224,7 +250,11 @@
                                             {% set i = i+1 %}
                                             <div class="mySlides">
                                                 <div class="numbertext">{{ i }} / {{ annonce.galleries|length }}</div>
-                                                <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" style="width:100%">
+                                                {% if gallery.image starts with 'http' %}
+                                                    <img src="{{ gallery.image }}" style="width:100%">
+                                                {% else %}
+                                                    <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" style="width:100%">
+                                                {% endif %}
                                             </div>
                                         {% endfor %}
 

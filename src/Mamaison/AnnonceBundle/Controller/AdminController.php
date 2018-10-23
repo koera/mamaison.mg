@@ -112,29 +112,6 @@ class AdminController extends Controller
                 'text/html'
             );
         $this->get('mailer')->send($message);
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL,$this->getParameter('newsletter_domain')."/newsletter/api/getAll");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $newsLetter = json_decode(curl_exec($ch));
-
-        foreach ($newsLetter as $news){
-            $message = (new \Swift_Message('Newsletter'))
-                ->setFrom('no-reply@mamaison.mg')
-                ->setTo($news->email)
-                ->setBody(
-                    $this->renderView(
-                        'emails/newsletter.html.twig',
-                        ['annonce' => $annonce]
-                    ),
-                    'text/html'
-                );
-            $this->get('mailer')->send($message);
-        }
-
-        curl_close ($ch);
 
         return $this->redirectToRoute('admin.annonces.index');
     }
@@ -169,41 +146,4 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin.annonces.index');
     }
 
-
-    function crawl_page($url, $depth = 5)
-    {
-        static $seen = array();
-        if (isset($seen[$url]) || $depth === 0) {
-            return;
-        }
-
-        $seen[$url] = true;
-
-        $dom = new \DOMDocument('1.0');
-        @$dom->loadHTMLFile($url);
-
-        $anchors = $dom->getElementsByTagName('a');
-        foreach ($anchors as $element) {
-            $href = $element->getAttribute('href');
-            if (0 !== strpos($href, 'http')) {
-                $path = '/' . ltrim($href, '/');
-                if (extension_loaded('http')) {
-                    $href = http_build_url($url, array('path' => $path));
-                } else {
-                    $parts = parse_url($url);
-                    $href = $parts['scheme'] . '://';
-                    if (isset($parts['user']) && isset($parts['pass'])) {
-                        $href .= $parts['user'] . ':' . $parts['pass'] . '@';
-                    }
-                    $href .= $parts['host'];
-                    if (isset($parts['port'])) {
-                        $href .= ':' . $parts['port'];
-                    }
-                    $href .= dirname($parts['path'], 1).$path;
-                }
-            }
-            $this->crawl_page($href, $depth - 1);
-        }
-        echo "URL:",$url,PHP_EOL,"CONTENT:",PHP_EOL,$dom->saveHTML(),PHP_EOL,PHP_EOL;
-    }
 }

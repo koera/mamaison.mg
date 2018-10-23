@@ -45,7 +45,7 @@ class Annonce
     /**
      * @var float
      *
-     * @ORM\Column(name="prix", type="float")
+     * @ORM\Column(name="prix", type="string")
      */
     private $prix;
 
@@ -178,6 +178,23 @@ class Annonce
      */
     private $prixTotal;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="isCrawled", type="boolean", nullable=false, options={"default" : false})
+     */
+    private $isCrawled;
+
+    /**
+     * @var string
+     * @ORM\Column(name="userNameCrawler", type="string", nullable=true)
+     */
+    private $userNameCrawler;
+
+    /**
+     * @var string
+     * @ORM\Column(name="userPhoneCrawler", type="string", nullable=true)
+     */
+    private $userPhoneCrawler;
 
 
     /**
@@ -754,5 +771,77 @@ class Annonce
     public function getPrixTotal()
     {
         return $this->prixTotal;
+    }
+
+    /**
+     * Set isCrawled
+     *
+     * @param boolean $isCrawled
+     *
+     * @return Annonce
+     */
+    public function setIsCrawled($isCrawled)
+    {
+        $this->isCrawled = $isCrawled;
+
+        return $this;
+    }
+
+    /**
+     * Get isCrawled
+     *
+     * @return boolean
+     */
+    public function getIsCrawled()
+    {
+        return $this->isCrawled;
+    }
+
+    /**
+     * Set userNameCrawler
+     *
+     * @param string $userNameCrawler
+     *
+     * @return Annonce
+     */
+    public function setUserNameCrawler($userNameCrawler)
+    {
+        $this->userNameCrawler = $userNameCrawler;
+
+        return $this;
+    }
+
+    /**
+     * Get userNameCrawler
+     *
+     * @return string
+     */
+    public function getUserNameCrawler()
+    {
+        return $this->userNameCrawler;
+    }
+
+    /**
+     * Set userPhoneCrawler
+     *
+     * @param string $userPhoneCrawler
+     *
+     * @return Annonce
+     */
+    public function setUserPhoneCrawler($userPhoneCrawler)
+    {
+        $this->userPhoneCrawler = $userPhoneCrawler;
+
+        return $this;
+    }
+
+    /**
+     * Get userPhoneCrawler
+     *
+     * @return string
+     */
+    public function getUserPhoneCrawler()
+    {
+        return $this->userPhoneCrawler;
     }
 }
