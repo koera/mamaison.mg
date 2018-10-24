@@ -3,15 +3,19 @@
 namespace Mamaison\AnnonceBundle\Entity;
 
 use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mamaison\AnnonceBundle\Concern\Annoncable;
 use Mamaison\AnnonceBundle\Entity\Category;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Annonce
  *
  * @ORM\Table(name="annonce")
  * @ORM\Entity(repositoryClass="Mamaison\AnnonceBundle\Repository\AnnonceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Annonce
 {
@@ -41,7 +45,7 @@ class Annonce
     /**
      * @var float
      *
-     * @ORM\Column(name="prix", type="float")
+     * @ORM\Column(name="prix", type="string")
      */
     private $prix;
 
@@ -114,6 +118,97 @@ class Annonce
      * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Gallery")
      */
     private $galleries;
+
+    /**
+     * @var DateTime $created
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime $updated
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="annonces")
+     */
+    private $likes;
+
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Rating", mappedBy="annonce")
+     */
+    private $rating;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="valide", type="boolean")
+     *
+     */
+    private $valide;
+
+    /**
+     * @var string
+     * @ORM\Column(name="status", type="string", nullable=false, options={"default" : "disponible"})
+     *
+     */
+    private $status;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prixTotal", type="float", nullable=true)
+     *
+     *
+     * Si type = Terrain
+     */
+    private $prixTotal;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="isCrawled", type="boolean", nullable=false, options={"default" : false})
+     */
+    private $isCrawled;
+
+    /**
+     * @var string
+     * @ORM\Column(name="userNameCrawler", type="string", nullable=true)
+     */
+    private $userNameCrawler;
+
+    /**
+     * @var string
+     * @ORM\Column(name="userPhoneCrawler", type="string", nullable=true)
+     */
+    private $userPhoneCrawler;
+
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setUpdatedAt(new \DateTime('now'));
+
+        if ($this->getCreatedAt() == null) {
+            $this->setCreatedAt(new \DateTime('now'));
+        }
+    }
 
 
     /**
@@ -430,5 +525,275 @@ class Annonce
     public function getCaracteristiques()
     {
         return $this->caracteristiques;
+    }
+
+    /**
+     * Add gallery
+     *
+     * @param \Mamaison\AnnonceBundle\Entity\Gallery $gallery
+     *
+     * @return Annonce
+     */
+    public function addGallery(\Mamaison\AnnonceBundle\Entity\Gallery $gallery)
+    {
+        $this->galleries[] = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * Remove gallery
+     *
+     * @param \Mamaison\AnnonceBundle\Entity\Gallery $gallery
+     */
+    public function removeGallery(\Mamaison\AnnonceBundle\Entity\Gallery $gallery)
+    {
+        $this->galleries->removeElement($gallery);
+    }
+
+    /**
+     * Get galleries
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGalleries()
+    {
+        return $this->galleries;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Annonce
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Annonce
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add like
+     *
+     * @param \AppBundle\Entity\User $like
+     *
+     * @return Annonce
+     */
+    public function addLike(\AppBundle\Entity\User $like)
+    {
+        $this->likes[] = $like;
+
+        return $this;
+    }
+
+    /**
+     * Remove like
+     *
+     * @param \AppBundle\Entity\User $like
+     */
+    public function removeLike(\AppBundle\Entity\User $like)
+    {
+        $this->likes->removeElement($like);
+    }
+
+    /**
+     * Get likes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Add rating
+     *
+     * @param Rating
+     *
+     * @return Annonce
+     */
+    public function addRating(Rating $rating)
+    {
+        $this->rating[] = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Remove rating
+     *
+     * @param Rating $rating
+     */
+    public function removeRating(Rating $rating)
+    {
+        $this->rating->removeElement($rating);
+    }
+
+    /**
+     * Get rating
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return Annonce
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set valide
+     *
+     * @param boolean $valide
+     *
+     * @return Annonce
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * Get valide
+     *
+     * @return boolean
+     */
+    public function getValide()
+    {
+        return $this->valide;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Annonce
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param float $prixTotal
+     *
+     * @return Annonce
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return float
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
+    }
+
+    /**
+     * Set isCrawled
+     *
+     * @param boolean $isCrawled
+     *
+     * @return Annonce
+     */
+    public function setIsCrawled($isCrawled)
+    {
+        $this->isCrawled = $isCrawled;
+
+        return $this;
+    }
+
+    /**
+     * Get isCrawled
+     *
+     * @return boolean
+     */
+    public function getIsCrawled()
+    {
+        return $this->isCrawled;
     }
 }

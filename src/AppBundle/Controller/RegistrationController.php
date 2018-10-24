@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RegistrationController extends Controller{
 
-
     /**
      * @Route("/", name="registration_simple_user")
      */
@@ -42,10 +41,11 @@ class RegistrationController extends Controller{
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            $user->setRoles(["ROLE_USER"]);
 
             /* send email registration here*/
 
-            $message = (new \Swift_Message('Registration confirmation'))
+            $message = (new \Swift_Message('Confirmation instructions'))
                 ->setFrom('no-reply@mamaison.mg')
                 ->setTo($user->getEmail())
                 ->setBody(
@@ -90,6 +90,7 @@ class RegistrationController extends Controller{
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            $user->setRoles(["ROLE_USER"]);
 
             /* send email registration here*/
 
@@ -140,6 +141,7 @@ class RegistrationController extends Controller{
      * @param Request $request
      *
      * @Route("/account/confirm/{token}", name="confirm_account")
+     * @return Response
      */
     public function confirmationAction(Request $request, $token){
         $em = $this->getDoctrine()->getManager();

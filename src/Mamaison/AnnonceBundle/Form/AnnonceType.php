@@ -7,6 +7,7 @@ use Mamaison\AnnonceBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,6 +23,7 @@ class AnnonceType extends AbstractType
         $builder->add('titre')
             ->add('description')
             ->add('prix')
+            ->add('prixTotal')
             ->add('nombrePiece')
             ->add('surface')
             ->add('uniteSurface',ChoiceType::class, array(
@@ -53,30 +55,6 @@ class AnnonceType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'required' => true)
-            )
-            ->add('gallery_0',HiddenType::class,array(
-                'mapped' => false
-                )
-            )
-            ->add('gallery_1',HiddenType::class,array(
-                    'mapped' => false
-                )
-            )
-            ->add('gallery_2',HiddenType::class,array(
-                    'mapped' => false
-                )
-            )
-            ->add('gallery_3',HiddenType::class,array(
-                    'mapped' => false
-                )
-            )
-            ->add('gallery_4',HiddenType::class,array(
-                    'mapped' => false
-                )
-            )
-            ->add('gallery_5',HiddenType::class,array(
-                    'mapped' => false
-                )
             )
         ;
     }

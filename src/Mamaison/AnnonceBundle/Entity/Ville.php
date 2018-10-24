@@ -92,4 +92,9 @@ class Ville
     {
         return $this->region;
     }
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }

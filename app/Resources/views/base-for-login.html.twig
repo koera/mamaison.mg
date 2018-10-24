@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>MaMaison / Home</title>
+    {% block title %}
+    {% endblock %}
     <!--Meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +11,7 @@
     <meta name="description" content="Houzez HTML5 Template">
     <meta name="author" content="Favethemes">
     <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="{{ asset('assets/images/favicons/favicon.ico') }}"/>
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
@@ -43,51 +45,20 @@
                 </a>
             </div>
             <nav class="navi main-nav">
-                <ul>
-                    <li><a href="{{ path('a_vendre_tous') }}">A VENDRE</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-vendre.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-vendre.html">Propriétés commerciales</a></li>
-                            <li><a href="villa-a-vendre.html">Villas</a></li>
-                            <li><a href="studio-a-vendre.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-vendre.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-vendre.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="a-louer-mois.html">A LOUER PAR MOIS</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-louer-mois.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-louer-mois.html">Propriété commerciale</a></li>
-                            <li><a href="villa-a-louer-mois.html">Villas</a></li>
-                            <li><a href="studio-a-louer-mois.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-louer-mois.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-louer-mois.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="a-louer-jour.html">A LOUER PAR JOUR</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-louer-jour.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-louer-jour.html">Propriétés commerciales</a></li>
-                            <li><a href="villa-a-louer-jour.html">Villas</a></li>
-                            <li><a href="studio-a-louer-jour.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-louer-jour.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-louer-jour.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
+                {{ render(controller(
+                    'AppBundle:Header:index'
+                )) }}
             </nav>
         </div>
         <div class="header-right">
 
             <div class="user">
                 {% if app.user %}
-                    <a href="{{ path('logout') }}">Deconnecter </a>
+                    {% if app.user.type == "simple" %}
+                        <a href="{{ path('mon-compte.edit') }}">Mon compte </a>
+                    {% elseif app.user.type == 'society' %}
+                        <a href="{{ path('compte.edit',{'societyName' : app.user.societyName}) }}">Mon compte </a>
+                    {% endif %}
                 {% else %}
                     <a href="{{ path('login') }}">Se connecter </a>
                     {#<a href="{{ path('registration_simple_user') }}">Créer un compte</a>#}
@@ -135,7 +106,7 @@
                         </div>
                         <div class="widget-body">
                             <p></p>
-                            <p class="read"><a href="about-us.html" >En savoir plus <i class="fa fa-caret-right"></i></a></p>
+                            <p class="read"><a href="{{ path('about') }}" >En savoir plus <i class="fa fa-caret-right"></i></a></p>
                         </div>
                     </div>
                 </div>
@@ -190,6 +161,7 @@
                                 <li><a href="vie-privee.html">Vie Priv&eacute;e</a></li>
                                 <li><a href="termes-conditions.html">Termes & Conditions</a></li>
                                 <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ path('faq') }}">FAQ</a></li>
                             </ul>
                         </div>
                     </div>

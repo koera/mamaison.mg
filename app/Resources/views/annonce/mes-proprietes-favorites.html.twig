@@ -1,0 +1,194 @@
+{% extends 'template.html.twig' %}
+{% block title %}
+    <title>Mamaison - Mes propriété favorites</title>
+{% endblock %}
+{% block content %}
+
+    <section id="section-body">
+
+        <div class="container">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-left">
+                            <h2>Mes Propriétés</h2>
+                        </div>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb"><li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li><li><a href="{{ path('mon-compte.edit') }}">Mon compte</a></li><li class="active">Mes Propriétés favorites</li></ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-4 user-dashboard-left">
+                    <div class="my-sidebar">
+                        <ul class="list-unstyled my-menu">
+                            {% if app.user.type == 'simple' %}
+                                <li> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% elseif app.user.type == 'society' %}
+                                <li> <a href="{{ path('compte.edit',{'societyName':app.user.profileSocietyUser.nom}) }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% endif %}
+                            <li> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
+                            <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
+                            <li class="active"> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
+                            <li> <a href="{{ path('logout') }}"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8 user-dashboard-right">
+
+                    <div class="account-block">
+                        <div class="property-listing list-view">
+                            <div class="row">
+                                {% for annonce in annonces %}
+                                <div class="item-wrap">
+                                    <div class="property-item table-list">
+                                        <div class="table-cell">
+                                            <div class="figure-block">
+                                                <figure class="item-thumb">
+                                                    <div class="label-wrap hide-on-list">
+                                                        <div class="label-status label label-default">
+                                                            {{ annonce.typeAnnonce.valeur }}
+                                                        </div>
+                                                        {% if annonce.status == 'vendu' %}
+                                                            <span class="label label-danger">Vendu</span>
+                                                        {% elseif annonce.status == 'louer' %}
+                                                            <span class="label label-danger">Louer</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="price hide-on-list">
+                                                        <h3>AR {{ annonce.prix }}</h3>
+                                                    </div>
+                                                    <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                                        <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" class="img-thumbnail" alt="{{ annonce.titre }}">
+                                                    </a>
+                                                    <figcaption class="thumb-caption cap-actions clearfix">
+                                                        <ul class="list-unstyled actions pull-right">
+                                                            <li>
+                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Favorite">
+                                                                    <i class="fa fa-heart"></i>
+                                                                </span>
+                                                            </li>
+                                                            <li class="share-btn">
+                                                                <div class="share_tooltip fade">
+                                                                    <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                                                                    <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                                                                </div>
+                                                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Partage"><i class="fa fa-share-alt"></i></span>
+                                                            </li>
+                                                        </ul>
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                        <div class="item-body table-cell">
+
+                                            <div class="body-left table-cell">
+                                                <div class="info-row">
+                                                    <h2 class="property-title"><a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.titre }}</a></h2>
+                                                    <h4 class="property-location">{{ annonce.adresse }}</h4>
+                                                </div>
+                                                <div class="info-row amenities hide-on-grid">
+                                                    <p>{{ annonce.category.type }}</p>
+                                                </div>
+                                                <div class="info-row date hide-on-grid">
+                                                    {% if annonce.user.type == 'simple' %}
+                                                        <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSimpleUser.nom }}</a></p>
+                                                    {% elseif annonce.user.type == 'society' %}
+                                                        <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">{{ annonce.user.profileSocietyUser.nom }}</a></p>
+                                                    {% endif %}
+                                                    <p><i class="fa fa-calendar"></i>
+                                                        {{ annonce.createdAt|ago }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="body-right table-cell hidden-gird-cell">
+                                                <div class="info-row price">
+                                                    <h3> AR {{ annonce.prix }}</h3>
+                                                    {#<p class="rant"> AR 21,000/mo</p>#}
+                                                </div>
+                                                <div class="info-row phone text-right">
+                                                    <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
+                                                    <p>
+                                                        <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
+                                                            {% if annonce.user.type == 'simple' %}
+                                                                {% if annonce.user.profileSimpleUser.telephone %}
+                                                                    {{ annonce.user.profileSimpleUser.telephone }}
+                                                                {% endif %}
+                                                            {% elseif annonce.user.type == 'society' %}
+
+                                                                {% if annonce.user.profileSocietyUser.telephone %}
+                                                                    {{ annonce.user.profileSocietyUser.telephone }}
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="table-list full-width hide-on-list">
+                                                <div class="cell">
+                                                    <div class="info-row amenities">
+                                                        <p>{{ annonce.category.type }}</p>
+                                                        {#<p>#}
+                                                            {#{% for caracteristique in annonce.caracteristiques %}#}
+                                                                {#<span><input type="checkbox" checked readonly="readonly"/>{{ caracteristique.nom }}</span>#}
+                                                            {#{% endfor %}#}
+                                                        {#</p>#}
+                                                    </div>
+                                                </div>
+                                                <div class="cell">
+                                                    <div class="phone">
+                                                        <a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}" class="btn btn-primary">Details <i class="fa fa-angle-right fa-right"></i></a>
+                                                        <p><a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
+                                                                {% if annonce.user.type == 'simple' %}
+                                                                    {% if annonce.user.profileSimpleUser.telephone %}
+                                                                        {{ annonce.user.profileSimpleUser.telephone }}
+                                                                    {% endif %}
+                                                                {% elseif annonce.user.type == 'society' %}
+
+                                                                    {% if annonce.user.profileSocietyUser.telephone %}
+                                                                        {{ annonce.user.profileSocietyUser.telephone }}
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-foot date hide-on-list">
+                                        <div class="item-foot-left">
+                                            <p><i class="fa fa-user"></i> <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
+                                            {% if annonce.user.type == 'simple' %}
+                                                {{ annonce.user.profileSimpleUser.nom }}
+                                            {% elseif annonce.user.type == 'society' %}
+                                                {{ annonce.user.profileSocietyUser.nom }}
+                                            {% endif %}
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="item-foot-right">
+                                            <p><i class="fa fa-calendar"></i>
+                                                {{ annonce.createdAt|ago }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    {{ knp_pagination_render(annonces) }}
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

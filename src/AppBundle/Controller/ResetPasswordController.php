@@ -32,46 +32,40 @@ class ResetPasswordController extends Controller
      * @return Response
      *
      * @Route("/", name="reset.index")
-     * @Method({"GET"})
      */
     public function indexAction(Request $request){
+        if($request->getMethod() == 'POST'){
+            if($request->get('_email')){
+                $em = $this->getDoctrine()->getManager();
+                $user = $em->getRepository(User::class)
+                    ->findOneBy(['email'=>$request->get('_email')]);
+                if(!is_null($user)){
+                    $token = $this->random(32);
+                    $user->setResetPasswordToken($token);
+                    $em->persist($user);
+                    $em->flush();
+                    $message = (new \Swift_Message('Reset password instructions'))
+                        ->setFrom('no-reply@mamaison.mg')
+                        ->setTo($request->get('_email'))
+                        ->setBody(
+                            $this->renderView(
+                                'emails/reset_password.html.twig',
+                                array('user'=>$user)
+                            ),
+                            'text/html'
+                        );
+                    $this->get('mailer')->send($message);
+                    $this->addFlash("success", "Un email a ete envoyer");
+                    return $this->render('reset/index.html.twig');
+                }else{
+                    $this->addFlash("error", "Utilisateur non trouve");
+                    return $this->render('reset/index.html.twig');
+                }
+            }
+        }
         return $this->render('reset/index.html.twig');
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     *
-     * @Route("/envoie-email", name="reset.send-email")
-     * @Method({"POST"})
-     */
-    public function requestAction(Request $request){
-        if($request->get('_email')){
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository(User::class)
-                ->findOneBy(['email'=>$request->get('_email')]);
-            if(!is_null($user)){
-                $token = $this->random(32);
-                $user->setResetPasswordToken($token);
-                $em->persist($user);
-                $em->flush();
-                $message = (new \Swift_Message('Reset password'))
-                    ->setFrom('no-reply@mamaison.mg')
-                    ->setTo($request->get('_email'))
-                    ->setBody(
-                        $this->renderView(
-                            'emails/reset_password.html.twig',
-                            array('user'=>$user)
-                        ),
-                        'text/html'
-                    );
-                $this->get('mailer')->send($message);
-                return new Response("An email has been sent to ".$user->getEmail());
-            }else{
-                return new Response("We can't find this email adress");
-            }
-        }
-    }
 
     /**
      * @param Request $request

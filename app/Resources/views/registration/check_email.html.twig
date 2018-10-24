@@ -1,8 +1,41 @@
 {% extends 'base-for-login.html.twig' %}
-
+{% block title %}
+    <title>Mamaison - Compte </title>
+{% endblock %}
 {% block content %}
-
-    Hi {{ user.username }},<br/><br/>
-    An email was sent to {{ user.email }} to account confirmation.
+    <section id="section-body">
+        <div class="container">
+            <div class="page-title breadcrumb-top">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li>
+                            <li class="active">Confirmation compte</li>
+                        </ol>
+                        <div class="page-title-left">
+                            <h2>Confirmation compte</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Confirmation compte
+                        </div>
+                        <div class="panel-body">
+                            <p class="text">
+                                Bonjour {{ user.username }},
+                            </p>
+                            <p class="text">
+                                Un email a ete envoye a <span style="color: #0eaae5">{{ user.email }}</span>  pour confirmation de votre compte.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

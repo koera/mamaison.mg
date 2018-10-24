@@ -14,44 +14,38 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
-    # makes classes in src/AppBundle available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-#    AppBundle\:
-#        resource: '../../src/AppBundle/*'
-#        # you can exclude directories or files
-#        # but if a service is unused, it's removed anyway
-#        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/AppBundle/{Entity,Repository}'
 
-    # controllers are imported separately to make sure they're public
-    # and have a tag that allows actions to type-hint services
-#    AppBundle\Controller\:
-#        resource: '../../src/AppBundle/Controller'
-#        public: true
-#        tags: ['controller.service_arguments']
+    mamaison.last_route_event_listener:
+        class: Mamaison\AnnonceBundle\EventListener\LastRouteListener
+        tags:
+        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 30 }
 
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+    rating_service:
+        class: Mamaison\AnnonceBundle\Service\Rating\MoyenneService
+        arguments: ['@doctrine.orm.default_entity_manager']
 
-#    AppBundle\Controller\:
-#          resource: '../../src/AppBundle/Controller'
-#          autowire: true
-#    AppBundle\Controller\ProfileSimpleUserController:
-#        tags: ['controller.service_arguments']
-#        calls:
-#            - [setContainer, ["@service_container"]]
-#        bind:
-#            $formFactory: "@fos_user.profile.form.factory"
-#    AppBundle\Controller\RegistrationController:
-#        tags: ['controller.service_arguments']
-#        calls:
-#            - [setContainer, ["@service_container"]]
-#        bind:
-#            $formFactory: "@fos_user.registration.form.factory"
-#    AppBundle\Controller\ChangePasswordController:
-#        tags: ['controller.service_arguments']
-#        calls:
-#            - [setContainer, ["@service_container"]]
-#        bind:
-#            $formFactory: "@fos_user.profile.form.factory"
+    app.annonce_repository:
+        class: Mamaison\AnnonceBundle\Repository\AnnonceRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+        - Mamaison\AnnonceBundle\Entity\Annonce
+
+    kernel.listener.doctrine:
+        class: Mamaison\AnnonceBundle\EventListener\DoctrineListener
+        public: false
+        tags:
+          - { name: doctrine.event_listener, event: preFlush, method: preFlush }
+
+    AppBundle\Commande\DeleteUnusedGalleryFileCommand:
+        arguments: ['@doctrine.orm.default_entity_manager']
+
+    AppBundle\Commande\CreateUserAdminCommand:
+        arguments: ['@doctrine.orm.default_entity_manager']
+
+    AppBundle\Commande\NewsLetterCommand:
+        arguments: ['@doctrine.orm.default_entity_manager','@swiftmailer.mailer.default','@service_container']

@@ -21,3 +21,6 @@
 /web/uploads/avatars/*
 /certs
 /certs/*
+/node_modules/*
+/yarn.lock
+/web/build/*

@@ -1,72 +1,622 @@
 {% extends 'template.html.twig' %}
-
+{% block title %}
+    <title>Mamaison - {{ annonce.titre }} </title>
+    <meta name="description" content="{{ annonce.description }}">
+{% endblock %}
 {% block content %}
-    <h1>Annonce</h1>
+    <section id="section-body">
+        <!--start detail top-->
+        <section class="detail-top detail-top-grid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="header-detail table-list">
+                            <div class="header-left table-cell">
+                                <ol class="breadcrumb">
+                                    <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li>
+                                    <li><a href="#">Proprietes</a></li>
+                                    <li class="active">{{ annonce.titre }}</li>
+                                </ol>
+                                <h1>
+                                    {{ annonce.titre }}
+                                    <span class="label-wrap">
+                                        <span class="label label-primary">{{ annonce.typeAnnonce.valeur }}</span>
+                                        {% if annonce.status == 'vendu' %}
+                                            <span class="label label-danger">Vendu</span>
+                                        {% elseif annonce.status == 'louer' %}
+                                            <span class="label label-danger">Louer</span>
+                                        {% endif %}
+                                    </span>
+                                </h1>
+                                <p>{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }} - {{ annonce.adresse }}</p>
+                            </div>
+                            <div class="header-right table-cell">
+                                <ul class="actions">
+                                    <li class="share-btn">
+                                        <div class="share_tooltip tooltip_left fade">
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" onclick="if(!document.getElementById('td_social_networks_buttons')){window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;}"><i class="fa fa-twitter"></i></a>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ annonce.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ annonce.titre }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ annonce.description }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ annonce.prix }}</td>
-            </tr>
-            <tr>
-                <th>Nombrepiece</th>
-                <td>{{ annonce.nombrePiece }}</td>
-            </tr>
-            <tr>
-                <th>Surface</th>
-                <td>{{ annonce.surface }}</td>
-            </tr>
-            <tr>
-                <th>Unitesurface</th>
-                <td>{{ annonce.uniteSurface }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ annonce.adresse }}</td>
-            </tr>
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-pinterest"></i></a>
+
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-google-plus"></i></a>
+                                            <a href="#"><i class="fa fa-envelope"></i></a>
+                                        </div>
+                                        <span data-placement="right" data-toggle="tooltip" data-original-title="share"><i class="fa fa-share-alt"></i></span>
+                                    {#</li>#}
+                                    <li>
+                                        <span>
+                                            {% if app.user %}
+                                                {% if annonce in app.user.annonces %}
+                                                    <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                        <i class="fa fa-heart" title="unlike">
+                                                        </i>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                        <i class="fa fa-heart-o" title="like">
+                                                        </i>
+                                                    </a>
+                                                {% endif %}
+                                            {% else %}
+                                                <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                    <i class="fa fa-heart-o" title="like">
+                                                    </i>
+                                                </a>
+                                            {% endif %}
+                                        </span>
+                                    </li>
+                                </ul>
+                                <h1>{% if annonce.category.type == 'Terrain' %}AR {{ annonce.prixTotal }}{% else %} AR {{ annonce.prix }} {% endif %}</h1>
+                                {#<h4>21,000<sup>2</sup></h4>#}
+                            </div>
+                        </div>
+                        <div class="detail-media">
+                            <div class="tab-content">
+
+                                <div id="gallery" class="tab-pane fade active in">
+                                    <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}" alt="{{ annonce.titre }}" width="1170" height="600">
+                                    <div class="form-small form-media">
+                                        {% if annonce.isCrawled %}
+                                            <div class="media agent-media">
+                                                <div class="media-left">
+                                                    <a>
+                                                        <img src="http://placehold.it/50x50" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Contact de l'Agent</h4>
+                                                    <ul>
+                                                        <li><i class="fa fa-user"></i>
+                                                            {{ annonce.userNameCrawler }}
+                                                        </li>
+                                                        <li><i class="fa fa-phone"></i>
+                                                            {{ annonce.userPhoneCrawler }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="media agent-media">
+                                                <div class="media-left">
+                                                    <a href="{{ path('agent_show',{'id':annonce.user.id}) }}">
+                                                        {% if annonce.user.type == 'simple' %}
+                                                            {% if annonce.user.profileSimpleUser.avatar %}
+                                                                <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                            {% elseif annonce.user.profileSimpleUser.avatarUrlFb %}
+                                                                <img src="{{ annonce.user.profileSimpleUser.avatarUrlFb }}" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                            {%  else %}
+                                                                <img src="http://placehold.it/50x50" alt="Avatar" class="media-object" alt="image" width="74" height="74">
+                                                            {% endif %}
+                                                        {% elseif annonce.user.type == 'society' %}
+                                                            <img src="{{ asset('uploads/avatars/'~annonce.user.profileSimpleUser.avatar) }}" class="media-object" alt="image" width="74" height="74">
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Contact de l'Agent</h4>
+                                                    <ul>
+                                                        <li><i class="fa fa-user"></i>
+                                                            {% if annonce.user.type == 'simple' %}
+                                                                {{ annonce.user.profileSimpleUser.nom }}
+                                                            {% elseif annonce.user.type == 'society' %}
+                                                                {{ annonce.user.profileSocietyUser.nom }}
+                                                            {% endif %}
+                                                        </li>
+                                                        <li><i class="fa fa-phone"></i>
+                                                            {% if annonce.user.type == 'simple' %}
+                                                                {{ annonce.user.profileSimpleUser.telephone }}
+                                                            {% elseif annonce.user.type == 'society' %}
+                                                                {{ annonce.user.profileSocietyUser.telephone }}
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
+                                                    {#<a href="#" class="view">Voir ma liste</a>#}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <form action="{{ path('contact.agent') }}" method="post">
+                                            <div class="form-group">
+                                                <input class="form-control" name="nom" type="text" placeholder="Votre Nom">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" name="telephone" type="text" placeholder="Téléphone">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" name="email" type="email" placeholder="E-mail">
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="message" rows="5" placeholder="Emplacement"></textarea>
+                                            </div>
+                                            <input type="hidden" value="{{ annonce.user.id }}" name="agent">
+                                            {% for message in app.flashes('success') %}
+                                                <div class="alert alert-success">
+                                                    <i class="fa fa-check-circle">
+                                                        {{ message }}
+                                                    </i>
+                                                </div>
+                                            {% endfor %}
+                                            <button class="btn btn-secondary btn-block" type="submit">Demande d'information</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="map" class="tab-pane fade">
+
+                                </div>
+                                <div id="street-map" class="tab-pane fade">
+
+                                </div>
+
+                            </div>
+                            <div class="media-tabs">
+                                <ul>
+                                    <li class="popup-trigger active" data-placement="bottom" data-toggle="tooltip" data-original-title="View Photos">
+                                        <a href="#gallery" data-toggle="tab" aria-expanded="true">
+                                            <i class="fa fa-camera"></i>
+                                        </a>
+                                    </li>
+                                    {#<li data-placement="bottom" data-toggle="tooltip" data-original-title="Map View" class="">#}
+                                        {#<a href="#map" data-toggle="tab" aria-expanded="false">#}
+                                            {#<i class="fa fa-map"></i>#}
+                                        {#</a>#}
+                                    {#</li>#}
+                                    {#<li data-placement="bottom" data-toggle="tooltip" data-original-title="Street View" class="">#}
+                                        {#<a href="#street-map" data-toggle="tab" aria-expanded="false">#}
+                                            {#<i class="fa fa-street-view"></i>#}
+                                        {#</a>#}
+                                    {#</li>#}
+                                </ul>
+                                <ul class="actions">
+                                    <li class="share-btn">
+                                        <div class="share_tooltip tooltip_left fade">
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" onclick="if(!document.getElementById('td_social_networks_buttons')){window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;}"><i class="fa fa-twitter"></i></a>
+
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-pinterest"></i></a>
+
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+                                            <a href="#" onclick="window.open(this.href, 'mywin','left=50,top=50,width=600,height=350,toolbar=0'); return false;"><i class="fa fa-google-plus"></i></a>
+                                            <a href="#"><i class="fa fa-envelope"></i></a>
+                                        </div>
+                                        <span data-placement="right" data-toggle="tooltip" data-original-title="share"><i class="fa fa-share-alt"></i></span>
+                                    </li>
+                                    <li>
+                                        <span><i class="fa fa-heart-o"></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end detail top-->
+        <!--start detail content-->
+        <section class="section-detail-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 container-contentbar">
+                        <div class="detail-bar">
+                            <div id="gallery" class="property-gallery detail-block target-block">
+                                <div class="detail-title">
+                                    <h2 class="title-left">Gallery</h2>
+                                </div>
+                                <div class="container-image">
+                                    <div class="row row-gallery">
+                                        {% set i =0 %}
+                                        {% for gallery in annonce.galleries %}
+                                            {% set i = i+1 %}
+                                            <div class="gallery">
+                                                {% if gallery.image starts with 'http' %}
+                                                    <img src="{{ gallery.image }}" onclick="openModal();currentSlide({{ i }})" class="hover-shadow">
+                                                {% else %}
+                                                    <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" onclick="openModal();currentSlide({{ i }})" class="hover-shadow">
+                                                {% endif %}
+
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <!-- The Modal/Lightbox -->
+                                <div id="myModal" class="modal">
+                                    <span class="close cursor" onclick="closeModal()">&times;</span>
+                                    <div class="modal-content">
+                                        {% set i =0 %}
+                                        {% for gallery in annonce.galleries %}
+                                            {% set i = i+1 %}
+                                            <div class="mySlides">
+                                                <div class="numbertext">{{ i }} / {{ annonce.galleries|length }}</div>
+                                                {% if gallery.image starts with 'http' %}
+                                                    <img src="{{ gallery.image }}" style="width:100%">
+                                                {% else %}
+                                                    <img src="{{ asset(gallery.uploadDir ~ '/' ~ gallery.image) }}" style="width:100%">
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+
+                                        <!-- Next/previous controls -->
+                                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <style>
+                                .row > .column {
+                                    padding: 0 8px;
+                                }
+
+                                .row:after {
+                                    content: "";
+                                    display: table;
+                                    clear: both;
+                                }
+
+                                /* Create four equal columns that floats next to eachother */
+                                .column {
+                                    float: left;
+                                    width: 25%;
+                                }
+
+                                /* The Modal (background) */
+                                .modal {
+                                    display: none;
+                                    position: fixed;
+                                    z-index: 1000;
+                                    padding-top: 100px;
+                                    left: 0;
+                                    top: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    overflow: auto;
+                                    background-color: black;
+                                }
+
+                                /* Modal Content */
+                                .modal-content {
+                                    position: relative;
+                                    background-color: #fefefe;
+                                    margin: auto;
+                                    padding: 0;
+                                    width: 90%;
+                                    max-width: 1200px;
+                                }
+
+                                /* The Close Button */
+                                .close {
+                                    color: white;
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 25px;
+                                    font-size: 35px;
+                                    font-weight: bold;
+                                }
+
+                                .close:hover,
+                                .close:focus {
+                                    color: #999;
+                                    text-decoration: none;
+                                    cursor: pointer;
+                                }
+
+                                /* Hide the slides by default */
+                                .mySlides {
+                                    display: none;
+                                }
+
+                                /* Next & previous buttons */
+                                .prev,
+                                .next {
+                                    cursor: pointer;
+                                    position: absolute;
+                                    top: 50%;
+                                    width: auto;
+                                    padding: 16px;
+                                    margin-top: -50px;
+                                    color: white;
+                                    font-weight: bold;
+                                    font-size: 20px;
+                                    transition: 0.6s ease;
+                                    border-radius: 0 3px 3px 0;
+                                    user-select: none;
+                                    -webkit-user-select: none;
+                                }
+
+                                /* Position the "next button" to the right */
+                                .next {
+                                    right: 0;
+                                    border-radius: 3px 0 0 3px;
+                                }
+
+                                /* On hover, add a black background color with a little bit see-through */
+                                .prev:hover,
+                                .next:hover {
+                                    background-color: rgba(0, 0, 0, 0.8);
+                                }
+
+                                /* Number text (1/3 etc) */
+                                .numbertext {
+                                    color: #f2f2f2;
+                                    font-size: 12px;
+                                    padding: 8px 12px;
+                                    position: absolute;
+                                    top: 0;
+                                }
+
+                                /* Caption text */
+                                .caption-container {
+                                    text-align: center;
+                                    background-color: black;
+                                    padding: 2px 16px;
+                                    color: white;
+                                }
+
+                                img.demo {
+                                    opacity: 0.6;
+                                }
+
+                                .active,
+                                .demo:hover {
+                                    opacity: 1;
+                                }
+
+                                img.hover-shadow {
+                                    transition: 0.3s;
+                                }
+
+                                .hover-shadow:hover {
+                                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                                }
+
+                            </style>
+
+                            <div id="description" class="property-description detail-block target-block">
+                                <div class="detail-title">
+                                    <h2 class="title-left">Déscription</h2>
+                                    <div class="title-right">
+                                        <a href="#">Signaler cette annonce <i class="fa fa-flag"></i></a>
+                                    </div>
+                                </div>
+                                <p>{{ annonce.description }}</p>
+                            </div>
 
 
-        </tbody>
-    </table>
+                            <div id="address" class="detail-address detail-block target-block">
+                                <div class="detail-title">
+                                    <h2 class="title-left">Adresse</h2>
+                                    <div class="title-right">
+                                        <a href="#">Ouvrir sur Google Maps <i class="fa fa-map-marker"></i></a>
+                                    </div>
+                                </div>
+                                <ul class="list-three-col">
+                                    <li><strong>Adresse:</strong> {{ annonce.adresse }}</li>
+                                    <li><strong>Quartier:</strong> {{ annonce.quartier.nom }}</li>
+                                    <li><strong>Ville:</strong> {{ annonce.quartier.ville.nom }}</li>
+                                    <li><strong>Region:</strong> {{ annonce.quartier.ville.region.nom }}</li>
+                                    <li><strong>Etat / Pays:</strong> Madagascar</li>
+                                </ul>
+                            </div>
+                            <div id="detail" class="detail-list detail-block target-block">
+                                <div class="detail-title">
+                                    <h2 class="title-left">Detail</h2>
+                                    <div class="title-right">
+                                        <p>Information mise à jour le {{ annonce.updatedAt | date('d/m/Y') }}</p>
+                                    </div>
+                                </div>
+                                <div class="alert alert-info">
+                                    <ul class="list-three-col">
+                                        <li><strong>Propriété ID:</strong> {{ annonce.id }}</li>
+                                        {% if annonce.category.type == 'Terrain' %}
+                                            <li><strong>Prix:</strong> Ar {{ annonce.prix }} ({{ annonce.uniteSurface }})</li>
+                                            <li><strong>Prix total:</strong> Ar {{ annonce.prixTotal }}</li>
+                                            <li><strong>Surface de la propriété : </strong> {{ annonce.surface }} {{ annonce.uniteSurface }}</li>
+                                        {% else %}
+                                            <li><strong>Prix:</strong> Ar {{ annonce.prix }}</li>
+                                            <li><strong>Nombre piece:</strong> {{ annonce.nombrePiece }}</li>
+                                        {% endif %}
+                                        {% for caracteristique in annonce.caracteristiques %}
+                                            <li><strong> - {{ caracteristique.nom }}</strong>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-md-offset-0 col-sm-offset-3 container-sidebar">
+                        <aside id="sidebar">
+                            <div class="widget widget-recommend">
+                                <div class="widget-top">
+                                    <h3 class="widget-title">Donner votre avis sur ce propriete</h3>
+                                </div>
+                                <div class="widget-body">
+                                    Notez ce propriete <br/>
+                                    <span class="bottom-ratings tip">
+                                        {% if app.user %}
+                                            {% if annonce in app.user.annonces %}
+                                                <a href="{{ path('unlike',{'annonce_id':annonce.id}) }}">
+                                                    <i class="fa fa-heart">
+                                                    </i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                    <i class="fa fa-heart-o">
+                                                    </i>
+                                                </a>
+                                            {% endif %}
+                                                                            {% else %}
+                                            <a href="{{ path('like',{'annonce_id':annonce.id}) }}">
+                                                <i class="fa fa-heart-o">
+                                                </i>
+                                            </a>
+                                        {% endif %}
+                                        {{ annonce.likes |length }} J'aime
+                                        <br/>
 
-    <ul>
-        {% for caracteristique in annonce.caracteristiques %}
-            <li>
-                {{ caracteristique.nom }}
-            </li>
-        {% endfor %}
-    </ul>
+                                        {% set count = 1 %}
 
-    
-    Gallery : <br/>
-    {% for image in annonce.galleries %}
-        <img style="width: 150px;height: 150px;" src="{{ image.image }}"/>
-    {% endfor %}
+                                        {% if (rating.getMoyenne(annonce)) > 0 %}
 
-    <ul>
-        <li>
-            <a href="{{ path('annonce_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('annonce_edit', { 'id': annonce.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                                            {% for i in 1..rating.getMoyenne(annonce) %}
+                                                <a href="{{ path('rating',{'annonce_id':annonce.id,'value':(i)}) }}">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                {% set count = count + 1 %}
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% set j = 1 %}
+                                        {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                            {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                <a href="{{ path('rating',{'annonce_id':annonce.id,'value':(count)}) }}">
+                                                    <span class="fa fa-star-o"></span>
+                                                </a>
+                                                {% set count = count + 1 %}
+                                            {% endfor %}
+                                        {% endif %}<br/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="widget widget-rated">
+                                <div class="widget-top">
+                                    <h3 class="widget-title">Propriétés les plus notées</h3>
+                                </div>
+                                <div class="widget-body">
+                                    {% for annonce in annoncePlusNote|best(5)%}
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <figure class="item-thumb">
+                                                <a class="hover-effect" href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                                    <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}"  width="100" height="75" style="width: 100px; height: 75px;" alt="{{ annonce.titre }}">
+                                                </a>
+                                                <figcaption class="thumb-caption">
+
+                                                    <ul class="list-unstyled actions">
+                                                        <li>
+                                                        <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Photos">
+                                                            <i class="fa fa-camera"></i> <span class="blue">{{ annonce.galleries |length }}</span>
+                                                        </span>
+                                                        </li>
+                                                    </ul>
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3 class="media-heading"><a href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a></h3>
+                                            <div class="rating">
+                                                <span class="star-text-left"> AR {{ annonce.prix }}</span>
+
+                                                <span class="bottom-ratings tip">
+                                                {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                    {% for i in 1..rating.getMoyenne(annonce) %}
+                                                            <span class="fa fa-star"></span>
+                                                    {% endfor %}
+                                                {% endif %}
+
+                                                {% set j = 1 %}
+
+                                                {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                    {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                            <span class="fa fa-star-o"></span>
+                                                    {% endfor %}
+                                                {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="amenities">
+                                                <p>{{ annonce.likes|length }} J'aime</p>
+                                                <p>{{ annonce.adresse }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="widget widget-categories">
+                                <div class="widget-top">
+                                    <h3 class="widget-title">Catégories des propriétés</h3>
+                                </div>
+                                <div class="widget-body">
+                                    <ul>
+                                        {% for category in category %}
+                                            <li><a href="">{{ category.type }}</a> <span class="cat-count">({{ category.annonces | length }})</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end detail content-->
+
+    </section>
+{% endblock %}
+
+
+{% block specificScript %}
+    <script>
+        // Open the Modal
+        function openModal() {
+            document.getElementById('myModal').style.display = "block";
+        }
+
+        // Close the Modal
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+        }
+    </script>
 {% endblock %}

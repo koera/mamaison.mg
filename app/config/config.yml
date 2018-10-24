@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
@@ -39,6 +39,8 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes: ['bootstrap_4_layout.html.twig']
+    globals:
+        rating: "@rating_service"
 
 # Doctrine Configuration
 doctrine:
@@ -61,7 +63,10 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-
+        filters:
+            deleted:
+                class: 'Mamaison\AnnonceBundle\Filter\DeletedFilter'
+                enabled: true
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
@@ -69,3 +74,9 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+knp_paginator:
+    template:
+        pagination: 'pagination/pagination.html.twig'     # sliding pagination controls template
+        sortable: '@KnpPaginator/pagination/sortable_link.html.twig' # sort link template
+        filtration: '@KnpPaginator/pagination/filtration.html.twig'  # filters template
+

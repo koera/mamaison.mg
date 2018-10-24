@@ -283,16 +283,16 @@ var nice = false;
     if($( "#slider-price").length >0) {
         $("#slider-price").slider({
             range: true,
-            min: 500,
-            max: 5000,
-            values: [500, 5000],
+            min: 10000,
+            max: 1000000000,
+            values: [10000, 1000000000],
             slide: function (event, ui) {
                 $("#min-price").val("AR " + ui.values[0]);
                 $("#max-price").val("AR " + ui.values[1]);
             }
         });
-        $("#min-price").val("$ " + $("#slider-price").slider("values", 0));
-        $("#max-price").val("$ " + $("#slider-price").slider("values", 1));
+        $("#min-price").val($("#slider-price").slider("values", 0));
+        $("#max-price").val($("#slider-price").slider("values", 1));
     }
 
     if($( "#slider-size").length >0) {
@@ -313,9 +313,9 @@ var nice = false;
     if($( ".price-range-advanced").length >0) {
         $(".price-range-advanced").slider({
             range: true,
-            min: 500,
-            max: 5000,
-            values: [500, 5000],
+            min: 10000,
+            max: 1000000000,
+            values: [10000, 1000000000],
             slide: function (event, ui) {
                 $(".min-price-range-hidden").val("AR " + addCommas(ui.values[0]));
                 $(".max-price-range-hidden").val("AR " + addCommas(ui.values[1]));
@@ -1851,10 +1851,12 @@ $(document).ready(function() {
             $('.js-caracteristiques').hide();
             $('.js-show-terrain').show();
             $('.js-hide-terrain').hide();
+            $('.label-terrain').html('Prix en m2 ou en Ha')
         }else{
             $('.js-caracteristiques').show();
             $('.js-show-terrain').hide();
             $('.js-hide-terrain').show();
+            $('.label-terrain').html('Prix')
         }
 
     });
@@ -1897,7 +1899,7 @@ $(document).ready(function() {
                 if((nbrImage-1) == 5 ){
                     $('#upload-file-button').attr('disabled','disabled');
                 }
-                $('#mamaison_annoncebundle_annonce_gallery_'+(nbrImage-1)).val(bin);
+                $('#mamaison_annoncebundle_annonce_gallery_'+(nbrImage-1)).val(e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -1990,6 +1992,8 @@ $(document).ready(function() {
             obj['on' + evt] = handler;
         }
     }
+
+    loadImage();
 
 });
 /* fuction forcotroller page momcompte */

@@ -1,21 +1,412 @@
 {% extends 'template.html.twig' %}
+{% block title %}
+    <title>Mamaison - Modifier propriété </title>
+{% endblock %}
+{% block content %}
+    <!--start section page body-->
+    <section id="section-body">
 
-{% block body %}
-    <h1>Annonce edit</h1>
+        <div class="container">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-left">
+                            <h2>Ajouter propriete</h2>
+                        </div>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb">
+                                <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i></a></li>
+                                <li><a href="{{ path('mon-compte.edit') }}">Mon compte</a></li>
+                                <li class="active">Modifier propriete</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+            <div class="row">
+                <div class="col-md-3 col-sm-4 user-dashboard-left">
+                    <div class="my-sidebar">
+                        <ul class="list-unstyled my-menu">
+                            {% if app.user.type == 'simple' %}
+                                <li> <a href="{{ path('mon-compte.edit') }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% elseif app.user.type == 'society' %}
+                                <li> <a href="{{ path('compte.edit',{'societyName':app.user.profileSocietyUser.nom}) }}"> <i class="fa fa-user"></i> Mon profil </a></li>
+                            {% endif %}
+                            <li> <a href="{{ path('annonce_mon_proprietes') }}"> <i class="fa fa-building"></i> Mes propriétés </a></li>
+                            <li> <a href="{{ path('annonce_new') }}"> <i class="fa fa-plus-circle"></i> Ajouter une nouvelle propriété </a></li>
+                            <li> <a href="{{ path('annonce_mon_proprietes_favorites') }}"> <i class="fa fa-heart"></i> Propriétés favorites </a></li>
+                            <li> <a href="{{ path('logout') }}"> <i class="fa fa-unlock"></i> Se déconnecter </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8 user-dashboard-right">
+                    <form name="mamaison_annoncebundle_annonce" method="post" enctype="multipart/form-data">
+                        <div class="account-block">
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            <div class="add-title-tab">
+                                <h3>Status</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content" style="display: block;">
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="radio" {% if annonce.status == 'disponible' %} checked {% endif %} id="mamaison_annoncebundle_annonce_status" name="status" required="required" value="disponible">
+                                                        <label class="form-check-label">Disponible</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="radio" {% if annonce.status == 'vendu' %} checked {% endif %} id="mamaison_annoncebundle_annonce_status" name="status" required="required" value="vendu">
+                                                        <label class="form-check-label">Vendu</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input type="radio" {% if annonce.status == 'louer' %} checked {% endif %} id="mamaison_annoncebundle_annonce_status" name="status" required="required" value="louer">
+                                                        <label class="form-check-label">Louer</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-title-tab">
+                                <h3>Description de la propriété et prix</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content" style="display: block;">
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="property-title">Titre</label>
+                                                {{ form_widget(form.titre) }}
+                                                {{ form_errors(form.titre) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="description">Déscription</label>
+                                                {{ form_widget(form.description) }}
+                                                {{ form_errors(form.description) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="categories">Catégories</label>
+                                            <div class="form-group">
+                                                {{ form_errors(form.category) }}
+                                                {% for child in form.category %}
+                                                    <div class="col-md-4">
+                                                        {{ form_widget(child,{'attr':{'class':'js-form-annonce'} } ) }}
+                                                        {{ form_label(child) }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('annonce_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="caracteristiques generales">Type</label>
+                                                {{ form_widget(form.typeAnnonce,{'attr':{'class':'selectpicker'} }) }}
+                                                {{ form_errors(form.typeAnnonce) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 js-hide-terrain">
+                                            <div class="form-group">
+                                                <label for="property-price-before">Nombre de pièces</label>
+                                                {{ form_widget(form.nombrePiece) }}
+                                                {{ form_errors(form.nombrePiece) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="property-price">Prix</label>
+                                                {{ form_widget(form.prix) }}
+                                                {{ form_errors(form.prix) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3 js-show-terrain">
+                                            <div class="form-group">
+                                                <label for="property-price-before">Surface</label>
+                                                {{ form_widget(form.surface) }}
+                                                {{ form_errors(form.surface) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 js-show-terrain">
+                                            <div class="form-group">
+                                                <label for="property-price-before">Unite surface</label>
+                                                {{ form_widget(form.uniteSurface) }}
+                                                {{ form_errors(form.uniteSurface) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="add-tab-row push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12 js-caracteristiques">
+                                            <label for="categories">Caracteristiques</label>
+                                            <div class="form-group">
+                                                {{ form_errors(form.caracteristiques) }}
+                                                {% for child in form.caracteristiques %}
+                                                    <div class="col-md-4">
+                                                        {{ form_widget(child) }}
+                                                        {{ form_label(child) }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="account-block">
+                            <div class="add-title-tab">
+                                <h3>Emplacement de la propriété</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content">
+                                <div class="add-tab-row  push-padding-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="address">Adresse</label>
+                                                {{ form_widget(form.adresse) }}
+                                                {{ form_errors(form.adresse) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="quartier">Quartier</label>
+                                                {{ form_widget(form.neighborhood) }}
+                                                {{ form_errors(form.neighborhood) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="address">Ville</label>
+                                                {{ form_widget(form.ville) }}
+                                                {{ form_errors(form.ville) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="quartier">Region</label>
+                                                {{ form_widget(form.region) }}
+                                                {{ form_errors(form.region) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="account-block">
+                            <div class="add-title-tab">
+                                <h3>Médias de propriété</h3>
+                                <div class="add-expand"></div>
+                            </div>
+                            <div class="add-tab-content">
+                                <div class="add-tab-row">
+                                    <div class="property-media">
+                                        <div class="media-gallery">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-0' data-input-index="0" class="hidden"/>
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-0">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                        <span class="icon icon-loader"><i class="fa fa-spinner fa-spin"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-1' data-input-index="1" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-1">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-2' data-input-index="2" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-2">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-3' data-input-index="3" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-3">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-4' data-input-index="4" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-4">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <figure class="gallery-thumb">
+                                                        <input type="hidden" name="image[]" id='input-image-5' data-input-index="5" />
+                                                        <img src="http://placehold.it/127x127" alt="thumb" id="image-5">
+                                                        <span class="icon icon-fav"><i class="fa fa-edit"></i></span>
+                                                        <span class="icon icon-delete"><i class="fa fa-trash"></i></span>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media-drag-drop">
+                                            <h4><i class="fa fa-cloud-upload"></i> Glissez et déposez des images ici</h4>
+                                            <h4>or</h4>
+                                            <label class="btn btn-default btn-file" style="width:auto">
+                                                Selectioner images <input type="file" class="btn btn-primary btn-block" style="width:auto" id="btn-upload-image">
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="account-block text-right">
+                            <button class="btn btn-primary" type="submit">Envoyer la propriété</button>
+                        </div>
+                        <input id="image-index" type="hidden" value="{{ images|length }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+{% block specificScript %}
+
+    <script src="{{ asset('build/edit.js') }}"></script>
+    <script>
+        var index = 0;
+        var edited = false;
+
+        function editImage(imageId, imageIndex){
+
+            var url = '{{ url('mamaison.gallery_delete') }}';
+
+            var data = new FormData();
+            data.append('image-id',imageId)
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(resp, textStatus, jqXHR)
+                {
+                    console.log(resp);
+                    index = imageIndex
+                    edited = true;
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.log('ERRORS: ' + textStatus);
+                    console.log('ERRORS: ' + jqXHR);
+                    console.log('ERRORS: ' + errorThrown);
+                }
+            });
+
+            $("#btn-upload-image").click();
+        }
+
+        $('#btn-upload-image').on('change',function(event){
+
+            var imageIndex = $('#image-index').val()
+
+            if(index == 0 && !edited){
+                index = imageIndex;
+            }
+
+            var file = event.target.files
+
+            var data = new FormData();
+            data.append('file',file[0])
+            var url = '{{ url('mamaison.gallery_new') }}';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(data, textStatus, jqXHR)
+                {
+                    if(typeof data.error === 'undefined')
+                    {
+                        var reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            $('#image-'+index+'').attr('src', e.target.result);
+                            $('#input-image-'+index+'').attr('value', data.gallery_id);
+                        }
+
+                        reader.readAsDataURL(file[0]);
+                    }
+                    else
+                    {
+                        console.log('ERRORS: ' + data.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.log('ERRORS: ' + textStatus);
+                    console.log('ERRORS: ' + jqXHR);
+                    console.log('ERRORS: ' + errorThrown);
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function loadImage(){
+            {%set index = 0 %}
+            {% for image in images %}
+
+                $("{{'#image-'~index}}").attr('src', "{{ asset( image.uploadDir ~ '/' ~ image.image ) }}");
+
+                $("{{'#image-'~index}}").attr('gallery-id', "{{ image.id }}");
+
+                $("{{'#image-'~index}}").on('click',function(){
+
+                   editImage({{ image.id }},{{ index }})
+
+                });
+            {%set index = index +1 %}
+            {% endfor %}
+        }
+    </script>
 {% endblock %}

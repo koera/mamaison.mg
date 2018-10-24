@@ -2,8 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mamaison\AnnonceBundle\Concern\Annoncable;
+use Mamaison\AnnonceBundle\Concern\Rating;
 use Mamaison\AnnonceBundle\Entity\Annonce;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\ProfileSimpleUser;
@@ -23,12 +25,19 @@ class User implements UserInterface
 {
 
     /**
-     * @var Annonce
+     * @var ArrayCollection
      *
      * User can like Annonce
      *
      */
     use Annoncable;
+
+    /**
+     * @var ArrayCollection
+     *
+     * User give rating to annonce
+     */
+    use Rating;
 
     /**
      * @var integer
@@ -90,6 +99,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=254, unique=true, nullable=true)
      */
     private $facebookId;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = [];
     
 
     /**
@@ -104,7 +120,7 @@ class User implements UserInterface
     /**
      * @var ProfileSimpleUser
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProfileSimpleUser")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProfileSimpleUser", fetch="EAGER")
      */
     private $profileSimpleUser;
 
@@ -130,11 +146,18 @@ class User implements UserInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return (Role|string)[] The user roles
+     * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return $this->roles;
+    }
+
+    /**
+     * @param $roles
+     */
+    public function setRoles($roles){
+        $this->roles = $roles;
     }
 
 

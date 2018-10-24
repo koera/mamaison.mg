@@ -1,0 +1,106 @@
+<form method="POST" class="form-search" data-type-annonce="{{typeAnnonce}}">
+    <div class="row">
+        <div class="col-md-3 col-sm-3">
+            <div class="form-group">
+                <input class="form-control" placeholder="Entrer un lieu, une adresse ou un zip... " name="adresse" id="property-title" />
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <div class="row">
+                <div class="col-sm-2 col-xs-12">
+                    <div class="form-group no-margin">
+                        <select name="region" class="selectpicker bs-select-hidden search-region search-select" data-live-search="false" data-live-search-style="begins">
+                            <option value="" selected>Régions</option>
+                            {% for region in getAllRegions() %}
+                                <option value="{{ region.id }}">{{ region.nom }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-12">
+                    <div class="form-group no-margin">
+                        <select name="ville" class="selectpicker bs-select-hidden search-ville search-select" data-live-search="false" data-live-search-style="begins">
+                            <option value="" selected>Villes</option>
+                            {% for ville in getAllVilles() %}
+                                <option value="{{ ville.id }}">{{ ville.nom }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group no-margin">
+                        <select name="quartier" class="selectpicker bs-select-hidden search-quartier search-select" data-live-search="false" data-live-search-style="begins">
+                            <option value="">Quartiers</option>
+                            {% for quartier in getAllQuartiers() %}
+                                <option value="{{ quartier.id }}">{{ quartier.nom }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-6 text-center">
+                    <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée</button>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search"></i>Rechercher</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="advance-fields">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12 col-md-12 features-list">
+                <div classs="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><span class="text-uppercase">Prix min</span>(en Ariary)</label>
+                            <select name="prix[min]" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                <option value="">Prix min</option>
+                                {% for val, min in rangePriceMin() %}
+                                    <option value="{{ val }}">{{ min }}</option> 
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><span class="text-uppercase">Prix max</span>(en Ariary)</label>
+                            <select name="prix[max]" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
+                                <option value="">Prix max</option>
+                                {% for val, max in rangePriceMax() %}
+                                    <option value="{{ val }}">{{ max }}</option> 
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 features-list">
+                <label class="text-uppercase title">Categories</label>
+                <div class="clearfix"></div>
+                <div class="row">
+                    {% for categorie in getAllCategories() %}
+                        <div class="col-md-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="category[]" value="{{ categorie.id }}"> {{categorie.type}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br />
+            </div>
+            <div class="col-md-12 features-list">
+                <label class="text-uppercase title">Caracteristique generale</label>
+                <div class="clearfix"></div>
+                <div class="row">
+                    {% for caracteristique in getAllCaracteristiques() %}
+                        <div class="col-xs-6 col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="caracteristique[]" value="{{caracteristique.id}}"> {{caracteristique.nom}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

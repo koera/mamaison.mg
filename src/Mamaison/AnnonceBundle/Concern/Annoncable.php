@@ -9,8 +9,8 @@ trait Annoncable {
 
     /**
      * @var Annonce
-     *
-     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Annonce", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Mamaison\AnnonceBundle\Entity\Annonce", inversedBy="likes", cascade={"PERSIST"})
+     * @ORM\JoinTable(name="user_annonce")
      */
     private $annonces;
 
@@ -30,7 +30,7 @@ trait Annoncable {
      *
      * @param \Mamaison\AnnonceBundle\Entity\Annonce $annonce
      *
-     * @return Caracteristique
+     * @return Annonce
      */
     public function addAnnonce(\Mamaison\AnnonceBundle\Entity\Annonce $annonce)
     {

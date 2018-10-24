@@ -1,0 +1,26 @@
+<ul>
+    <li><a href="{{ path('a_vendre_tous',{'ville' : app.request.cookies.get('ville')}) }}">A VENDRE</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                {{ category | slugify }}
+                <li><a href="{{ path('a_vendre_category',{'ville': app.request.cookies.get('ville') ,'slug':category|slugify}) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+
+    <li><a href="{{ path('a_louer_mois_tous',{'ville': app.request.cookies.get('ville') }) }}">A LOUER PAR MOIS</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                <li><a href="{{ path('a_louer_mois_category',{'ville': app.request.cookies.get('ville') ,'slug':category|slugify}) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+
+    <li><a href="{{ path('a_louer_jours_tous',{'ville': app.request.cookies.get('ville') }) }}">A LOUER PAR JOUR</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                <li><a href="{{ path('a_louer_jours_category',{'ville': app.request.cookies.get('ville') ,'slug':category|slugify}) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>

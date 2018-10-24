@@ -157,7 +157,8 @@ class SecurityController extends Controller
                 ->setIsActive(true)
                 ->setUsername($fbUser)
                 ->setEmail($fbUser.'@example.com')
-                ->setProfileSimpleUser($profile);
+                ->setProfileSimpleUser($profile)
+                ->setRoles(["ROLE_USER"]);
             $em->persist($new_user);
 
             $em->flush();
@@ -227,18 +228,26 @@ class SecurityController extends Controller
      *
      * @Route("/redirect-login",name="redirect-login")
      */
-    public function redirectAction(){
+    public function redirectAction(Request $request){
+
         /** @var User $user */
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
-        if($user->getType() == 'simple'){
-            return $this->redirectToRoute('mon-compte.edit');
+        if(in_array('ROLE_USER',$user->getRoles())){
+            if($user->getType() == 'simple'){
+                return $this->redirectToRoute('mon-compte.edit');
+            }
+            elseif($user->getType() == 'society'){
+                return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+            }
         }
-        elseif($user->getType() == 'society'){
-            return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+
+        if(in_array('ROLE_ADMIN',$user->getRoles())){
+            return $this->redirectToRoute("admin.index");
         }
+
     }
 
 }

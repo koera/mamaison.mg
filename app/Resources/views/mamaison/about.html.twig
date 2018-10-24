@@ -1,0 +1,192 @@
+{% extends 'template.html.twig' %}
+{% block title %}
+    <title>Mamaison - A propos de nous </title>
+{% endblock %}
+{% block content %}
+
+
+    <section id="section-body">
+        <div class="container">
+            <div class="page-title breadcrumb-top">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li><a href="index.html"><i class="fa fa-home"></i></a></li>
+                            <li class="active"> À propos de MaMaison</li>
+                        </ol>
+                        <div class="page-title-left">
+                            <h2> À propos de MaMaison</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 container-contentbar">
+                    <div class="page-main">
+                        <div class="article-detail">
+                            <p><strong><h3>Qui est MaMaison ?</h3>
+                                    C'est un site web de confiance à Madagascar, met en contact les agents et les
+                                    développeurs avec les acheteurs et les locataires en ligne.. </strong></p>
+
+                            <h3>Trouvez votre prochaine maison</h3>
+                                                        <p> Quels que soient vos besoins et votre budget, trouvez
+                                facilement votre nouvelle maison dans notre gamme de propriétés au Kenya à vendre par le
+                                propriétaire ou par des agents immobiliers qualifiés.
+                                Vous pouvez facilement comparer les prix d'investir dans un <a href="#">nouveau projet
+                                    de développement</a>. Une fois que vous avez trouvé une propriété que vous aimez,
+                                appelez ou envoyez un courriel avec le formulaire de demande. Si vous avez besoin d'un
+                                peu plus d'aide pour décider, vous pouvez également lire les<a href="#">guides de
+                                    propriété</a> d'experts locaux. </p>
+                            <a href="#">Trouvez votre nouvelle maison</a>
+                                                       <br><br>
+                                                        <h3> Vendez votre propriété </h3>
+                                                        <p> Obtenez le prix que vous voulez et économisez sur la
+                                commission lorsque vous vendez votre maison en privé. La publicité de votre propriété
+                                sur BuyRentKenya est rapide, sûre et offre un bon rapport qualité-prix. Si vous cherchez
+                                plus d'informations, lisez notre <a href="#">guide sur la vente de votre propre
+                                    maison </a>. </p>
+                            <a href="#">Vendez votre propriété</a>
+                            <br><br>
+                            <h3>Faites de la publicité avec nous</h3>
+                            <p>Le partenaire idéal pour les agents immobiliers et les promoteurs, MaMaison propose des
+                                solutions de publicité immobilière. Développez votre activité avec un site dédié pour
+                                mettre en valeur votre propriété, avec un outil CRM intégré pour gérer vos interactions
+                                clients. Vos annonces immobilières se synchroniseront automatiquement avec le site Web
+                                MaMaison pour maximiser votre audience et générer des prospects de haute qualité.</p>
+                            <h3>Forfaits publicitaires</h3>
+                            <p>Or: logo de marque, énumérés ci-dessus annonces prioritaires argent, carrousel de la page
+                                d'accueil, fonction newsletter.</p>
+                            <p>Argent: logo de marque, répertorié au-dessus des annonces normales.
+                                De base: annonce normale.</p>
+                            <h3>Des services supplémentaires</h3>
+                            <p>Nouvelle annonce de page de projets</p>
+                            <p>Bannière page d'accueil</p>
+                            <p>Bannière de logo</p>
+                            <p>Bannière de recherche d'agent</p>
+                            <p>Bannière de bulletin électronique</p>
+                                                      
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-md-offset-0 col-sm-offset-3 container-sidebar">
+                    <aside id="sidebar">
+                        <div class="widget widget-rated">
+                            <div class="widget-top">
+                                <h3 class="widget-title">Propriétés les plus notées</h3>
+                            </div>
+                            <div class="widget-body">
+                                {% for annonce in annoncePlusNote|best(5) %}
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <figure class="item-thumb">
+                                                <a class="hover-effect"
+                                                   href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">
+                                                    <img src="{{ path('mamaison.thumb',{'id':annonce.id}) }}"
+                                                         width="100" height="75" style="width: 100px; height: 75px;"
+                                                         alt="{{ annonce.titre }}">
+                                                </a>
+                                                <figcaption class="thumb-caption">
+                                                    <ul class="list-unstyled actions">
+                                                        <li>
+                                                        <span title="" data-placement="top" data-toggle="tooltip"
+                                                              data-original-title="Photos">
+                                                            <i class="fa fa-camera"></i> <span
+                                                                    class="blue">{{ annonce.galleries |length }}</span>
+                                                        </span>
+                                                        </li>
+                                                    </ul>
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3 class="media-heading"><a
+                                                        href="{{ path('annonce_show',{'ville':app.request.cookies.get('ville') ,'category':annonce.category.type|slugify,'type':annonce.typeAnnonce.valeur|slugify,'title':annonce.titre | slugify,'id':annonce.id}) }}">{{ annonce.category.type }} {{ annonce.typeAnnonce.valeur }}</a>
+                                            </h3>
+                                            <div class="rating">
+                                                <span class="star-text-left"> AR {{ annonce.prix }}</span>
+
+                                                <span class="bottom-ratings tip">
+                                                {% if (rating.getMoyenne(annonce)) > 0 %}
+                                                    {% for i in 1..rating.getMoyenne(annonce) %}
+                                                        <span class="fa fa-star"></span>
+                                                    {% endfor %}
+                                                {% endif %}
+
+                                                    {% set j = 1 %}
+
+                                                    {% if (5 - rating.getMoyenne(annonce)) > 0 %}
+                                                        {% for j in 1..(5 - rating.getMoyenne(annonce)) %}
+                                                            <span class="fa fa-star-o"></span>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="amenities">
+                                                <p>{{ annonce.likes|length }} J'aime</p>
+                                                <p>{{ annonce.adresse }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="widget widget-categories">
+                            <div class="widget-top">
+                                <h3 class="widget-title">Catégories des propriétés</h3>
+                            </div>
+                            <div class="widget-body">
+                                <ul>
+                                    {% for category in category %}
+                                        <li><a href="">{{ category.type }}</a> <span
+                                                    class="cat-count">({{ category.annonces | length }})</span></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {#<div class="widget widget-reviews">#}
+                        {#<div class="widget-top">#}
+                        {#<h3 class="widget-title">Dernières critiques</h3>#}
+                        {#</div>#}
+                        {#<div class="widget-body">#}
+                        {#<div class="media">#}
+                        {#<div class="media-left">#}
+                        {#<a href="#">#}
+                        {#<img class="media-object img-circle" src="http://placehold.it/50x50" alt="Thumb" width="50" height="50">#}
+                        {#</a>#}
+                        {#</div>#}
+                        {#<div class="media-body">#}
+                        {#<h3 class="media-heading"><a href="#">Titre de propriété</a></h3>#}
+                        {#<div class="rating">#}
+                        {#<span class="bottom-ratings"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 70%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span></span>#}
+                        {#</div>#}
+                        {#<p>Lorem ipsum dolor sit amet,#}
+                        {#consectetur adipiscing elit. Etiam#}
+                        {#risus tortor, accumsan at nisi et,#}
+                        {#</p>#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#<div class="media">#}
+                        {#<div class="media-left">#}
+                        {#<a href="#">#}
+                        {#<img class="media-object img-circle" src="http://placehold.it/50x50" alt="Thumb" width="50" height="50">#}
+                        {#</a>#}
+                        {#</div>#}
+                        {#<div class="media-body">#}
+                        {#<h3 class="media-heading"><a href="#">Titre de propriété</a></h3>#}
+                        {#<div class="rating">#}
+                        {#<span class="bottom-ratings"><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span style="width: 70%" class="top-ratings"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span></span>#}
+                        {#</div>#}
+                        {#<p>Lorem ipsum dolor sit amet,#}
+                        {#consectetur adipiscing elit. Etiam#}
+                        {#risus tortor, accumsan at nisi et,#}
+                        {#</p>#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#</div>#}
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

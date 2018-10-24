@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>MaMaison / Home</title>
+    {% block title %}
+    {% endblock %}
     <!--Meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +11,7 @@
     <meta name="description" content="Houzez HTML5 Template">
     <meta name="author" content="Favethemes">
     <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="{{ asset('assets/images/favicons/favicon.ico') }}"/>
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
             <div class="modal-body">
                 <ul class="contenaire-login" align="center">
                     <a href="{{ path('login') }}" class="menumbil"><h5 style="color : #828282;">Se connecter</h5></a>
-                    <hr></hr>
+                    <hr/>
                     <a href="{{ path('registration_simple_user')}}" class="menumbil"><h5 style="color : #828282; sans-serif;">S'enregistrer</h5></a>
                 </ul>
             </div>
@@ -43,56 +45,26 @@
                 </a>
             </div>
             <nav class="navi main-nav">
-                <ul>
-                    <li><a href="{{ path('a_vendre_tous') }}">A VENDRE</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-vendre.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-vendre.html">Propriétés commerciales</a></li>
-                            <li><a href="villa-a-vendre.html">Villas</a></li>
-                            <li><a href="studio-a-vendre.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-vendre.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-vendre.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="a-louer-mois.html">A LOUER PAR MOIS</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-louer-mois.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-louer-mois.html">Propriété commerciale</a></li>
-                            <li><a href="villa-a-louer-mois.html">Villas</a></li>
-                            <li><a href="studio-a-louer-mois.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-louer-mois.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-louer-mois.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="a-louer-jour.html">A LOUER PAR JOUR</a>
-                        <ul class="sub-menu">
-
-                            <li><a href="terrain-a-louer-jour.html">Terrains</a></li>
-                            <li><a href="ppte-cmle-a-louer-jour.html">Propriétés commerciales</a></li>
-                            <li><a href="villa-a-louer-jour.html">Villas</a></li>
-                            <li><a href="studio-a-louer-jour.html">Studios</a></li>
-                            <li><a href="maison-familiale-a-louer-jour.html">Maisons familiales</a></li>
-                            <li><a href="appartement-a-louer-jour.html">Appartements</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
+                {#Load menu from controller#}
+                {{ render(controller(
+                    'AppBundle:Header:index'
+                )) }}
             </nav>
         </div>
         <div class="header-right">
 
             <div class="user">
                 {% if app.user %}
-                    <a href="{{ path('logout') }}">Deconnecter </a>
+                    {% if app.user.type == "simple" %}
+                        <a href="{{ path('mon-compte.edit') }}">Mon compte </a>
+                    {% elseif app.user.type == 'society' %}
+                        <a href="{{ path('compte.edit',{'societyName' : app.user.societyName}) }}">Mon compte </a>
+                    {% endif %}
                 {% else %}
                     <a href="{{ path('login') }}">Se connecter </a>
                     {#<a href="{{ path('registration_simple_user') }}">Créer un compte</a>#}
                 {% endif %}
-                <a href="add-new-property.html" class="btn btn-default btn-publish">Publier votre propriété</a>
+                <a href="{{ path('annonce_mon_proprietes') }}" class="btn btn-default btn-publish">Publier votre propriété</a>
             </div>
         </div>
     </div>
@@ -106,7 +78,7 @@
         </div>
         <!--end mobile nav-->
         <div class="header-logo">
-            <a href="#"><img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo" ></a>
+            <a href="{{ path('homepage') }}"><img src="{{ asset('assets/images/mamaison2.png')}}" alt="logo" ></a>
         </div>
         <div class="header-user">
             <div class="user">
@@ -123,163 +95,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <form>
-                    <div class="form-group search-long">
-                        <div class="search">
-                            <div class="input-search input-icon">
-                                <input class="form-control" type="text" placeholder="Entrer un lieu, une adresse...">
-                            </div>
-                            <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
-                                <option value="">Tous les régions</option>
-                                <option value="chicago"> Chicago</option>
-                                <option value="los-angeles"> Los Angeles</option>
-                                <option value="miami"> Miami</option>
-                                <option value="new-york"> New York</option>
-                            </select>
-                            <select name="location" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
-                                <option value="">Tous les villes</option>
-                                <option value="chicago"> Chicago</option>
-                                <option value="los-angeles"> Los Angeles</option>
-                                <option value="miami"> Miami</option>
-                                <option value="new-york"> New York</option>
-                            </select>
-                            <select name="area" class="selectpicker bs-select-hidden" data-live-search="false" data-live-search-style="begins">
-                                <option value="">Tous les quartiers</option>
-                                <option value="beverly-hills"> Beverly Hills</option>
-                                <option value="brickell"> Brickell</option>
-                                <option value="brickyard"> Brickyard</option>
-                                <option value="bronx"> Bronx</option>
-                                <option value="brooklyn"> Brooklyn</option>
-                                <option value="coconut-grove"> Coconut Grove</option>
-                                <option value="downtown"> Downtown</option>
-                                <option value="eagle-rock"> Eagle Rock</option>
-                                <option value="englewood"> Englewood</option>
-                                <option value="hermosa"> Hermosa</option>
-                                <option value="hollywood"> Hollywood</option>
-                                <option value="lincoln-park"> Lincoln Park</option>
-                                <option value="manhattan"> Manhattan</option>
-                                <option value="midtown"> Midtown</option>
-                                <option value="queens"> Queens</option>
-                                <option value="westwood"> Westwood</option>
-                                <option value="wynwood"> Wynwood</option>
-                            </select>
-                            <div class="advance-btn-holder">
-                                <button class="advance-btn btn" type="button"><i class="fa fa-gear"></i> Avancée </button>
-                            </div>
-                        </div>
-                        <div class="search-btn">
-                            <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                    <div class="advance-fields">
-                        <div class="row">
-                            <div class="col-md-12 features-list">
-                                <label class="text-uppercase title">Categories</label>
-                                <div class="clearfix"></div>
-
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> terrains
-                                        </label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> propriétés commerciales
-                                        </label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option3"> villas
-                                        </label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> studios
-                                        </label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> maisons familiales
-                                        </label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option3"> appartements
-                                        </label>
-                                    </div>
-                                </div>
-                                </br>
-                            </div>
-
-                            <div class="col-md-12 features-list">
-                                <label class="text-uppercase title">Caracteristique generale</label>
-                                <div class="clearfix"></div>
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> 1er plan
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> 2ème plan avec accès voiture
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option3"> 2ème plan avec accès moto
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> 2ème plan accès piéton
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> Avec garage
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> Avec cour
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> WC intérieur
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> Douche intérieur
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> Cuisine
-                                        </label>
-                                    </div>
-                                </div>
-                                </br>
-                            </div>
-
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="range-advanced-main">
-                                    <div class="range-text">
-                                        <input type="hidden" class="min-price-range-hidden range-input" readonly>
-                                        <input type="hidden" class="max-price-range-hidden range-input" readonly>
-                                        <p><span class="range-title">Échelle des prix:</span> de  <span class="min-price-range"></span> à  <span class="max-price-range"></span></p>
-                                    </div>
-                                    <div class="range-wrap">
-                                        <div class="price-range-advanced"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                {% include 'search/form.html.twig' %}
             </div>
         </div>
     </div>
@@ -290,197 +106,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <form>
-                    <div class="single-search-wrap">
-                        <div class="single-search-inner advance-btn">
-                            <button class="table-cell text-left" type="button"><i class="fa fa-gear"></i></button>
-                        </div>
-                        <div class="single-search-inner single-search">
-
-                            <input type="text" class="form-control table-cell" name="search" placeholder="Entrer une adresse, une ville, une rue ou un zip ...">
-                        </div>
-                        <div class="single-search-inner single-seach-btn">
-                            <button class="table-cell text-right" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="advance-fields">
-                        <div class="row">
-
-                            <!--<div class="col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="A vendre">
-                                        <option>A vendre</option>
-                                        <option>A louer / mois</option>
-                                        <option>A louer / jour</option>
-                                    </select>
-                                </div>
-                            </div>-->
-
-                            <div class="col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Region">
-                                        <option>Location 1</option>
-                                        <option>Location 2</option>
-                                        <option>Location 3</option>
-                                        <option>Location 4</option>
-                                        <option>Location 5</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Ville">
-                                        <option>Location 1</option>
-                                        <option>Location 2</option>
-                                        <option>Location 3</option>
-                                        <option>Location 4</option>
-                                        <option>Location 5</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <select class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Quartier">
-                                        <option>Location 1</option>
-                                        <option>Location 2</option>
-                                        <option>Location 3</option>
-                                        <option>Location 4</option>
-                                        <option>Location 5</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="features-list">
-                                <label class="text-uppercase title">Categories</label>
-                                <div class="clearfix"></div>
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> terrain
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> propriété commerciale
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option3"> villa
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> studio
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> maison familiale
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option3"> appartement
-                                        </label>
-                                    </div>
-                                </div>
-                                </br>
-
-                            </div>
-
-
-
-                            <div class="features-list">
-                                <label class="text-uppercase title">Caracteristique generale</label>
-                                <div class="clearfix"></div>
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> 1er plan
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> 2ème plan avec accès voiture
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option3"> 2ème plan avec accès moto
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> 2ème plan accès piéton
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> Avec garage
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> Avec cour
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option1"> WC intérieur
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> Douche intérieur
-                                        </label>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="option2"> Cuisine
-                                        </label>
-                                    </div>
-                                </div>
-                                </br>
-                            </div>
-                            <div class="col-sm-12  col-xs-12">
-                                <div class="col-sm-3 col-xs-2">
-
-                                </div>
-                                <div class="col-sm-6 col-xs-8 range-advanced-main ">
-                                    <div class="range-text">
-                                        <input type="hidden" class="min-price-range-hidden range-input" readonly>
-                                        <input type="hidden" class="max-price-range-hidden range-input" readonly>
-                                        <p><span class="range-title">Échelle des prix:</span> de  <span class="min-price-range"></span> à  <span class="max-price-range"></span></p>
-                                    </div>
-                                    <div class="range-wrap">
-                                        <div class="price-range-advanced"></div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-xs-2">
-
-                                </div>
-
-                            </div>
-                            <div class="col-sm-3 col-xs-2">
-
-                            </div>
-
-                            <div class="col-sm-6 col-xs-8">
-                                </br>
-                                <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-search pull-left"></i> Recherche </button>
-                            </div>
-
-                            <div class="col-sm-3 col-xs-2">
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                {% include 'search/form-mobile.html.twig' %}
             </div>
         </div>
     </div>
@@ -500,7 +126,7 @@
                         </div>
                         <div class="widget-body">
                             <p></p>
-                            <p class="read"><a href="about-us.html" >En savoir plus <i class="fa fa-caret-right"></i></a></p>
+                            <p class="read"><a href="{{ path('about') }}" >En savoir plus <i class="fa fa-caret-right"></i></a></p>
                         </div>
                     </div>
                 </div>
@@ -513,7 +139,7 @@
                             <ul class="list-unstyled" >
                                 <li><i class="fa fa-location-arrow"></i>Mahamasinba</li>
                                 <li><i class="fa fa-phone"></i>+231 032 54 953 67 </li>
-                                <li><i class="fa fa-envelope-o"></i> <a href="#">info@mamaison.mg</a></li>
+                                <li><i class="fa fa-envelope-o"></i> <a href="">info@mamaison.mg</a></li>
                             </ul>
                             <!--<p class="read"><a href="contact-us.html">Nous contacter &nbsp;<i class="fa fa-caret-right"></i></a></p>-->
                         </div>
@@ -555,6 +181,7 @@
                                 <li><a href="vie-privee.html">Vie Priv&eacute;e</a></li>
                                 <li><a href="termes-conditions.html">Termes & Conditions</a></li>
                                 <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ path('faq') }}">FAQ</a></li>
                             </ul>
                         </div>
                     </div>
@@ -592,7 +219,10 @@
 <script type="text/javascript" src="{{ asset('assets/js/isotope.pkgd.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/jquery.nicescroll.js')}}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/jquery.parallax-1.1.3.js')}}"></script>
+<script src="{{ asset('build/search.js') }}"></script>
 {#<script type="text/javascript" src="{{ asset('assets/js/jquery.ezdz.min.js')}}"></script>#}
+{% block specificScript %}
+{% endblock %}
 <script type="text/javascript" src="{{ asset('assets/js/custom.js')}}"></script>
 </body>
 </html>
