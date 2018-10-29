@@ -13,14 +13,14 @@ use Mamaison\AnnonceBundle\Entity\Annonce;
  */
 class PrefAnnonce
 {
-    const TABLE_ATTR = [
-        'annonce'=>['adresse','type_annonce_id'],
-        'quartier'=>['id','nom'],
-        'ville'=>['id','nom'],
-        'region'=>['id','nom'],
-        'category'=>['id','type'],
-        'annonce_caracteristique'=>['annonce_id','caracteristique_id'],
-    ];
+    const TABLE_ATTR = array(
+        'annonce'=>array('adresse','type_annonce_id'),
+        'quartier'=>array('id','nom'),
+        'ville'=>array('id','nom'),
+        'region'=>array('id','nom'),
+        'category'=>array('id','type'),
+        'annonce_caracteristique'=>array('annonce_id','caracteristique_id'),
+    );
     private $_annonceFilter;
     private $_entityManager;
 
@@ -37,7 +37,7 @@ class PrefAnnonce
 
     private $_sqlParams;
 
-    public function __construct(EntityManager $_entityManager, $_annonceFilter = [])
+    public function __construct(EntityManager $_entityManager, $_annonceFilter = array())
     {
         $this->_entityManager = $_entityManager;
         $this->_annonceFilter = $_annonceFilter;
@@ -46,8 +46,8 @@ class PrefAnnonce
         $this->_isJoinedRegion= false;
         $this->_isJoinedCategory=false;
         $this->_isJoinedCaracteristique=false;
-        $this->_sqlWhereQuery= [];
-        $this->_sqlParams= [];
+        $this->_sqlWhereQuery= array();
+        $this->_sqlParams= array();
 
     }
 

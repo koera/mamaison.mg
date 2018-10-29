@@ -20,79 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @param Request $request
-     * @throws \Facebook\Exceptions\FacebookSDKException
-     * @Route("/login/facebook/")
-     */
-    public function fb_connect(Request $request)
-    {
-
-        $fb = new \Facebook\Facebook([
-                'app_id' => $this->getParameter('fb_app_id'), 'app_secret' => $this->getParameter('fb_app_secret')]
-        );
-        $helper = $fb->getRedirectLoginHelper();// to set redirection url
-        $permissions = ['email'];// set required permissions to user details
-        $loginUrl = $helper->getLoginUrl('https://www.mamaison.mg/app_dev.php/login/facebook/check',$permissions);
-        echo "<a href=" . $loginUrl . ">Log in with Facebook!</a>";
-        die;
-    }
-
-
-    public function checkLoginFacebook(Request $request)
-    {
-        if (!session_id()) {
-            session_start();
-        }
-
-        $fb = new \Facebook\Facebook([
-                'app_id' => '253861401879571', 'app_secret' => 'f1e1cd1ab423a336df4f66c1fdb78732']
-        );
-
-        $helper = $fb->getRedirectLoginHelper();
-        $_SESSION['FBRLH_state']=$_GET['state'];
-        try {
-            $accessToken = $helper->getAccessToken();// to fetch access token
-        } catch (Facebook\Exceptions\FacebookResponseException $e) {
-// When facebook server returns error
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
-        } catch (Facebook\Exceptions\FacebookSDKException $e) {
-// when issue with the fetching access token
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
-        }
-        if (!isset($accessToken))// checks whether access token is in there or not
-        {
-            if ($helper->getError()) {
-                header('HTTP/1.0 401 Unauthorized');
-                echo "Error: " . $helper->getError() . "\n";
-                echo "Error Code: " . $helper->getErrorCode() . "\n";
-                echo "Error Reason: " . $helper->getErrorReason() . "\n";
-                echo "Error Description: " . $helper->getErrorDescription() . "\n";
-            } else {
-                header('HTTP/1.0 400 Bad Request');
-                echo 'Bad request';
-            }
-            exit;
-        }
-        try {
-// to get required fields using access token
-            $response = $fb->get('me?fields=id,name,picture', $accessToken->getValue());
-        } catch (Facebook\Exceptions\FacebookResponseException $e)// throws an error if invalid fields are specified
-        {
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
-        } catch (Facebook\Exceptions\FacebookSDKException $e) {
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
-        }
-        $user = $response->getGraphUser();
-        echo 'Name: ' . $user['name'];
-        die;
-    }
-
-
-    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/a-propos-de-nous", name="about")
      */
@@ -102,17 +29,17 @@ class DefaultController extends Controller
             $request->cookies->set('ville', 'antananarivo');
             $ville = 'antananarivo';
         }
-        $annonceLesPlusNoter = [];
+        $annonceLesPlusNoter = array();
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
                      ->getAnnoncePlusNote($ville) as $a)
             $annonceLesPlusNoter[] = $a[0];
         $category = $this->getDoctrine()->getRepository(Category::class)
             ->findAll();
         return $this->render('mamaison/about.html.twig',
-            [
+            array(
                 'annoncePlusNote'   => $annonceLesPlusNoter,
                 'category'          => $category
-            ]
+            )
         );
     }
 
@@ -127,17 +54,17 @@ class DefaultController extends Controller
             $request->cookies->set('ville', 'antananarivo');
             $ville = 'antananarivo';
         }
-        $annonceLesPlusNoter = [];
+        $annonceLesPlusNoter = array();
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
                      ->getAnnoncePlusNote($ville) as $a)
             $annonceLesPlusNoter[] = $a[0];
         $category = $this->getDoctrine()->getRepository(Category::class)
             ->findAll();
         return $this->render('mamaison/faq.html.twig',
-            [
+            array(
                 'annoncePlusNote'   => $annonceLesPlusNoter,
                 'category'          => $category
-            ]
+            )
         );
     }
 
@@ -150,7 +77,7 @@ class DefaultController extends Controller
     public function newsletterAction(Request $request){
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->findAll();
-        $annonce = [];
+        $annonce = array();
         $i= 0;
         foreach($annonces as $a){
             if($i<10){
@@ -160,21 +87,9 @@ class DefaultController extends Controller
             }
             $i++;
         }
-//        $message = (new \Swift_Message('Confirmation instructions'))
-//            ->setFrom('no-reply@mamaison.mg')
-//            ->setTo('tolotrarazafindrabe@trustylabs.mg')
-//            ->setBody(
-//                $this->renderView(
-//                    'emails/newsletter.html.twig',
-//                    array('annonce' => $annonce)
-//                ),
-//                'text/html'
-//            );
-//
-//        $this->get('mailer')->send($message);
-        return $this->render('emails/newsletter.html.twig',[
+        return $this->render('emails/newsletter.html.twig',array(
             'annonces' => $annonce
-        ]);
+        ));
     }
 
 
@@ -186,7 +101,7 @@ class DefaultController extends Controller
         $string = "";
         $crawler = $client->request('GET', 'https://www.jumia.mg/appartements-a-louer');
         $crawler->filter('body > #wrapper > #main > #main-holder > #twocolumn > .container-sticky > #content > #posts-list > .tab-content > #tab1 > #search-results ')->each(function ($node) {
-            if (in_array($node->getNode(0)->nodeName, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a'])) {
+            if (in_array($node->getNode(0)->nodeName, array('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a'))) {
                 echo "{$node->getNode(0)->nodeName} => {$node->getNode(0)->textContent}.<br/>\n";
             } elseif ($node->getNode(0)->nodeName == 'div') {
                 echo "<code>".$node->html()."</code><br/>";
@@ -205,7 +120,7 @@ class DefaultController extends Controller
         $string = "";
         $crawler = $client->request('GET', 'https://www.jumia.mg/appartements-a-vendre');
         $crawler->filter('body > #wrapper > #main > #main-holder > #twocolumn > .container-sticky > #content > #posts-list > .tab-content > #tab1 > #search-results ')->each(function ($node) {
-            if (in_array($node->getNode(0)->nodeName, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a'])) {
+            if (in_array($node->getNode(0)->nodeName, array('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a'))) {
                 echo "{$node->getNode(0)->nodeName} => {$node->getNode(0)->textContent}.<br/>\n";
             } elseif ($node->getNode(0)->nodeName == 'div') {
                 echo "<code>".$node->html()."</code><br/>";
@@ -235,14 +150,14 @@ class DefaultController extends Controller
         $client = new Client();
         $string = "";
 
-        $title = [];
-        $adresse = [];
-        $type = [];
-        $price = [];
-        $image = [];
-        $linkDescription = [];
+        $title = array();
+        $adresse = array();
+        $type = array();
+        $price = array();
+        $image = array();
+        $linkDescription = array();
 
-        $crawler = $client->request('GET', $this->generateUrl('crawler-jumia-a-vendre',[], UrlGeneratorInterface::ABSOLUTE_URL));
+        $crawler = $client->request('GET', $this->generateUrl('crawler-jumia-a-vendre',array(), UrlGeneratorInterface::ABSOLUTE_URL));
 
         $crawler->filter('body > code > article > .post > .text-area > .announcement-container > .announcement-infos > .post-link')->each(function ($node) use (&$title,&$linkDescription) {
             $linkDescription[] = $node->getNode(0)->getAttribute('href');
@@ -289,22 +204,22 @@ class DefaultController extends Controller
                 ->setStatus('disponible')
                 ->setValide(true)
                 ->setUser($u)
-                ->setTypeAnnonce($em->getRepository(TypeAnnonce::class)->findOneBy(['valeur' => 'A vendre']))
-                ->setCategory($em->getRepository(Category::class)->findOneBy(['type' => 'Appartement']))
+                ->setTypeAnnonce($em->getRepository(TypeAnnonce::class)->findOneBy(array('valeur' => 'A vendre')))
+                ->setCategory($em->getRepository(Category::class)->findOneBy(array('type' => 'Appartement')))
                 ->setPrix($price[$i]);
 
             // adresse
 
             $annonce->setAdresse($adresse[$i]);
 
-            $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($adresse[$i])]);
+            $region = $em->getRepository(Region::class)->findOneBy(array('nom' => strtolower($adresse[$i])));
             if(is_null($region)){
                 $region = new Region();
                 $region->setNom(strtolower($adresse[$i]));
                 $em->persist($region);
             }
 
-            $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($adresse[$i])]);
+            $ville = $em->getRepository(Ville::class)->findOneBy(array('nom'=> strtolower($adresse[$i])));
             if(is_null($ville)){
                 $ville = new Ville();
                 $ville->setNom(strtolower($adresse[$i]));
@@ -312,7 +227,7 @@ class DefaultController extends Controller
                 $em->persist($ville);
             }
 
-            $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($adresse[$i])]);
+            $quartier = $em->getRepository(Quartier::class)->findOneBy(array('nom'=>strtolower($adresse[$i])));
 
             if(is_null($quartier)){
                 $quartier = new Quartier();

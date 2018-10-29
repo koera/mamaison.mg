@@ -62,7 +62,7 @@ class SearchExtension extends \Twig_Extension
 
     public function rangePriceMin()
     {
-        $priceMax=[
+        $priceMax=array(
             100000=>'100 000',
             150000=>'150 000',
             200000=>'200 000',
@@ -72,13 +72,13 @@ class SearchExtension extends \Twig_Extension
             20000000=>'20 000 000',
             50000000=>'50 000 000',
             100000000=>'100 000 000'
-        ];
+        );
         return $priceMax;
     }
 
     public function rangePriceMax()
     {
-        $priceMax=[
+        $priceMax=array(
             100000=>'100 000',
             150000=>'150 000',
             200000=>'200 000',
@@ -89,7 +89,7 @@ class SearchExtension extends \Twig_Extension
             50000000=>'50 000 000',
             100000000=>'100 000 000',
             '100000000+'=>'plus de 100 000 000'
-        ];
+        );
         return $priceMax;
     }
 

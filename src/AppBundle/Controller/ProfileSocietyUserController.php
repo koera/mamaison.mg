@@ -99,7 +99,7 @@ class ProfileSocietyUserController extends Controller
             } else
                 $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "Profile modifier success");
-            return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+            return $this->redirectToRoute('compte.edit',array('societyName'=>$user->getSocietyName()));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -111,7 +111,7 @@ class ProfileSocietyUserController extends Controller
             $em->persist($user);
             $em->flush();
             $this->addFlash("success", "Mot de passe modifier");
-            return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+            return $this->redirectToRoute('compte.edit',array('societyName'=>$user->getSocietyName()));
         }
 
         return $this->render('profile/society_user.html.twig', array(

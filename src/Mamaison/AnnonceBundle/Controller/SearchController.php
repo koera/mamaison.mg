@@ -54,13 +54,13 @@ class SearchController extends Controller
         }
 
         $annonces = $query->getResult();
-        $annonceLesPlusNoter = [];
+        $annonceLesPlusNoter = array();
 
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
                      ->getAnnoncePlusNote() as $a)
             $annonceLesPlusNoter[] = $a[0];
 
-        return $this->render('search/search.result.html.twig',['annonces'=>$annonces,'annoncePlusNote'=>$annonceLesPlusNoter]);
+        return $this->render('search/search.result.html.twig',array('annonces'=>$annonces,'annoncePlusNote'=>$annonceLesPlusNoter));
     }
 
     /**

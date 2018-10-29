@@ -41,7 +41,7 @@ class HomeController extends Controller
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)
             ->getAnnonceEnVedette($ville);
 
-        $annonceMeilleur = [];
+        $annonceMeilleur = array();
 
         foreach ($annonces as $annonce)
             $annonceMeilleur[] = $annonce[0];
@@ -56,12 +56,12 @@ class HomeController extends Controller
             ->findAnnonceByType('A louer par jours',$ville);
 
         return $this->render('home/index.html.twig',
-            [
+            array(
                 'annonceAVendre'=>$annonceVente,
                 'annonceALouerParMois'=>$annonceALouerParMois,
                 'annonceALouerParJours'=>$annonceALouerParJours,
                 'annonceMeilleur' => $annonceMeilleur
-            ]
+            )
         );
     }
 }

@@ -41,15 +41,15 @@ class AnnonceType extends AbstractType
                 'expanded' => true,
                 'required' => true))
             ->add('typeAnnonce')
-            ->add('neighborhood',TextType::class,[
+            ->add('neighborhood',TextType::class,array(
                 'mapped' => false
-            ])
-            ->add('region',TextType::class,[
+            ))
+            ->add('region',TextType::class,array(
                 'mapped' => false
-            ])
-            ->add('ville',TextType::class,[
+            ))
+            ->add('ville',TextType::class,array(
                 'mapped' => false
-            ])
+            ))
             ->add('caracteristiques',EntityType::class, array(
                     'class' => Caracteristique::class,
                     'multiple' => true,

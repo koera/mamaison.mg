@@ -56,13 +56,13 @@ class AdminController extends Controller
 
 
         return $this->render('admin/index.html.twig',
-            [
+            array(
                 'nombreUsers'           => $nombreUsers,
                 'nombreAnnonces'        => count($annonces),
                 'nombreVente'           => $nombreVente,
                 'nombreAlouerParJours'  => $nombreAlouerParJours,
                 'nombreAlouerParMois'   => $nombreAlouerParMois
-            ]
+            )
         );
     }
 
@@ -73,9 +73,9 @@ class AdminController extends Controller
     public function usersAction(){
         $users = $this->getDoctrine()->getManager()->getRepository(User::class)
             ->findAll();
-        return $this->render('admin/users/index.html.twig',[
+        return $this->render('admin/users/index.html.twig',array(
             'users' => $users
-        ]);
+        ));
     }
 
     /**
@@ -86,9 +86,9 @@ class AdminController extends Controller
         $annonces = $this->getDoctrine()->getManager()
             ->getRepository(Annonce::class)
             ->findAllAnnonce('',true);
-        return $this->render('admin/annonces/index.html.twig',[
+        return $this->render('admin/annonces/index.html.twig',array(
             'annonces' => $annonces
-        ]);
+        ));
     }
 
     /**
@@ -107,7 +107,7 @@ class AdminController extends Controller
             ->setBody(
                 $this->renderView(
                     'emails/admin/propriete-active.html.twig',
-                    ['user' => $annonce->getUser()]
+                    array('user' => $annonce->getUser())
                 ),
                 'text/html'
             );
@@ -135,10 +135,10 @@ class AdminController extends Controller
             ->setBody(
                 $this->renderView(
                     'emails/admin/propriete-desactive.html.twig',
-                    [
+                    array(
                         'user' => $annonce->getUser(),
                         'comments' => $request->get('comments')
-                    ]
+                    )
                 ),
                 'text/html'
             );

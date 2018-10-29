@@ -29,7 +29,7 @@ class ProfileSocietyUserType extends AbstractType
                 'required' => true)
             )
             ->add('siteweb')
-            ->add('avatarFile',FileType::class,['required'=>false]);
+            ->add('avatarFile',FileType::class,array('required'=>false));
     }/**
      * {@inheritdoc}
      */
