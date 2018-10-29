@@ -46,11 +46,11 @@ class SecurityController extends Controller
 
 
         /* connect fb */
-        $fb = new \Facebook\Facebook([
-                'app_id' => $this->getParameter('fb_app_id'), 'app_secret' => $this->getParameter('fb_app_secret')]
+        $fb = new \Facebook\Facebook(array(
+                'app_id' => $this->getParameter('fb_app_id'), 'app_secret' => $this->getParameter('fb_app_secret'))
         );
         $helper = $fb->getRedirectLoginHelper();// to set redirection url
-        $permissions = ['email'];// set required permissions to user details
+        $permissions = array('email');// set required permissions to user details
 
         $loginFbUrl = $helper->getLoginUrl($this->getParameter('fb_app_url_redirect'),$permissions);
         /* end connect fb */
@@ -87,8 +87,8 @@ class SecurityController extends Controller
             session_start();
         }
 
-        $fb = new \Facebook\Facebook([
-                'app_id' => $this->getParameter('fb_app_id'), 'app_secret' => $this->getParameter('fb_app_secret')]
+        $fb = new \Facebook\Facebook(array(
+                'app_id' => $this->getParameter('fb_app_id'), 'app_secret' => $this->getParameter('fb_app_secret'))
         );
 
         $helper = $fb->getRedirectLoginHelper();
@@ -158,7 +158,7 @@ class SecurityController extends Controller
                 ->setUsername($fbUser)
                 ->setEmail($fbUser.'@example.com')
                 ->setProfileSimpleUser($profile)
-                ->setRoles(["ROLE_USER"]);
+                ->setRoles(array("ROLE_USER"));
             $em->persist($new_user);
 
             $em->flush();
@@ -240,7 +240,7 @@ class SecurityController extends Controller
                 return $this->redirectToRoute('mon-compte.edit');
             }
             elseif($user->getType() == 'society'){
-                return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+                return $this->redirectToRoute('compte.edit',array('societyName'=>$user->getSocietyName()));
             }
         }
 

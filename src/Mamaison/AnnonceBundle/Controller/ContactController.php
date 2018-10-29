@@ -45,13 +45,13 @@ class ContactController extends Controller
                 ->setBody(
                     $this->renderView(
                         'emails/contact.html.twig',
-                        [
+                        array(
                             'user'      => $user,
                             'nom'       => $nom,
                             'telephone' => $telephone,
                             'email'     => $email,
                             'msg'       => $msg
-                        ]
+                        )
                     ),
                     'text/html'
                 );
@@ -63,7 +63,7 @@ class ContactController extends Controller
         //redirect to last route
 
         $session = $request->getSession();
-        $lastRoute = $session->get('last_route', []);
+        $lastRoute = $session->get('last_route', array());
         return $this->redirectToRoute($lastRoute['name'],$lastRoute['params']);
 
     }

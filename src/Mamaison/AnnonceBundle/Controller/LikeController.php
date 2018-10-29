@@ -37,7 +37,7 @@ class LikeController extends Controller
 
         //redirect to last route
         $session = $request->getSession();
-        $lastRoute = $session->get('last_route', []);
+        $lastRoute = $session->get('last_route', array());
         return $this->redirectToRoute($lastRoute['name'],$lastRoute['params']);
 
     }
@@ -63,7 +63,7 @@ class LikeController extends Controller
         //redirect to last route
 
         $session = $request->getSession();
-        $lastRoute = $session->get('last_route', []);
+        $lastRoute = $session->get('last_route', array());
         return $this->redirectToRoute($lastRoute['name'],$lastRoute['params']);
     }
 

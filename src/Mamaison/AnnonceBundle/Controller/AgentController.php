@@ -29,7 +29,7 @@ class AgentController extends Controller
     public function showAction($id){
         $user = $this->getDoctrine()->getRepository(User::class)
             ->find($id);
-        return $this->render('agent/show.html.twig',['user'=>$user]);
+        return $this->render('agent/show.html.twig',array('user'=>$user));
     }
 
 }

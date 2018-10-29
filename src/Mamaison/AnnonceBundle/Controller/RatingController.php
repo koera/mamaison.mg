@@ -35,7 +35,7 @@ class RatingController extends Controller
         // get rating from user id and annonce id
         /** @var Rating $rating */
         $rating = $this->getDoctrine()->getRepository(Rating::class)
-            ->findOneBy(['annonce'=>$annonce,'user'=>$user]);
+            ->findOneBy(array('annonce'=>$annonce,'user'=>$user));
         if($rating){
             $rating->setRatingValue($value);
         } else {
@@ -52,7 +52,7 @@ class RatingController extends Controller
 
         //redirect to last route
         $session = $request->getSession();
-        $lastRoute = $session->get('last_route', []);
+        $lastRoute = $session->get('last_route', array());
         return $this->redirectToRoute($lastRoute['name'],$lastRoute['params']);
 
     }

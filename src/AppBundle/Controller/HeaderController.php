@@ -28,13 +28,13 @@ class HeaderController extends Controller
         }
         $category = $this->getDoctrine()->getRepository(Category::class)
             ->findAll();
-        return $this->render('templates/header.html.twig',['categories'=>$category]);
+        return $this->render('templates/header.html.twig',array('categories'=>$category));
     }
 
     public function villeAction(){
         $villes = $this->getDoctrine()->getRepository(Ville::class)
             ->findAll();
-        return $this->render('templates/ville.html.twig',['villes'=>$villes]);
+        return $this->render('templates/ville.html.twig',array('villes'=>$villes));
     }
 
     /**
@@ -47,7 +47,7 @@ class HeaderController extends Controller
         $ville = $this->getDoctrine()->getRepository(Ville::class)
             ->find($ville_id);
         $session = $request->getSession();
-        $lastRoute = $session->get('last_route', []);
+        $lastRoute = $session->get('last_route', array());
         $params = [];
         foreach($lastRoute['params'] as $key => $value)
             $params = [$key => $value];

@@ -20,7 +20,7 @@ class ProfileSimpleUserType extends AbstractType
             ->add('bio')
             ->add('facebookId')
             ->add('linkedinId')
-            ->add('avatarFile',FileType::class,['required'=>false]);
+            ->add('avatarFile',FileType::class,array('required'=>false));
 
     }/**
      * {@inheritdoc}

@@ -12,7 +12,7 @@ use Mamaison\AnnonceBundle\Service\Search\PrefAnnonce;
  */
 class PrefAnnonceBuilder
 {
-    const FORM_ENTITY_NAME=[
+    const FORM_ENTITY_NAME=array(
         'adresse'=>'annonce.adresse',
         'region'=>'region.id',
         'ville'=>'ville.id',
@@ -20,14 +20,14 @@ class PrefAnnonceBuilder
         'category'=>'category.id',
         'caracteristique'=>'annonce_caracteristique.caracteristique_id',
         'prix'=>'prix',
-    ];
+    );
     private $_annonceFilter;
     private $_entityManager;
 
     public function __construct(EntityManager $_entityManager)
     {
         $this->_entityManager = $_entityManager;
-        $this->_annonceFilter = [];
+        $this->_annonceFilter = array();
     }
 
     public function addFilter($filterName,$filterValue)

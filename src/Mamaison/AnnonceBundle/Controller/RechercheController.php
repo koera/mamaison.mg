@@ -24,13 +24,15 @@ class RechercheController extends Controller
 {
     public function homePageAction()
     {
-        return $this->render('templates/recherche/home.html.twig', [
-            'regions'           => $this->getDoctrine()->getRepository(Region::class)->findAll(),
-            'villes'            => $this->getDoctrine()->getRepository(Ville::class)->findAll(),
-            'quartiers'         => $this->getDoctrine()->getRepository(Quartier::class)->findAll(),
-            'categories'        => $this->getDoctrine()->getRepository(Category::class)->findAll(),
-            'caracteristiques'  => $this->getDoctrine()->getRepository(Caracteristique::class)->findAll()
-        ]);
+        return $this->render('templates/recherche/home.html.twig',
+            array(
+                'regions'           => $this->getDoctrine()->getRepository(Region::class)->findAll(),
+                'villes'            => $this->getDoctrine()->getRepository(Ville::class)->findAll(),
+                'quartiers'         => $this->getDoctrine()->getRepository(Quartier::class)->findAll(),
+                'categories'        => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+                'caracteristiques'  => $this->getDoctrine()->getRepository(Caracteristique::class)->findAll()
+            )
+        );
     }
 
 }

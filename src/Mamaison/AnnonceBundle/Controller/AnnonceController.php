@@ -48,14 +48,14 @@ class AnnonceController extends Controller
             $villeRequest = $form->get('ville')->getData();
             $regionRequest = $form->get('region')->getData();
 
-            $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($regionRequest)]);
+            $region = $em->getRepository(Region::class)->findOneBy(array('nom' => strtolower($regionRequest)));
             if(is_null($region)){
                 $region = new Region();
                 $region->setNom(strtolower($regionRequest));
                 $em->persist($region);
             }
 
-            $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($villeRequest)]);
+            $ville = $em->getRepository(Ville::class)->findOneBy(array('nom'=> strtolower($villeRequest)));
             if(is_null($ville)){
                 $ville = new Ville();
                 $ville->setNom(strtolower($villeRequest));
@@ -63,7 +63,7 @@ class AnnonceController extends Controller
                 $em->persist($ville);
             }
 
-            $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($quartierRequest)]);
+            $quartier = $em->getRepository(Quartier::class)->findOneBy(array('nom'=>strtolower($quartierRequest)));
 
             if(is_null($quartier)){
                 $quartier = new Quartier();
@@ -96,7 +96,7 @@ class AnnonceController extends Controller
 
 
             $this->addFlash("success", "Annnonce ajouter avec success");
-            return $this->redirectToRoute('annonce.update',['id'=>$annonce->getId()]);
+            return $this->redirectToRoute('annonce.update',array('id'=>$annonce->getId()));
 
         }
 
@@ -132,14 +132,14 @@ class AnnonceController extends Controller
                 $villeRequest = $form->get('ville')->getData();
                 $regionRequest = $form->get('region')->getData();
 
-                $region = $em->getRepository(Region::class)->findOneBy(['nom' => strtolower($regionRequest)]);
+                $region = $em->getRepository(Region::class)->findOneBy(array('nom' => strtolower($regionRequest)));
                 if(is_null($region)){
                     $region = new Region();
                     $region->setNom(strtolower($regionRequest));
                     $em->persist($region);
                 }
 
-                $ville = $em->getRepository(Ville::class)->findOneBy(['nom'=> strtolower($villeRequest)]);
+                $ville = $em->getRepository(Ville::class)->findOneBy(array('nom'=> strtolower($villeRequest)));
                 if(is_null($ville)){
                     $ville = new Ville();
                     $ville->setNom(strtolower($villeRequest));
@@ -147,7 +147,7 @@ class AnnonceController extends Controller
                     $em->persist($ville);
                 }
 
-                $quartier = $em->getRepository(Quartier::class)->findOneBy(['nom'=>strtolower($quartierRequest)]);
+                $quartier = $em->getRepository(Quartier::class)->findOneBy(array('nom'=>strtolower($quartierRequest)));
 
                 if(is_null($quartier)){
                     $quartier = new Quartier();
@@ -196,7 +196,7 @@ class AnnonceController extends Controller
     {
         if($request->request->get('image')) {
             $em = $this->getDoctrine()->getManager();
-            $images = [];
+            $images = array();
             foreach ($request->request->get('image') as $image_id) {
                 if ($image_id) {
                     $images[] = $em->getRepository(Gallery::class)->find($image_id);
@@ -244,9 +244,9 @@ class AnnonceController extends Controller
             4
         );
 
-        return $this->render('annonce/mes-proprietes-favorites.html.twig', [
+        return $this->render('annonce/mes-proprietes-favorites.html.twig', array(
             'annonces' => $pagination
-        ]);
+        ));
     }
 
     /**
@@ -267,7 +267,7 @@ class AnnonceController extends Controller
         if($annonce){
             $category = $this->getDoctrine()->getRepository(Category::class)
                 ->findAll();
-            $annonceLesPlusNoter = [];
+            $annonceLesPlusNoter = array();
             foreach ($this->getDoctrine()->getRepository(Annonce::class)
                          ->getAnnoncePlusNote($ville) as $a)
                 $annonceLesPlusNoter[] = $a[0];
@@ -343,13 +343,14 @@ class AnnonceController extends Controller
             $ville = 'antananarivo';
         }
         return $this->redirectToRoute('annonce_show',
-            [
+            array(
                 'ville' =>$ville,
                 'category' => $this->slugify($annonce->getCategory()->getType()),
                 'type' => $this->slugify($annonce->getTypeAnnonce()->getValeur()),
                 'title' => $this->slugify($annonce->getTitre()),
                 'id' => $annonce->getId()
-            ]);
+            )
+        );
     }
 
     private function slugify($string)

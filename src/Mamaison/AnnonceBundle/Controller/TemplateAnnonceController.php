@@ -29,7 +29,7 @@ class TemplateAnnonceController extends Controller
             $ville = 'antananarivo';
         }
 
-        $annonceLesPlusNoter = [];
+        $annonceLesPlusNoter = array();
 
         foreach ($this->getDoctrine()->getRepository(Annonce::class)
                      ->getAnnoncePlusNote($ville) as $a){
@@ -42,13 +42,13 @@ class TemplateAnnonceController extends Controller
         if($annonceMeilleur)
             $annonceMeilleur = $annonceMeilleur[0][0];
         else
-            $annonceMeilleur = [];
+            $annonceMeilleur = array();
 
         return $this->render('templates/annonce-part2.html.twig',
-            [
+            array(
                 'annoncePlusNote' => $annonceLesPlusNoter,
                 'annonceEnVedette' => $annonceMeilleur
-            ]
+            )
         );
     }
 

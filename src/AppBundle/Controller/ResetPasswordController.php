@@ -38,7 +38,7 @@ class ResetPasswordController extends Controller
             if($request->get('_email')){
                 $em = $this->getDoctrine()->getManager();
                 $user = $em->getRepository(User::class)
-                    ->findOneBy(['email'=>$request->get('_email')]);
+                    ->findOneBy(array('email'=>$request->get('_email')));
                 if(!is_null($user)){
                     $token = $this->random(32);
                     $user->setResetPasswordToken($token);
@@ -76,7 +76,7 @@ class ResetPasswordController extends Controller
     public function changePasswordAction(Request $request,$token){
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)
-            ->findOneBy(['resetPasswordToken'=>$token]);
+            ->findOneBy(array('resetPasswordToken'=>$token));
         if(!is_null($user)){
             $resetPassword = new ResetPassword();
             $resetForm = $this->createForm('AppBundle\Form\ResetPasswordType', $resetPassword);
@@ -92,11 +92,11 @@ class ResetPasswordController extends Controller
                     return $this->redirectToRoute('mon-compte.edit');
                 }
                 elseif($user->getType() == 'society'){
-                    return $this->redirectToRoute('compte.edit',['societyName'=>$user->getSocietyName()]);
+                    return $this->redirectToRoute('compte.edit',array('societyName'=>$user->getSocietyName()));
                 }
             }
             return $this->render('reset/reset.html.twig',
-                ['form'=>$resetForm->createView()]
+                array('form'=>$resetForm->createView())
             );
 
         }else{
