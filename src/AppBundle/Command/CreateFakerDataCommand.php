@@ -18,7 +18,6 @@ use Mamaison\AnnonceBundle\Entity\Gallery;
 use Mamaison\AnnonceBundle\Entity\Quartier;
 use Mamaison\AnnonceBundle\Entity\TypeAnnonce;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Faker;
@@ -38,7 +37,7 @@ class CreateFakerDataCommand extends Command
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('app:create-data')
+            ->setName('app:create-faker-data')
 
             // the short description shown while running "php bin/console list"
             ->setDescription('This command create an 20 fakes data')
