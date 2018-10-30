@@ -60,7 +60,7 @@ class NewsLetterCommand extends Command
 
         $newsLetter = json_decode(curl_exec($ch));
 
-        $annonce = [];
+        $annonce = array();
         $i= 0;
         foreach($annonces as $a){
             if($i<10){
@@ -81,7 +81,7 @@ class NewsLetterCommand extends Command
                     ->setBody(
                         $this->container->get('templating')->render(
                             'emails/newsletter.html.twig',
-                            ['annonces' => $annonce]
+                            array('annonces' => $annonce)
                         ),
                         'text/html'
                     );
