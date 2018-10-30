@@ -41,7 +41,7 @@ class RegistrationController extends Controller{
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-            $user->setRoles(["ROLE_USER"]);
+            $user->setRoles(array("ROLE_USER"));
 
             /* send email registration here*/
 
@@ -90,7 +90,7 @@ class RegistrationController extends Controller{
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-            $user->setRoles(["ROLE_USER"]);
+            $user->setRoles(array("ROLE_USER"));
 
             /* send email registration here*/
 

@@ -43,7 +43,7 @@ class DeleteUnusedGalleryFileCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $galleries = $this->em->getRepository(Gallery::class)
-            ->findBy(['used'=>false]);
+            ->findBy(array('used'=>false));
         $i = 0;
         foreach ($galleries as $gallery):
             $i = $i+1;
