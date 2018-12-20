@@ -45,7 +45,7 @@ class Annonce
     /**
      * @var float
      *
-     * @ORM\Column(name="prix", type="string")
+     * @ORM\Column(name="prix", type="float")
      */
     private $prix;
 

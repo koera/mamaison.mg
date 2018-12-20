@@ -360,4 +360,11 @@ class ProfileSimpleUser extends Profile implements \Serializable
     {
         return $this->isSigninWithFb;
     }
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+
+
 }
