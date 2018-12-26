@@ -206,7 +206,7 @@ class DefaultController extends Controller
                 ->setUser($u)
                 ->setTypeAnnonce($em->getRepository(TypeAnnonce::class)->findOneBy(array('valeur' => 'A vendre')))
                 ->setCategory($em->getRepository(Category::class)->findOneBy(array('type' => 'Appartement')))
-                ->setPrix($price[$i]);
+                ->setPrix(floatval($price[$i]));
 
             // adresse
 

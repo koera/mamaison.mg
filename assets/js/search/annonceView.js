@@ -18,7 +18,6 @@ export default class AnnonceView
                         <div class="table-cell">
                             <div class="figure-block">
                                 <figure class="item-thumb">
-                                    <span class="label-featured label label-success">En vedette</span>
                                     <div class="price hide-on-list">
                                         <h3> AR ${ annonce.prix }</h3>
                                     </div>

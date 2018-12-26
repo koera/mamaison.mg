@@ -48,7 +48,7 @@ class HeaderController extends Controller
             ->find($ville_id);
         $session = $request->getSession();
         $lastRoute = $session->get('last_route', array());
-        $params = [];
+        $params = array();
         foreach($lastRoute['params'] as $key => $value)
             $params = [$key => $value];
 
